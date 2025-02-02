@@ -1,0 +1,139 @@
+#Soldier_Transaction_mainDiv {
+    background-color: #F9F9F9;
+    min-height: 100vh;
+    width: 100%;
+}
+
+#Soldier_Transaction_wrapperDiv {
+    padding: 5rem 7.5rem;
+}
+
+#Soldier_Transaction_headerText {
+    color: #1A1A1A;
+    font-size: 1.5rem;
+}
+
+#toggle_buttonDiv {
+    width: 12.25rem;
+    height: 3.06rem;
+    background: linear-gradient(to right, #F6F6F6, #F2EFEF);
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.62rem;
+    box-sizing: border-box;
+}
+
+.toggle_button {
+    border: none;
+    background-color: transparent;
+    color: #666666;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.toggleDiv_buttonActive {
+    min-width: 4.43rem;
+    height: 2.31rem;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: #0E093C;
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+#InputField_Div {
+    display: flex;
+    align-items: center;
+    column-gap: 1rem;
+    margin-top: 2.5rem;
+}
+
+#InputField_Div span {
+    height: 0;
+    color: #707070;
+    font-size: 0.93rem;
+}
+
+#searchDiv img {
+    position: absolute;
+    padding: 1.8rem 1rem;
+    box-sizing: border-box;
+}
+
+#searchDiv input {
+    border-radius: 0.75rem;
+    height: 2.5rem;
+}
+
+#Soldier_Transaction_Table_WrapperDiv {
+    width: 100%;
+    background-color: #FFFFFF;
+    margin-top: 1rem;
+}
+
+#Soldier_Transaction_Table_WrapperDiv table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#Soldier_Transaction_Table_WrapperDiv #headerTable {
+    border-bottom: 1px solid #C4C4C4;
+    color: #000000;
+    font-size: 1.1rem;
+    height: 4rem;
+}
+
+#Soldier_Transaction_Table_WrapperDiv tr {
+    height: 13.87rem;
+    border-bottom: 1px solid #C4C4C4;
+    color: #666666;
+    font-size: 0.9rem;
+    /* text-align: left; */
+}
+
+#Soldier_Transaction_Table_WrapperDiv tr:last-child {
+    border-bottom: none;
+}
+
+#Soldier_Transaction_Table_WrapperDiv th,
+td {
+    padding: 0 1rem;
+}
+
+#Soldier_Transaction_Table_WrapperDiv th {
+    text-align: left;
+}
+
+#Soldier_Transaction_Table_WrapperDiv .Status_data {
+    width: 5.12rem;
+    height: 1.62rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(49, 195, 100, .2);
+    color: #31C364;
+    font-size: 0.81rem;
+    border-radius: 0.25rem;
+}
+
+#Soldier_Transaction_Table_WrapperDiv #BankDetails_Div {
+    display: flex;
+    flex-direction: column;
+}
+
+#Soldier_Transaction_Table_WrapperDiv .BankDetails_BoldText {
+    font-weight: bold;
+
+}
+
+#calendar_popup {
+    position: absolute;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 27rem;
+    z-index: 1000;
+}

@@ -1,0 +1,90 @@
+#All_Users_toggleDiv{
+    width: 23.81rem;
+    height: 3.06rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.62rem;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    background: linear-gradient(120deg, #F6F6F6, #F2EFEF);
+}
+
+.All_Users_listDiv_button{
+    background-color: transparent;
+    border: none;
+    color: #666666;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+.toggleDiv_buttonActive{
+    min-width: 50px;
+    background-color: #0E093C;
+    border: none;
+    color: #FFFFFF;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    height: 2rem;
+    font-size: 0.9rem;
+}
+#All_Users_toggle_dateDiv{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2.9rem;
+}
+#searchDiv input {
+    background-color: #FFFFFF;
+    width: 14.5rem;
+    border-radius: 0.75rem;
+    padding-left: 2.5rem;
+    box-sizing: border-box;
+    height: 2.4rem;
+}
+#searchDiv {
+    margin-top: -0.95rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#searchDiv img {
+    position: absolute;
+    top: 2rem;
+    width: 15px;
+    left: 1rem;
+    fill: #9e9ea7;
+}
+#All_Users_Card{
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+    justify-content: center;
+    gap: 2rem;
+}
+.empty_userDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #000000;
+    font-size: 1.25rem;
+    margin-top: 1rem;
+}
+
+
+@media(max-width:480px){
+    #All_Users_toggleDiv{
+        width: 80vw;
+        margin-top: 13px;
+        margin-left: 8%;
+        justify-self: center;
+
+    }
+    #All_Users_Card{
+        margin-top: 18px;
+        justify-items: center;
+        height: 100vh;
+        overflow-x: scroll;
+    }
+}

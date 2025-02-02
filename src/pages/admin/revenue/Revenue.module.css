@@ -1,0 +1,165 @@
+#Revenue_mainDiv {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #F9F9F9;
+}
+#Revenue_First_WrapperDiv{
+    padding: 7.3rem 7.5rem;
+
+}
+#Revenue_wrapperDiv {
+    display: flex;
+    /* justify-content: space-between; */
+    column-gap: 4rem;
+
+}
+
+#Total_Card_mapDiv {
+    display: flex;
+    column-gap: 32px;
+}
+
+#Revenue_weeklyReport_Div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.6rem;
+}
+
+#Revenue_weeklyReport_Div img {
+    border-radius: 1rem;
+}
+
+#Revenue_earning_wrapperDiv {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.1rem;
+}
+
+.Revenue_earningDiv {
+    /* width: 18.75rem; */
+    width: 100%;
+    height: 17.56rem;
+    background-color: #FFFFFF;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1.5rem;
+    box-sizing: border-box;
+}
+
+#Revenue_progressDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 0.85rem;
+}
+
+#Revenue_progressBar {
+    width: 10.62rem;
+    height: 1.5rem;
+    background-color: #003E79;
+    border-radius: 0.8rem;
+}
+
+#Revenue_progressBar_two {
+    width: 10.62rem;
+    height: 1.5rem;
+    background-color: #003E79;
+}
+
+.Revenue_earningDiv img {
+    width: 3rem;
+    text-align: center;
+}
+
+.Revenue_earningDiv #Revenue_percentText {
+    font-size: 1.12rem;
+    color: #000000;
+    font-weight: bold;
+    text-align: center;
+}
+
+.Revenue_earningDiv .earningText {
+    font-size: 1rem;
+    color: #989797;
+    height: 0px;
+}
+
+.Revenue_earningDiv .priceText {
+    font-size: 1.12rem;
+    color: #000000;
+    font-weight: bold;
+}
+
+.Revenue_earningDiv .Revenue_infoText {
+    width: 100%;
+    font-size: 0.9rem;
+    color: #989797;
+    text-align: center;
+    margin-top: 1.3rem;
+}
+
+#Revenue_total_EarningDiv {
+    display: flex;
+    column-gap: 1.5rem;
+}
+
+#Revenue_graph {
+    width: 40rem;
+    height: 18rem;
+    margin-bottom: 2rem;
+}
+
+#Dashboard_lineChart {
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
+    border-radius: 25px;
+    /* border: 1px solid #F0F0F0;\ */
+    padding: 0 1rem;
+    box-sizing: border-box;
+    width: 38.82rem;
+    height: 18rem;
+}
+
+#Dashboard_RevenueText {
+    display: flex;
+    /* margin: 0  1rem; */
+    box-sizing: border-box;
+    align-items: center;
+    height: 50px;
+    border-bottom: 1.5px solid #E3E3E3;
+    font-size: 1.125rem;
+    color: #003E79;
+    margin-bottom: 1rem;
+}
+
+#AreaChartDiv {
+    /* width: 38.37rem; */
+    width: 100%;
+    height: 27rem;
+    background-color: #FFFFFF;
+    border-radius: 1rem;
+    padding: 2.5rem 3rem;
+    box-sizing: border-box;
+}
+
+#AreaChartDiv #AreaChart_TextDiv {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3.5rem;
+    box-sizing: border-box;
+}
+
+#AreaChart_weeklyText {
+    color: #000000;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+#AreaChart_dateText {
+    color: #707070;
+    font-size: 0.95rem;
+}

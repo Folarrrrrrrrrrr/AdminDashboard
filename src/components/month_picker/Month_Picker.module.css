@@ -1,0 +1,27 @@
+#Month_Picker_wrapperDiv {
+    width: 10rem;
+    height: 10rem;
+    background-color: #FFFFFF;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    padding: 1rem;
+    box-sizing: border-box;
+    overflow-y: hidden;
+    overflow-y: scroll;
+
+}
+
+#Month_Picker_wrapperDiv p {
+    display: flex;
+    column-gap: 0.5rem;
+    text-align: left;
+}
+#Month_PickerDiv {
+    width: 6rem;
+}
+#Month_PickerDiv label{
+    cursor: pointer;
+}

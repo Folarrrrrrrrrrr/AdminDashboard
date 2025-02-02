@@ -1,0 +1,51 @@
+#Users_placedbets_mainDiv {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #F9F9F9;
+}
+
+#placedbets_wrapperDiv {
+    padding: 5.5rem 7.5rem;
+}
+#headerText{
+    color: #0E093C;
+    font-size: 1.5rem;  
+    height: 4rem;
+    line-height: 4rem;
+}
+#Users_placedbets_mapDiv{
+    display: flex;
+    column-gap: 2rem;
+}
+
+
+@media(max-width: 480px){
+    #Users_placedbets_mainDiv{
+        width: 100vw;
+    }
+    #placedbets_wrapperDiv{
+        width: 100vw;
+    }
+    #Users_placedbets_mapDiv{
+        padding: 10px 0px;
+        overflow: scroll;
+        height: 310px;
+        display:  grid;
+        position: relative;
+        left: -120px;
+    }
+    #headerText{
+        text-align: center;
+        position: relative;
+        left: -120px;
+    }
+    #betPlacedComponent{
+        width: 100vw;
+        height: 600px;
+        position: relative;
+        left: -120px;  
+        overflow: scroll;
+        padding: 10px 0px;
+    }
+    
+}

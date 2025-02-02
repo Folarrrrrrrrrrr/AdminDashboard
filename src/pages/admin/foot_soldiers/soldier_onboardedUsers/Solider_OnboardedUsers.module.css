@@ -1,0 +1,78 @@
+#onboardedUsers{
+    width: 100%;
+    min-height: 100vh;
+    background-color: #F9F9F9;
+}
+#All_FootSoldiers_wrapperDiv{
+    padding: 5rem 7.5rem;
+}
+#All_FootSoldiers_headerText{
+    color: #1A1A1A;
+    font-size: 1.5rem;
+    height: 0;
+    line-height: 0;
+}
+#All_Users_toggle_dateDiv{
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+}
+#All_Users_input_FilterDiv{
+    display: flex;
+    column-gap: 1.5rem;
+}
+.footsoldier_listGrid_view{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #707070;
+    font-size: 0.93rem;
+}
+.footsoldier_listGrid_view img{
+    width: 1.25rem;
+    height: 1.25rem;
+}
+#viewchange_button{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+#All_Users_input_FilterDiv #dateText{
+    font-size: 0.93rem;
+    color: #707070;
+    line-height: 1.4rem;
+}
+
+
+#All_Users_input_FilterDiv #searchDiv img{
+    position: absolute;
+    width: 15px;
+    padding-left: 0.7rem;
+    padding-top: 1rem;
+
+}
+#searchDiv{
+    display: flex;
+    align-items: center;
+    height: 0;
+}
+
+#searchDiv input{
+    /* position: absolute; */
+    position: relative;
+    width: 7.6rem;
+    border-radius: 0.75rem;
+    padding-left:2rem;
+    box-sizing: border-box;
+    height: 2.43rem;  
+}
+
+#All_Users_Card{
+    margin-top: 1.56rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    justify-content: center;
+    gap: 2.2rem;
+}
+
+

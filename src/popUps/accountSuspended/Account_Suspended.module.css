@@ -1,0 +1,49 @@
+#mainDiv{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, .3);
+}
+#wrapper{
+    width: 24.9rem;
+    height: 7.5rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #F5F5F5;
+    position: relative;
+}
+#closeButtonWrapper{
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+    margin-top: -2.7rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+#closeButton{
+    color: #ED2F2F;
+    font-size: 1.5rem;
+    font-weight: 700;
+
+}
+#wrapper button{
+    width: 9rem;
+    height: 1.3rem;
+    padding: 0.5rem;
+    font-size: 0.75rem;
+    border-radius: 1rem;
+    
+}
+#wrapper p{
+    color: #ED2F2F;
+}

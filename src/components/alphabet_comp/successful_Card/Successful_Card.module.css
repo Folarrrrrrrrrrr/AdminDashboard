@@ -1,0 +1,54 @@
+#Successful_AccCreation_mainDiv{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    background-color:rgba(0, 0, 0, 0.3);
+    padding-right: 50px;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 99;
+}
+#Successful_AccCreation_wrapperDiv{
+    width:480px;
+    height: 98px;
+    background-color: #FFFFFF;
+    margin-top: -450px;
+    padding: 10px 14px 0 34px;
+    border-radius: 10px;
+}
+#cancelDiv{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#cancelDiv button{
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+}
+#Successful_AccCreation_TextDiv{
+    margin-top: -15px;
+    display: flex;
+    column-gap: 19px;
+}
+#Successful_AccCreation_TextDiv img{
+    width: 30px;
+}
+#Successful_AccCreation_TextDiv p{
+    color: #003E79;
+    font-size: 1.125rem;
+    height: 4px;
+}
+#Successful_AccCreation_TextDiv div{
+    color: #969696;
+    font-size: 0.9rem;
+    width: 85%;
+}
+/* #successDiv div{
+    color: #969696;
+    font-size: 0.9rem;
+} */

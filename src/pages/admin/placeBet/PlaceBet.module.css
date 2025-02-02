@@ -1,0 +1,121 @@
+#PlaceBet_mainDiv{
+    width: 100%;
+    min-height: 100vh;
+    background-color: #F9F9F9;
+}
+#PlaceBet_wrapperDiv{
+    padding: 4rem 8rem 5rem 7.5rem;
+}
+#Total_Card_mapDiv{
+    width: 100%;
+    display: flex;
+    column-gap: 2rem;
+}
+#PlaceBet_summaryText{
+    color: #1A1A1A;
+    font-size: 1.55rem;
+    line-height: 38px;
+}
+#ChartDiv{
+    display: flex;
+    column-gap: 2.3rem;
+    margin-top: 48px;
+}
+
+#Chart_mainDiv {
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
+    width: 100%;
+    height: 19.56rem;
+    border-radius: 25px;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+#Revenue_Div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1.5px solid #E3E3E3;
+}
+#PayoutsText {
+    display: flex;
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+    align-items: center;
+    height: 50px;
+    border-bottom: 1.5px solid #E3E3E3;
+    font-size: 1.125rem;
+    color: #0E093C; 
+}
+
+#Placebet_RevenueText {
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    /* height: 50px; */
+    /* border-bottom: 1.5px solid #E3E3E3; */
+    font-size: 1.125rem;
+    color: #0E093C;
+    margin-bottom: 1rem;
+}
+#PlaceBet_MoreText{
+    width: 3.87rem;
+    height: 2rem;
+    border: 1px solid #0E093C;
+    border-radius: 0.43rem;
+    color: #0E093C;
+    font-size: 0.75rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+#Placebet_lineChart_Two{
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
+    border-radius: 25px;
+    padding: 0 1rem;
+    box-sizing: border-box;
+    width: 100%;
+    height: 19.56rem;
+}
+
+@media (max-width: 480px) {
+    #PlaceBet_mainDiv{
+        padding: 0;
+        /* background-color: #FFF; */
+    }
+
+    #PlaceBet_summaryText{
+        width: 90vw;
+        justify-self: center;
+        justify-content: center;
+        margin-top: -35px;
+        margin-bottom: 10px;
+        margin-left: 90px;
+        /* border: 1px solid red; */
+    }
+    #Total_Card_mapDiv{
+        display: grid;
+        height: 45vh;
+        width: 100vw;
+        overflow-y: scroll;
+        justify-self: center;
+        margin-top: 0%;
+        margin-bottom: 15px;
+    }
+    #Cards_div{
+        margin-top: 8px;
+    }
+    #ChartDiv{
+        display: grid;
+        justify-self: center;
+        width: 100vw;
+        margin-top: 10px;
+    }
+    #Placebet_lineChart_Two{
+        margin-top: 15px;
+    }
+}

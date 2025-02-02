@@ -1,0 +1,223 @@
+#Amount_Paid_mainDiv{
+    background-color: #F9F9F9;
+    min-height: 100vh;
+    width: 100%;
+}
+#Amount_Paid_wrapperDiv{
+    padding: 5rem 7.5rem;
+}
+
+
+#DiceGame_Card_wrapper {
+    width: 100%;
+    height: 15.37rem;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 2rem;
+    row-gap: 1.5rem;
+}
+.Revenue_earningDiv {
+    width: 100%;
+    height: 20.37rem;
+    background-color: #FFFFFF;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1.5rem;
+    box-sizing: border-box;
+}
+
+.Revenue_earningDiv #Revenue_percentText {
+    font-size: 1.12rem;
+    color: #000000;
+    font-weight: bold;
+    text-align: center;
+    margin-top: -2rem;
+}
+
+.Revenue_earningDiv .earningText {
+    font-size: 1rem;
+    color: #989797;
+    height: 0px;
+    line-height: 0.5rem;
+}
+
+.Revenue_earningDiv .priceText {
+    font-size: 1.12rem;
+    color: #000000;
+    font-weight: bold;
+    line-height: 0.1rem;
+}
+
+.Revenue_earningDiv .Revenue_infoText {
+    width: 100%;
+    font-size: 0.9rem;
+    color: #989797;
+    text-align: center;
+    margin-top: 1.3rem;
+}
+
+#Revenue_progressDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Revenue_progressBar {
+    width: 10.62rem;
+    height: 5.3rem;
+    border-top-left-radius: 110px;
+    border-top-right-radius: 110px;
+    border: 10px solid #F6F6F6;
+    border-bottom: 0;
+}
+#Revenue_wrapperDiv {
+    width: 100%;
+    display: flex;
+    column-gap: 1.5rem;
+}
+#Amount_Paid_headerText{
+    color: #1A1A1A;
+    font-size: 1.5rem;   
+}
+#Amount_Paid_headerDiv{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 3.5rem;
+}
+
+#Amount_Paid_input_FilterDiv{
+    display: flex;
+    align-items: center;
+    column-gap: 1.5rem;
+
+}
+#Amount_Paid_input_FilterDiv p{
+    font-size: 0.93rem;
+    color: #707070;
+    height: 0;
+}
+#Amount_Paid_input_FilterDiv p img{
+    width: 1rem;
+}
+#Amount_Paid_input_FilterDiv #searchDiv img{
+    position: absolute;
+    width: 15px;
+    padding-left: 0.7rem;
+    padding-top: 0.9rem;
+
+}
+#searchDiv{
+    display: flex;
+    align-items: center;
+}
+#searchDiv input{
+    position: relative;
+    width: 14.5rem;
+    border-radius: 0.75rem;
+    padding-left:2.5rem;
+    box-sizing: border-box;
+    height: 2.43rem;  
+}
+#imgDiv img{
+    height: 2.3rem;
+    margin-right: 0.4rem;
+    margin-bottom: -1rem;
+}
+#Amount_Paid_table_WrapperDiv{
+    width: 100%;
+    background-color: #FFFFFF;
+    margin-top: 0.9rem;
+    box-sizing: border-box;
+}
+#Amount_Paid_table_WrapperDiv table{
+    border-collapse: collapse;
+    width: 100%;
+}
+#Amount_Paid_table_WrapperDiv #headerTable{
+    color: #000000;
+    font-size: 1.1rem;
+    height: 5.1rem;
+}
+#Amount_Paid_table_WrapperDiv th, td{
+    padding: 0 1rem;
+}
+#Amount_Paid_table_WrapperDiv th{
+    text-align: left;
+}
+#Amount_Paid_table_WrapperDiv tr{
+    height: 5rem;
+    color: #666666;
+    font-size: 0.93rem;
+    border-bottom: 1px solid #C4C4C4;
+}
+
+#Amount_Paid_table_WrapperDiv tr:last-child{
+    border-bottom: none;
+}
+#status_td{
+    background-color: rgba(49, 195, 100, .2);
+    color: #31C364;
+    width: 5.1rem;
+    height: 1.6rem;
+    border-radius: 0.3rem;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media(max-width : 480px){
+    #Amount_Paid_wrapperDiv{
+        width: 100vw;
+    }
+    #Revenue_wrapperDiv{
+        width:100vw;
+    }
+    #Amount_Paid_wrapperDiv{
+        width: 100vw;
+    }
+    #Revenue_wrapperDiv{
+        width: 100vw;
+        /* border: 2px solid red; */
+        display: flex;
+        position: relative;
+        left: -140px;
+        overflow: scroll;
+        padding: 20px 20px;
+    }
+    #Amount_Paid_headerDiv{
+        position: relative;
+        left: -110px;
+        display: grid;
+    }
+    #Amount_Paid_input_FilterDiv {
+        width:  100vw;
+        position: relative;
+        top: -20px;
+    }
+    #dateText{
+        margin-right:  -135px; 
+    }
+    #imgDiv{
+        display: flex;
+        position: relative;
+        top: -50px;
+        right: 20px;
+    }
+    #searchDiv{
+        position: relative;
+        right: -120px;
+    }
+    #Amount_Paid_mainDiv{
+        width: 100vw;
+    }
+    #Amount_Paid_table_WrapperDiv{
+        position: relative;
+        left: -120px;
+        padding: 20px 10px;
+        overflow: scroll;
+    }
+}

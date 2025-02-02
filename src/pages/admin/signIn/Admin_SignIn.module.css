@@ -1,0 +1,254 @@
+#SignIn_mainDiv{
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, .6)), url("/Admin_BG.svg") no-repeat center;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    /* justify-content: end; */
+    justify-content: space-between;
+}
+#SignIn_mainDiv img{
+    width: 100%;
+}
+#admin_signIn_wrapperDiv{
+    background-color: rgba(255, 255, 255, .3);
+    width: 38.1rem;
+    height: 33.5rem;
+    border-radius: 2rem;
+    border: 1px solid #F4F0F0;
+    padding: 2.5rem;
+    box-sizing: border-box;
+    margin-right:8.4rem;
+    box-sizing: border-box;
+}
+
+#SignIn_headerDiv{
+    text-align: center;
+}
+#signIn_Text{
+    color: #FFFFFF;
+    font-size: 1.5rem;
+    font-weight: bold;
+    height: 0.5rem;
+    line-height: 1.5rem;
+}
+#login_detailsText{
+    color: #FFFFFF;
+    font-size: 1rem;
+    height: 3rem;
+}
+#inputDiv{
+    display: flex;
+    flex-direction: column;
+    row-gap: 2.56rem;
+}
+#inputDiv input{
+    border: 1px solid #FFFFFF;
+    height: 3.12rem;
+}
+
+#inputDiv input::placeholder{
+    color: #FFFFFF;
+    font-size: 0.93rem;
+}
+#inputDiv label{
+    font-size: 1rem;
+    color: #1A1A1A;
+    background-color: #F4F0F0;
+    border-radius: 0.5rem;
+    padding: 0 0.5rem;
+
+}
+#Stay_signedIn{
+    display: flex;
+    align-items: center;
+    column-gap: 0.4rem;
+    color: #FFFFFF;
+    font-size: 1rem;
+}
+#Stay_signedIn input{
+    width: 1.12rem;
+    height: 1.12rem;
+}
+#forget_passwordText{
+    color: #1A1A1A;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+#checkbox_passwordDiv{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#btnDiv{
+   margin-top: 4rem;
+   display: flex;
+   justify-content: center;
+}
+#btnDiv button{
+    width: 29.5rem;
+    background-color: #FFFFFF;
+    color: #1A1A1A;
+    font-size: 1rem;
+}
+#pie_Chart_textDiv{
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    column-gap: 0.5rem;
+    margin-left: -6rem;
+}
+#pie_Chart_textDiv p{
+    height: 0.5rem;
+}
+#pie_Chart_textDiv img{
+    width: 5.25rem;
+}
+#scattered_imagesDiv{
+    display: flex;
+    flex-direction: column;
+    padding-left: 13rem;
+    row-gap: 4.8rem;
+}
+#scattered_imagesDiv img{
+    width: 7rem;
+}
+#gamePad{
+    margin-left: 5rem;
+    width: 7.5rem;
+}
+#SignIn_headerDiv img{
+    width: 5rem;
+}
+
+
+@media (max-width: 480px) {
+    #SignIn_mainDiv {
+      background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+        url("/Admin_BG.svg") no-repeat center;
+      background-size: cover;
+      height: 100vh;
+      margin-top: 0%;
+      display: grid;
+      justify-content: center;
+      align-items: center;
+      /* padding: 2%; */
+    }
+    #admin_signIn_wrapperDiv {
+      width: 100%;
+      position: absolute;
+      top: 12%;
+      z-index: 9999;
+      /* padding:%; */
+    }
+  
+    #gamePad {
+      animation: roll 5s linear infinite 2s;
+    }
+    #revenue_BG {
+      animation: roll2 5s linear infinite 4s;
+    }
+    #pie_BG {
+      animation: roll 5s linear infinite 6s;
+    }
+    #chart_BG {
+      animation: roll2 5s linear infinite 8s;
+    }
+  
+    @keyframes roll {
+      0% {
+        font-size: 0px;
+        opacity: 0;
+        margin-left: -30px;
+        margin-top: 0px;
+        transform: rotate(-25deg);
+      }
+      3% {
+        opacity: 1;
+        transform: rotate(0deg);
+      }
+      5% {
+        font-size: inherit;
+        opacity: 1;
+        margin-left: 0px;
+        margin-top: 0px;
+      }
+      20% {
+        font-size: inherit;
+        opacity: 1;
+        margin-left: 0px;
+        margin-top: 0px;
+        transform: rotate(0deg);
+      }
+      27% {
+        font-size: 0px;
+        opacity: 0.5;
+        margin-left: 20px;
+        margin-top: 100px;
+      }
+      100% {
+        font-size: 0px;
+        opacity: 0;
+        margin-left: -30px;
+        margin-top: 0px;
+        transform: rotate(15deg);
+      }
+    }
+  
+    @keyframes roll2 {
+      0% {
+        font-size: 0px;
+        opacity: 0;
+        margin-left: -30px;
+        margin-top: 0px;
+        transform: rotate(-25deg);
+      }
+      3% {
+        opacity: 1;
+        transform: rotate(0deg);
+      }
+      5% {
+        font-size: inherit;
+        opacity: 1;
+        margin-left: 0px;
+        margin-top: 0px;
+      }
+      30% {
+        font-size: inherit;
+        opacity: 1;
+        margin-left: 0px;
+        margin-top: 0px;
+        transform: rotate(0deg);
+      }
+      37% {
+        font-size: 1500px;
+        opacity: 0;
+        margin-left: -1000px;
+        margin-top: -800px;
+      }
+      100% {
+        font-size: 0px;
+        opacity: 0;
+        margin-left: -30px;
+        margin-top: 0px;
+        transform: rotate(15deg);
+      }
+    }
+    #btnDiv {
+      border-radius: 40px;
+
+    }
+    #SigninBtn{
+      border: none;
+      border-radius: 13px;
+      padding: 13px 5px;
+      font-size: 1.2rem;
+      font-size: large;
+      width: 90vw;
+      justify-self: center;
+    }
+}

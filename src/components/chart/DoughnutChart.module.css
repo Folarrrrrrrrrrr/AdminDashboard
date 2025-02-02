@@ -1,0 +1,60 @@
+.chartContainer {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  
+  .chartWrapper {
+    position: relative;
+  }
+  
+  .chartCenterText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  
+  .chartCenterText p {
+    margin: 0;
+  }
+  
+  .totalRevenue {
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+  
+  .revenueAmount {
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+  
+  .revenueDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .detailBlock {
+    font-size: 0.875rem;
+  }
+  
+  .detailBlock p {
+    margin: 2px 0;
+  }
+  
+  .detailTitle {
+    font-weight: 600;
+  }
+  
+  .detailNote {
+    font-size: 0.75rem;
+    color: gray;
+  }
+  
+  .detailAmount {
+    font-size: 1.125rem;
+    font-weight: 700;
+  }
+  

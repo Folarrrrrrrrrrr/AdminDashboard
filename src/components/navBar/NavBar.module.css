@@ -1,0 +1,367 @@
+#Nav_Bar_Wrapper {
+  height: 5.5rem;
+  padding: 0rem 1.5rem;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 9999;
+}
+#bigScreensNav {
+  display: flex;
+}
+
+.scrollUpIcon{
+  display: none;  
+}
+
+#NavBar_textDiv{
+  display: flex;
+  /* border:2px solid black; */
+  width:70%;
+  justify-content:space-around;
+}
+
+#entireNavHide {
+  display: flex;
+  /* border:2px solid black; */
+  width:100vw;
+  justify-content:space-around;
+}
+
+#NavBar_textDiv{
+  display:none;
+}
+Nav_Bar_Wrapper p {
+  height: 0;
+}
+
+#NavBar_textDiv {
+  display: flex;
+  column-gap: 1.5rem;
+  align-items: center;
+  margin-right: 23px;
+}
+
+.game {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 0.5rem;
+  cursor: pointer;
+}
+
+#NavBar_ContactDiv {
+  display: flex;
+  column-gap: 1.5rem;
+  align-items: center;
+  color: #0e093c;
+  cursor: pointer;
+}
+
+#NavBar_ContactDiv #NavBar_line {
+  width: 2px;
+  height: 2.5rem;
+  margin-top: 10px;
+  background-color: #0e093c;
+}
+
+.NavBar_text {
+  color: #0e093c;
+  font-size: 1rem;
+}
+
+
+/* Add this to NavBar.module.css */
+.Nav_styled_Link {
+  font-weight: bold;
+  color: #4a4a4a; /* Choose your active color */
+  border-bottom: 2px solid #4a4a4a; /* Optional underline */
+}
+
+.Nav_styled_Link {
+  background-color: #0e093c;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  font-size: 1rem;
+  min-width: 5rem;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-align:center;
+  box-sizing: border-box;
+  height: 2.18rem;
+  border-radius: 7px;
+}
+
+#NavBar_lastlineDiv {
+  display: flex;
+  column-gap: 1rem;
+}
+
+#dropdown {
+  display: none;
+}
+.NavBar_text:hover #dropdown {
+  display: block;
+  width: 8.6rem;
+  height: 5.2rem;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  margin-left: -2.5rem;
+  color: #353535;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0.5rem 0.5rem 1rem 0 rgb(0, 0, 0, 0.2);
+}
+.Nav_styled_Link:hover #dropdown {
+  display: block;
+  width: 138px;
+  height: 84px;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  color: #353535;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  margin-top: 7.2rem;
+  box-shadow: 0.5rem 0.5rem 1rem 0 rgb(0, 0, 0, 0.2);
+}
+
+#dropdown ul {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.6rem;
+  justify-content: center;
+  list-style: none;
+}
+#dropdown li {
+  text-align: left;
+  font-size: 1rem;
+  color: #000000;
+}
+
+#Business_name_dropdown {
+  display: none;
+}
+.NavBar_text:hover #Business_name_dropdown {
+  display: block;
+  height: 84px;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  margin-top: -2rem;
+  margin-left: 1rem;
+  color: #ffffff;
+  border-radius: 1rem;
+}
+#Alphabet {
+  color: #ccc;
+}
+
+#logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #0e093c;
+}
+
+#profile_img {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+  margin-top: 1rem;
+}
+#profile_img img {
+  width: 1.1rem;
+}
+
+#CustomerCare_details_mainDiv {
+  position: absolute;
+}
+#CustomerCare_details_wrapperDiv {
+  background-color: #ffffff;
+  width: 13.12rem;
+  height: 6.25rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0 0 -2rem;
+  box-sizing: border-box;
+  box-shadow: 0.5rem 0.5rem 1rem 0 rgb(0, 0, 0, 0.2);
+}
+#CustomerCare_details_wrapperDiv p {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #000000;
+  padding-bottom:-10px;
+}
+#CustomerCare_details_wrapperDiv button {
+  width: 5.18rem;
+  height: 1.37rem;
+  border: 1px solid #0e093c;
+  background-color: #0e093c;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  padding:5px 5px 20px 5px;
+  text-align: center;
+  text-justify:center;
+  color: #ffffff;
+}
+#CustomerCare_details_wrapperDiv button:nth-child(2) {
+  background-color: transparent;
+  color: #0e093c;
+}
+#btnDiv {
+  display: flex;
+  column-gap: 1rem;
+}
+
+.menuToggle {
+  display: none;
+}
+#WelcomeText{
+  display:none;
+}
+/* Tablet view */
+/* @media (max-width: 768px) {
+  #NavBar_textDiv,
+  #NavBar_ContactDiv {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  #CustomerCare_details_mainDiv,
+  #Business_name_dropdown {
+    width: 100%;
+  }
+} */
+
+/* Mobile view */
+/* @media (max-width: 480px) { */
+  /* #Nav_Bar_Wrapper { */
+    /* height: 20%; */
+    /* position:fixed;
+    width: 100vw;
+    flex-direction: column;
+    align-items: flex-start;
+    background: url("../../assets/svg/banner.svg") no-repeat center;
+    background-size: cover;
+  } */
+  /* #WelcomeText{
+    display: inline;
+    position: relative;
+    top: -28%;
+    text-justify: center;
+  }
+  #WelcomeText p{
+    margin-top: -9%
+  }
+  .menuToggle {
+    display: flex;
+    position: relative;
+    top: 30%;
+    left: 80%;
+    border: 1px solid #d3d2d6;
+    border-radius: 40%;
+    padding-top: 7px;
+    padding-bottom: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #ffffff;
+  }
+  .menuToggle:hover {
+    border: 1px solid #d3d2d6;
+    color: #ffffff;
+    background-color: #0e093c;
+  }
+  #entireNav {
+    position: relative;
+    top: -90%;
+    left: -15%;
+    z-index: 999;
+    height: 295px;
+    width: 90%;
+    background-color: #ffffff;
+  }
+  #entireNavHide {
+    display: none;
+  }
+  #NavBar_textDiv{
+    background-color: #ffffff;
+    margin-top: -28px;
+  }
+  #NavBar_ContactDiv{
+    border-radius: 0px 50px 0px 0px;
+    background-color: rgba(112, 108, 108, 0.1);
+  } */
+
+  /* #NavBar_textDiv,
+  #NavBar_ContactDiv {
+    flex-direction: column;
+    width: 100%;
+    overflow: scroll;
+    height: 55%;
+  }
+
+  #NavBar_textDiv.show-menu,
+  #NavBar_ContactDiv.show-menu {
+    display: flex; /* Show menu items on toggle */
+  /* }  */
+  /* #logo{
+    margin-top:-30px;
+  } */
+/* 
+  .scrollUpIcon{
+    display: flex;
+    width: 30px;
+    position: relative;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-65%);
+    z-index: 999;
+    animation: scrollUp steps(200) 1s infinite;
+    @keyframes scrollUp{
+      from{
+        position: relative;
+        top: 40px;
+        opacity: 0px;
+      }
+      to{
+        position: relative;
+        top: 5px;
+        opacity: 1;
+      }
+    }
+  } */
+
+  /* Hamburger icon */
+  /* .hamburger {
+    display: block;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  #dropdown{
+    position: relative;
+    top: -24px;
+  } */
+  /* #mail_icon{
+  justify-self: center;
+  align-self: center;
+  margin-top: -33px;
+  } */
+ /* #NavBar_businessName{
+    margin-bottom: 50px;
+  } */
+  /* #Business_name_dropdown{
+    position: relative;
+    top: 93%;
+    left: 0;
+  } */
+/* } */

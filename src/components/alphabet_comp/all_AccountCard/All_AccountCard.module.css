@@ -1,0 +1,59 @@
+#All_AccountCard_MainDiv{
+    width: 17.81rem;
+    height: 220px;
+    background-color: #FFFFFF;
+    border: 2px solid #F0F0F0;
+    border-radius: 14px;
+    position: relative;
+}
+#All_AccountCard_imgTextDiv{
+    height: 46px;
+    padding-left: 14px;
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+    font-size: 0.9rem;
+    color: #777777;
+}
+#All_AccountCard_line{
+    width: 17rem;
+    height: 2px;
+    margin: 0px 5px;
+    background-color: #F0F0F0;
+}
+#All_AccountCard_MainDiv #AccDetails{
+    text-align: center;
+}
+#All_AccountCard_MainDiv #AccDetails p{
+    font-size: 1.87rem;
+    color: #353535;
+    margin-top: 25px;
+    height: 20px;
+}
+#All_AccountCard_MainDiv #AccDetails div{
+    font-size: 0.83rem;
+    color: #777777;
+}
+#All_AccountCard_BtnDiv{
+    display: flex;
+    justify-content: center;
+    column-gap: 7px;
+    margin-top: 18px;
+}
+#All_AccountCard_MainDiv button{
+    width: 118px;
+    height: 40px;
+    border-radius: 7px;
+    border: 1px solid #0B9FE1;
+    font-size: 0.8rem;
+    cursor: pointer;
+   
+}
+#viewTransaction_btn{
+    color: #0B9FE1;
+    background-color: #FFFFFF;
+}
+#viewBalance_btn{
+    background-color: #0B9FE1;
+    color: #FFFFFF;
+}

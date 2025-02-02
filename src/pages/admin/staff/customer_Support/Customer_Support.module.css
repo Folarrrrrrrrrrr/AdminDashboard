@@ -1,0 +1,345 @@
+#Customer_Support_mainDiv {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #F9F9F9;
+}
+
+#Customer_Support_wrapperDiv {
+    padding: 4.5rem 7.5rem;
+}
+
+#Customer_SupportText {
+    font-size: 1.56rem;
+    color: #1A1A1A;
+}
+
+#Customer_Support_mapDiv {
+    display: flex;
+    column-gap: 2rem;
+}
+
+#Customer_Support_rating_wrapperDiv {
+    display: flex;
+    column-gap: 2rem;
+    margin-top: 2.87rem;
+}
+
+.Customer_Support_ratingDiv {
+    width: 100%;
+    height: 17.56rem;
+    background-color: #FFFFFF;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1.5rem;
+    box-sizing: border-box;
+}
+
+.RatingText {
+    font-size: 1rem;
+    color: #989797;
+    height: 0px;
+}
+
+.percentText {
+    font-size: 1.12rem;
+    color: #000000;
+    font-weight: bold;
+}
+
+#Customer_Support_progressDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 0.85rem;
+}
+
+.Customer_Support_infoText {
+    width: 100%;
+    font-size: 0.9rem;
+    color: #989797;
+    text-align: center;
+    margin-top: 1.3rem;
+}
+
+#Customer_Support_progressBar {
+    width: 10.62rem;
+    height: 1.5rem;
+    background-color: #0E093C;
+    border-radius: 0.8rem;
+}
+
+#Customer_Support_progressDiv img {
+    width: 3rem;
+    text-align: center;
+}
+
+#Customer_Support_performance_satisfactionDiv {
+    display: flex;
+    column-gap: 2rem;
+    margin-top: 3.1rem;
+    box-sizing: border-box;
+}
+
+
+#Customer_Support_performanceDiv {
+    width: 100%;
+    height: 29.37rem;
+    background-color: #FFFFFF;
+    border-radius: 1rem;
+    color: #767676;
+    box-sizing: border-box;
+}
+
+#performance_headerDiv {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1rem;
+    padding: 0 2rem;
+    box-sizing: border-box;
+    color: #0E093C;
+}
+
+#performance_headerDiv button {
+    width: 5.12rem;
+    height: 1.68rem;
+    border-radius: 0.45rem;
+    /* background-color: #0E093C;
+    border: none;
+    color: #FFFFFF; */
+    font-size: 0.69rem;
+}
+
+#performance_headerDiv #dateText {
+    font-size: 0.95rem;
+    color: #767676;
+}
+
+#date_viewDiv {
+    display: flex;
+    align-items: center;
+    column-gap: 2rem;
+}
+
+#Customer_Support_performanceDiv table {
+    width: 100%;
+}
+
+#Customer_Support_performanceDiv tr {
+    color: #767676;
+    font-size: 1.2rem;
+    height: 3rem;
+}
+
+#Customer_Support_performanceDiv td button{
+font-size: 0.69rem;
+border-radius: 0.5rem;
+height: 1.87rem;
+width: 5.12rem;
+padding: 0.4rem;
+}
+
+#Customer_Support_performanceDiv td {
+    padding: 0 2.1rem;
+    box-sizing: border-box;
+}
+
+.performing_agentText {
+    color: #0E093C;
+    font-weight: bold;
+}
+
+#CustomerCare_Progress_Wrapper {
+    background-color: #FFFFFF;
+    width: 100%;
+    height: 29.31rem;
+    padding: 2rem;
+    padding-top: 1rem;
+    box-sizing: border-box;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+}
+
+#CustomerCare_textDiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    color: #000000;
+}
+
+#monthDiv {
+    width: 8.25rem;
+    height: 2.25rem;
+    border-radius: 0.5rem;
+    border: 1px solid #C7C2C2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #000000;
+    column-gap: 20px;
+}
+
+.Staff_progress {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#Staff_details {
+    display: flex;
+    justify-content: space-between;
+}
+
+#Staff_details p {
+    color: #000000;
+}
+
+#imgDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 0.9rem;
+    font-size: 1rem;
+    color: #000000;
+}
+
+#imgDiv p {
+    width: 6rem;
+}
+
+.Staff_progress #progressDiv {
+    height: 0.62rem;
+    width: 100%;
+    background-color: #075070;
+    border-radius: 0.62rem;
+    margin-bottom: 2rem;
+}
+
+#Report_WrapperDiv {
+    background-color: #FFFFFF;
+    width: 100%;
+    height: 31.5rem;
+    padding: 2rem 1.5rem;
+    box-sizing: border-box;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 2.2rem;
+}
+
+.ReportsDiv {
+    display: flex;
+    justify-content: space-between;
+    height: 1.6rem;
+}
+
+.ReportText {
+    font-size: 1rem;
+    color: #000000;
+}
+
+.Report_Details {
+    font-size: 1rem;
+    color: #939393;
+    width: 45%;
+}
+
+.Report_Amounts {
+    color: #000000;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#Customer_Support_BarChartDiv {
+    height: 31.5rem;
+    background-color: #FFFFFF;
+    width: 100%;
+    padding: 2.25rem;
+    box-sizing: border-box;
+    border-radius: 1rem;
+
+}
+
+#BarChart_headerText {
+    color: #000000;
+    font-size: 1.12rem;
+    line-height: 1px;
+    height: 1rem;
+}
+
+#Report_GraphDiv {
+    display: flex;
+    column-gap: 2rem;
+    margin-top: 3rem;
+
+}
+#month_pickerDiv{
+        position: absolute;
+        background-color: white;
+        border-radius: 1rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 13rem;
+        margin-left: 29rem;
+        z-index: 999;
+    
+}
+
+@media(max-width : 480px){
+    #Customer_Support_mainDiv{
+        width: 100vw;
+    }
+    #Customer_Support_wrapperDiv{
+        width: 100vw;
+    }
+    #Customer_SupportText{
+        /* border : 1px solid black; */
+        margin-left: -100px;
+        width: 100vw;
+    }
+    #Customer_Support_mapDiv{
+        width: 98vw;
+        display: grid;
+        position: absolute ;
+        left: 0%;
+    }
+    #statCards{
+        margin-top: 10px;
+    }
+    #Customer_Support_rating_wrapperDiv{
+        margin-top: 550px;
+        width: 100vw;
+        display: grid;
+        position: relative;
+        left: -120px;
+        overflow: scroll;
+    }
+    .Customer_Support_ratingDiv {
+        margin: 5px; 
+        width: 95vw;
+        justify-self: center;
+    }
+    #Customer_Support_performance_satisfactionDiv{
+        width: 100vw;
+        position: relative;
+        left: -120px;
+        display:  grid;
+    }
+    #Customer_Support_performanceDiv{
+        overflow-x: scroll;
+        width: 100vw;
+    }
+    #Report_GraphDiv{
+        /* border: 2px solid red; */
+        position: relative;
+        left: -120px;
+        display: grid;
+    }
+    #Customer_Support_BarChartDiv{
+        margin-top: 5px;
+    }
+}

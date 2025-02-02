@@ -1,0 +1,360 @@
+#TotalBet_wrapperDiv {
+    padding: 5rem 7.5rem;
+  }
+  
+  #Transaction_listCalendar_Div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2.5rem;
+    margin-bottom: 1.5rem;
+    box-sizing: border-box;
+  }
+  #Transaction_listDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 15.93rem;
+    height: 3rem;
+    background-color: #efefef;
+    justify-content: space-between;
+    padding: 0.62rem;
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+  }
+  #ToggleRow{
+    /* display:none; */
+    /* background-color: #0e093c; */
+    /* border: 2px solid black; */
+    padding-top: 10px;
+    border-radius: 20px;
+    height: 60px;
+    background-color: #8886861f;
+  }
+  .Transaction_listDiv_button {
+    border: none;
+    color: #666666;
+    font-size: 0.9rem;
+    background-color: transparent;
+    cursor: pointer;
+  }
+  .toggleDiv_buttonActive {
+    min-width: 2.3rem;
+    background-color: #0e093c;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    height: 2rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  #Amount_Paid_input_FilterDiv {
+    display: flex;
+    align-items: center;
+    column-gap: 1rem;
+  }
+  #Amount_Paid_input_FilterDiv h1 {
+    display: flex;
+    column-gap: 0.2rem;
+    font-size: 0.93rem;
+    color: #707070;
+  }
+  #Amount_Paid_input_FilterDiv p img {
+    width: 1rem;
+  }
+  #Amount_Paid_input_FilterDiv #searchDiv img {
+    position: absolute;
+    width: 15px;
+    padding-left: 0.7rem;
+  }
+  #searchDiv {
+    display: flex;
+    align-items: center;
+    background-color: #ffffffa7;
+    border: none;
+    border-radius: 20px;
+  }
+  #searchDiv input {
+    margin-top: -1rem;
+    width: 14.5rem;
+    border-radius: 0.75rem;
+    padding-left: 2.5rem;
+    box-sizing: border-box;
+    height: 2.43rem;
+  }
+  #imgDiv img {
+    height: 2.3rem;
+    margin-right: 0.4rem;
+  }
+  #BetText{
+    display: flex;
+    justify-content: space-between;
+    height: 70px;
+    margin:0px 20px ;
+    /* justify-content: center; */
+    align-items: center;
+    /* border: 2px solid black; */
+    color: #003e79;
+    font-size: 1.2rem;
+    padding-top:10px ;
+    /* padding: 0rem 0 0.81rem 3.5rem; */
+    box-sizing: border-box;
+  }
+  #paginationByNumberDiv{
+    display: flex;
+    list-style: none;
+    /* border: 2px solid black; */
+    width: 150px;
+    padding: 0;
+  }
+  #pageNumbers{
+    /* border: 2px solid black; */
+    width: 20px;
+    text-align: center;
+    /* margin-right: 30px; */
+  }
+  #Btn{
+    width: 100px;
+    height: 30px;
+    color: black;
+    background-color: #8886861f;
+    /* background-color: #0b438d; */
+    border-radius: 50px;
+    border: none;
+  }
+  .NavigationBtns{
+    width: 10px;
+  }
+  .RightNavigationBtns{
+    width: 13px;
+  }
+  #Total_BetPlaced_TableWrapperDiv {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    /* background-color: #ffffff; */
+    min-height: 10rem;
+  }
+  #winners_background {
+    margin-bottom: -4rem;
+    width: 100%;
+  }
+  
+  #Total_BetPlaced_TableWrapperDiv table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2.43rem;
+    box-sizing: border-box;
+  }
+  #Total_BetPlaced_TableWrapperDiv #headerTable {
+    color: #000000;
+    font-size: 1rem;
+    background-color: #f1f1f1;
+    height: 2.68rem;
+    border-bottom: none;
+  }
+  #Total_BetPlaced_TableWrapperDiv td,
+  th {
+    padding: 0 2rem;
+  }
+  #Total_BetPlaced_TableWrapperDiv th {
+    text-align: left;
+  }
+  #Total_BetPlaced_TableWrapperDiv tr {
+    height: 4.3rem;
+    color: #666666;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #c4c4c4;
+  }
+  #tableRows{
+    background-color: #ffffffa7;
+  }
+  #Total_BetPlaced_TableWrapperDiv tr:last-child {
+    border-bottom: none;
+  }
+  #Total_BetPlaced_TableWrapperDiv #players_imgDiv {
+    display: flex;
+    column-gap: 0.5rem;
+  }
+  #Total_BetPlaced_TableWrapperDiv #players_imgDiv img {
+    width: 1.12rem;
+  }
+  #Total_BetPlaced_TableWrapperDiv #action_field {
+    display: flex;
+    column-gap: 0.25rem;
+  }
+  #Total_BetPlaced_TableWrapperDiv #statusText {
+    width: 3rem;
+    height: 1.62rem;
+    background-color: rgba(49, 195, 100, 0.2);
+    color: #31c364;
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #calendar_popup {
+    position: absolute;
+    /* top: 100px; Adjust position as needed */
+    /* left: 100px; */
+    background-color: white;
+    border-radius: 1rem;
+    /* padding: 10px; */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 25rem;
+    z-index: 1000;
+  }
+
+  #BetTables{
+    /* width: 200px; */
+    /* width: 1110px; */
+    height: 450px;
+    overflow:  scroll;
+  }
+  #BetFullDetailsBody{
+    position: absolute;
+    top:-35%;
+    left: 20%;
+    width: 60%;
+    height: 100%;
+    background-color: rgba(20, 18, 53, 0.541);
+    padding: 20px;
+    border-radius: 30px;
+  }
+  #modalOverlay {
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    background-color: rgba(36, 28, 28, 0.63);
+  }
+
+  #RowOne{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  #RowTwo{
+    display: flex;
+    justify-content: space-between;
+  }
+  #HeroHighlights{
+    margin: 20px;
+    color: #fff;
+  }
+  #dice{
+    width: 190px;
+    position: absolute;
+    left: 450px;
+    top: 450px;
+  }
+  #sport{
+    width: 100px;
+    position: absolute;
+    left: 520px;
+    top: 460px;
+  }
+  #WinnerCard{
+    background-color: #fff;
+    display: flex;
+    /*justify-content: space-between;*/
+    margin-top: 10px;
+    margin-right: 20px;
+    width: 45%;
+    height: 210px;
+    border-radius: 30px;
+  }
+  /* #WinnerTexts{} */
+  #Winner{
+    margin-left: 15px;
+    font-weight:600;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+  
+  #WinnerImg{
+    margin-left: -5% ;
+    margin-top: 15% ;
+    border-radius: 25px;
+  }
+  #winBetFigures{
+    display: flex;
+    justify-content: space-between;
+    width: 350px;
+  }
+  
+  @media (max-width: 480px) {
+    #Total_BetPlaced_TableWrapperDiv {
+      position: absolute;
+      left: 0%;
+      margin-top: -25px;
+      /* width: 100vw; */
+      margin-bottom: 1rem;
+      padding-top: 10px;
+    }
+  
+    #BetText {
+      margin-top: -5%;
+      margin-left: 1%;
+    }
+    #BetText span {
+      color: #ff0000;
+    }
+    #Transaction_listDiv {
+      position: relative;
+      left: -2.5%;
+      width: 100%;
+      top: 25%;
+    }
+    #Amount_Paid_input_FilterDiv {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      left: -7%;
+      margin-top: 20px;
+      margin-bottom: -20px;
+    }
+    #searchDiv {
+      width: 70%;
+      position: relative;
+      left: 34px;
+    }
+    #imgDiv {
+      position: absolute;
+      top: -115px;
+      right: -16%;
+      margin-right: 1%;
+    }
+    #Transaction_listCalendar_Div {
+      display: grid;
+    }
+    #calendar_popup {
+      margin-left: -5%;
+    }
+  
+    #table_wrapperDiv {
+      width: 100vw;
+      height: 70vh;
+      padding-top: 10px;
+      overflow-x: scroll;
+      overflow-y: scroll;
+    }
+
+    #BetPlacedTableDiv{
+      /* border: 2px solid red; */
+      width: 100vw;
+      height: 70vh;
+      overflow-x: scroll;
+      overflow-y: scroll;
+    }
+    
+    table {
+      position: relative;
+      top: -30px;
+    } 
+
+  }
+  

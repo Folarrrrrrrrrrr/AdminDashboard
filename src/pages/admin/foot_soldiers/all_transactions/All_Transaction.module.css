@@ -1,0 +1,127 @@
+#All_Transaction_mainDiv{
+    background-color: #F9F9F9;
+    min-height: 100vh;
+    width: 100%;
+}
+#All_Transaction_WrapperDiv{
+    padding: 5rem 7.5rem;
+}
+#All_Transaction_headerDiv{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#btnDiv{
+    display: flex;
+    column-gap: 1rem;
+}
+.toggleDiv_buttonActive{
+    min-width: 2rem;
+    background-color: #0E093C;
+    border: none;
+    color: #FFFFFF;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    height: 2rem;
+    font-size: 0.9rem;
+}
+.All_Transaction_button{
+    /* width: 4rem; */
+    border: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+    background-color: transparent;
+    color: #666666;
+    font-size: 0.9rem;
+}
+
+#Amount_Paid_input_FilterDiv{
+    display: flex;
+    align-items: center;
+    column-gap: 1.5rem;
+}
+ 
+#Amount_Paid_input_FilterDiv span{
+    font-size: 0.93rem;
+    color: #707070;
+    height: 0;
+}
+#Amount_Paid_input_FilterDiv span img{
+    width: 1rem;
+}
+#Amount_Paid_input_FilterDiv #searchDiv img{
+    position: absolute;
+    width: 15px;
+    padding-left: 0.7rem;
+    padding-top: 0.9rem;
+}
+#searchDiv{
+    display: flex;
+    align-items: center;
+}
+#searchDiv input{
+    position: relative;
+    width: 14.5rem;
+    border-radius: 0.75rem;
+    padding-left:2.5rem;
+    box-sizing: border-box;
+    height: 2.43rem;  
+}
+#imgDiv img{
+    height: 2.3rem;
+    margin-right: 0.4rem;
+    margin-bottom: -1rem;
+}
+
+
+#All_Transaction_table_WrapperDiv{
+    width: 100%;
+    background-color: #FFFFFF;
+    margin-top: 0.9rem;
+    box-sizing: border-box;
+}
+#All_Transaction_table_WrapperDiv table{
+    border-collapse: collapse;
+    width: 100%;
+}
+#All_Transaction_table_WrapperDiv #headerTable{
+    color: #000000;
+    font-size: 1.1rem;
+    height: 5.1rem;
+    border-bottom: 1px solid #C4C4C4;
+}
+#All_Transaction_table_WrapperDiv th, td{
+    padding: 0 1rem;
+}
+#All_Transaction_table_WrapperDiv th{
+    text-align: left;
+}
+#All_Transaction_table_WrapperDiv tr{
+    height: 6.1rem;
+    color: #666666;
+    font-size: 0.93rem;
+    border-bottom: 1px solid #C4C4C4;
+}
+
+#All_Transaction_table_WrapperDiv tr:last-child{
+    border-bottom: none;
+}
+#status_td{
+    background-color: rgba(49, 195, 100, .2);
+    color: #31C364;
+    width: 5.1rem;
+    height: 1.6rem;
+    border-radius: 0.3rem;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#calendar_popup {
+    position: absolute;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 27rem;
+    z-index: 1000;
+}

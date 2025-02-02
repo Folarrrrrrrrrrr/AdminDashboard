@@ -1,0 +1,129 @@
+#Complain_Details_mainDiv{
+    width: 100%;
+    min-height: 100vh;
+    background-color: #F9F9F9;
+}
+#Complain_Details_wrapperDiv{
+    padding: 7rem 7.5rem;
+}
+.Personal_Info_headerText{
+    color: #1A1A1A;
+    font-size: 1.55rem;
+    line-height: 1.5rem;
+}
+.Personal_Info_tableDiv {
+    width: 100%;
+    height: 23.62rem;
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    box-sizing: border-box;
+    margin-bottom: 3.3rem;
+}
+.Personal_Info_tableDiv table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.Personal_Info_tableDiv #headerTable {
+    height: 8rem;
+    color: #000000;
+    font-size: 1rem;
+    font-weight: lighter;
+    text-align: left;
+}
+
+.Personal_Info_tableDiv tr {
+    color: #666666;
+    font-size: 0.9rem;
+    height: 13.88rem;
+    border-bottom: 1px solid #c5c4c4;
+}
+.Personal_Info_tableDiv #Personal_Info_tr{
+    border-bottom: none;
+}
+
+.Personal_Info_tableDiv th,
+td {
+    padding: 0 1rem;
+    box-sizing: border-box;
+}
+
+.Personal_Info_tableDiv #statusText {
+    width: 4.8rem;
+    height: 26px;
+    background-color: #31c36433;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    padding: 5px;
+    box-sizing: border-box;
+    color: #31C364;
+}
+.Personal_Info_tableDiv .ReportDiv{
+    width: 18rem;
+}
+#Complain_Details_tableDiv_two{
+    width: 100%;
+    height: 33.3rem;
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    box-sizing: border-box;
+}
+#Complain_Details_tableDiv_two #Personal_Info_tr {
+    margin-top: -5rem;
+    color: #666666;
+    font-size: 0.9rem;
+    height: 24.5rem;
+}
+
+ #headlineText{
+    color: #262626;
+    font-weight: bold;
+}
+
+#Staff_Card_WrapperDiv img{
+    width: 7.5rem;
+    height: 7.5rem;
+    border-radius: 0.5rem;
+}
+#Staff_Card_WrapperDiv button{
+    width: 6.93rem;
+    height: 1.87rem;
+    background-color: #075070;
+    font-size: 0.75rem;
+    color: #FFFFFF;
+    padding: 7px;
+    box-sizing: border-box;
+}
+.Staff_Card_careRep{
+    width: 12.8rem;
+    height: 0.43px;
+    color: #000000;
+}
+.Staff_Card_nameText{
+    font-size: 1.25rem;
+    height: 0.5rem; 
+    color: #000000;
+}
+.Staff_Card_online_signalDiv{
+    width: 1rem;
+    height: 1rem;
+    background-color: #59C150;
+    border-radius: 100%;
+}
+.Staff_Card_onlineDiv{
+    display: flex;
+    column-gap: 0.5rem;
+    align-items: center;
+}
+.line{
+    width: 100%;
+    border: 1px dashed #666666;
+    margin-bottom: 2.5rem;
+}
+#Progress_BarDiv{
+    display: flex;
+    column-gap: 2rem;
+}

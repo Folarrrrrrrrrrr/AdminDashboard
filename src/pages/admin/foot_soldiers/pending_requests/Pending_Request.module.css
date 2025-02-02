@@ -1,0 +1,106 @@
+#Pending_Request_mainDiv{
+    background-color: #F9F9F9;
+    min-height: 100vh;
+    width: 100%;
+}
+#Pending_Request_wrapperDiv{
+    padding: 5rem 7.5rem;
+}
+#Pending_Request_headerDiv{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#Pending_Request_HeaderText{
+    color: #1A1A1A;
+    font-size: 1.5rem;
+}
+#Pending_Request_HeaderText span{
+    color: #0B438D;
+}
+#trashText{
+    display: flex;
+    align-items: center;
+    column-gap: 0.5rem;
+    color: #1A1A1A;
+    font-size: 1.5rem;
+}
+#Pending_Request_table_wrapperDiv{
+    width: 100%;
+    background-color: #FFFFFF;
+}
+#Pending_Request_table_wrapperDiv table{
+    width: 100%;
+    border-collapse: collapse;
+}
+#Pending_Request_table_wrapperDiv #headerTable{
+ color: #000000;
+    font-size: 1.1rem;
+    height: 4rem;
+}
+#Pending_Request_table_wrapperDiv tr {
+    height: 13.87rem;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #C4C4C4;
+}
+
+#Pending_Request_table_wrapperDiv tr:last-child {
+    border-bottom: none;
+}
+
+#Pending_Request_table_wrapperDiv th,
+td {
+    padding: 0 1rem;
+}
+#Pending_Request_table_wrapperDiv th{
+        text-align: left;
+}
+.Action_button{
+    background-color: #0B438D;
+    border: none;
+    width: 5.3rem;
+    height:1.37rem ;
+    border-radius: 0.5rem;
+    color: #FFFFFF;
+    font-size: 0.75rem;
+}
+.ActionDiv{
+    display: flex;
+    align-items: center;
+    column-gap: 0.6rem;
+}
+.trash_Action_button{
+    background-color: green;
+    border: none;
+    width: 5.3rem;
+    height:1.37rem ;
+    border-radius: 0.5rem;
+    color: #FFFFFF;
+    font-size: 0.75rem;
+}
+
+@media(max-width: 480px){
+    #Pending_Request_mainDiv{
+        width: 100vw;
+    }
+    #Pending_Request_wrapperDiv{
+        
+    }
+    #Pending_Request_headerDiv{
+        /* border: 2px solid red; */
+        width: 90vw;
+        position: absolute;
+        left: 0%;
+        margin: 5px;
+        /* padding-right: 15px; */
+    }
+    #Pending_Request_table_wrapperDiv{
+        width: 100vw;
+        position: relative;
+        top: 120px;
+        left: -120px;
+        width: 100vw;
+        overflow: scroll;
+        padding-top: 20px;
+    }
+}

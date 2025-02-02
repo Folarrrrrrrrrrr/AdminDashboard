@@ -1,0 +1,100 @@
+#FootSoldiers_mainDiv{
+    width: 100%;
+    min-height: 100vh;
+    background-color: #F9F9F9;
+}
+#FootSoldiers_wrapperDiv{
+    padding: 0 7.5rem 5rem;
+}
+#input_FilterDiv {
+    display: flex;
+    align-items: center;
+    column-gap: 1rem;
+    margin:  1rem 0;
+}
+#input_FilterDiv p {
+    display: flex;
+    column-gap: 0.5rem;
+    font-size: 0.932rem;
+    color: #707070;
+}
+#input_FilterDiv input {
+    background-color: #FFFFFF;
+    width: 18.87rem;
+    height: 2.43rem;
+}
+#InputField_images img {
+    height: 2.43rem;
+    margin-right: 0.75rem;
+}
+#searchDiv {
+    margin-top: -0.95rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+#searchDiv img {
+    position: absolute;
+    top: 1.75rem;
+    width: 0.93rem;
+    left: 1rem;
+    fill: #9e9ea7;
+}
+#searchDiv input {
+    width: 14.5rem;
+    border-radius: 0.75rem;
+    padding-left: 2.5rem;
+    box-sizing: border-box;
+    height: 2.43rem;
+}
+#flag_Div{
+    text-align: end;
+   position: relative;
+    margin-top: -3rem;
+}
+#flag_img{
+    width: 5.6rem;
+    height: 4rem;
+} 
+#FootSoldiers_header_dateDiv{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#headerText{
+    color: #1A1A1A;
+    font-size: 1.5rem;
+    margin-top: -0.1rem;
+}
+#footSoldiers_Card{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+    justify-content: center;
+    gap: 2rem;
+}
+#paginationText{
+    color: #777777;
+}
+#App_PaginationDiv{
+    display: flex;
+    align-items: center;
+}
+#App_PaginationDiv img{
+    transform: rotate(270deg);
+    transition: transform 0.5s ease-in-out;
+}
+.imgDiv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.9rem;
+    height: 2.1rem;
+    border-radius: 0.3rem;
+    border: 1px solid #DEDEDE;
+}
+#pagination_mainDiv{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}

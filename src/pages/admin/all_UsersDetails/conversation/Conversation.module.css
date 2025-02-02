@@ -1,0 +1,194 @@
+#Conversation_mainDiv {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #F9F9F9;
+}
+
+#Conversation_WrapperDiv {
+    padding: 4rem 7.5rem;
+}
+
+#Conversation_input_FilterDiv {
+    display: flex;
+    column-gap: 1.8rem;
+    align-items: center;
+    justify-content: end;
+}
+
+#Conversation_input_FilterDiv span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 0.5rem;
+    color: #000000;
+    font-size: 0.93rem;
+} 
+
+#Conversation_input_FilterDiv span img {
+    width: 1.25rem;
+}
+
+#Conversation_input_FilterDiv #searchDiv img {
+    position: absolute;
+    width: 0.93rem;
+    left: 1rem;
+    top: 1rem;
+    fill: #9e9ea7;
+}
+
+#searchDiv {
+    margin-top: -0.93rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#searchDiv input {
+    width: 14.5rem;
+    border-radius: 0.75rem;
+    padding-left: 2.5rem;
+    box-sizing: border-box;
+    height: 2.43rem;
+}
+
+#Conversation_input_FilterDiv img {
+    height: 2.43rem;
+}
+
+#InputField_images {
+    display: flex;
+    column-gap: 1rem;
+}
+
+
+#Conversation_tableDiv {
+    width: 100%;
+    min-height: 46.2rem;
+    background-color: #FFFFFF;
+    border-radius: 1rem;
+    margin-top: 1rem;
+    box-sizing: border-box;
+}
+
+#Conversation_tableDiv table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#Conversation_tableDiv #headerTable {
+    height: 5.2rem;
+    color: #000000;
+    font-size: 1.2rem;
+    font-weight: lighter;
+}
+
+#Conversation_tableDiv tr {
+    color: #666666;
+    font-size: 0.9rem;
+    height: 13.88rem;
+    border-bottom: 1px solid #c5c4c4;
+}
+
+#playerImg_Div {
+    width: 3.87rem;
+    display: flex;
+    position: relative;
+}
+#playerImg_Div img {
+    width: 1.12rem;
+    height: 1.12rem;
+    border-radius: 100%;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    background-color: #1E2757;
+    box-sizing: border-box;
+    border-radius: 50%;
+    object-fit: fill;
+    overflow: hidden;
+    margin: 0px;
+}
+
+#playerImg_Div img:not(#playerImg_Div img:nth-child(1)) {
+    margin-left: -7px
+}
+
+#Conversation_tableDiv th,
+td {
+    padding: 0 1rem;
+    box-sizing: border-box;
+
+}
+
+#Conversation_tableDiv th {
+    text-align: left;
+}
+
+.WinnerText {
+    width: 6.3rem;
+    height: 2.62rem;
+    border-radius: 0.5rem;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, .3);
+    display: flex;
+    column-gap: 4px;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.WinnerText img {
+    width: 1.12rem;
+}
+
+#calendar_popup {
+    position: absolute;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 27rem;
+    margin-right: 19rem;
+    z-index: 1000;
+}
+
+@media(max-width : 480px){
+    #Conversation_mainDiv{
+        width: 100vw;
+        overflow: scroll;    
+    }
+    #Conversation_WrapperDiv{
+        width: 100vw;
+        position: absolute;
+        left: 0%;    
+    }
+    #Conversation_input_FilterDiv{
+        width: 100vw;
+        height: 110px;
+        /* border:  1px solid red; */
+        position: absolute;
+        top: 40px;
+        left: 0%;
+    }
+    #dateTextDiv{
+        position: absolute;
+        left: 0;
+    }
+    #InputField_images{
+        /* border:  1px solid red; */
+        margin-top: -90px;
+        display: flex;
+        margin-left: -20px;
+    }
+    #searchDiv{
+        position: relative;
+        right: -130px;
+    }
+    #Conversation_tableDiv{
+        width: 100vw;
+        position: relative;
+        top: 50px;
+        left: -130px;
+        padding: 20px;
+        overflow:scroll;
+    }
+}

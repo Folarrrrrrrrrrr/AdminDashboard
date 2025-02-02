@@ -1,0 +1,68 @@
+#Department_mainDiv {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #F9F9F9;
+}
+#Department_wrapperDiv{
+    padding: 5rem 7.5rem;
+}
+#Total_Card_mapDiv {
+    width: 100%;
+    column-gap: 2rem;
+    display: flex;
+    margin-bottom: 5.56rem;
+}
+#Department_summaryText{
+    color: #1A1A1A;
+    font-size: 1.55rem;
+    line-height: 38px;
+}
+#Department_details_wrapperDiv{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 2.46rem;
+}
+#Department_detailsDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    width: 18.37rem;
+    height: 18.93rem;
+    background-color: #FFFFFF;
+    color: #000000;
+    border-radius: 1rem;
+}
+#Department_detailsDiv img{
+    width: 15.37rem;
+    height: 7.5rem;
+    border-radius: 0.5rem;
+}
+.Department_HeaderText{
+    font-weight: 500;
+    font-size: 1.25rem;
+    height: 0.3rem;
+}
+#Department_TextDiv{
+    display: flex;
+    column-gap: 1rem;
+    color: #5B5B5B;
+    font-size: 1rem;
+    height: 4rem;
+}
+.Department_staffNumber{
+    font-weight: bold;
+}
+#Department_detailsDiv button{
+    width: 6.93rem;
+    height: 1.87rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #0E093C;
+    color: #FFFFFF;
+    font-size: 0.8rem;
+    cursor: pointer;
+}

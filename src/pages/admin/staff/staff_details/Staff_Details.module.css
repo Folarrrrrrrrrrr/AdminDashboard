@@ -1,0 +1,181 @@
+#Staff_Details_mainDiv{
+    width: 100%;
+    min-height: 100vh;
+    background-color: #F9F9F9;
+}
+#Staff_Details_wrapperDiv{
+    padding: 5rem 7.5rem;
+}
+#Staff_headerText{
+    color: #000000;
+    font-size: 1.56rem;
+    height: 1.5rem;
+}
+#Staff_Details_tableDiv{
+    width: 100%;
+    height: 21.6rem;
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    margin-top: 16px;
+    box-sizing: border-box;
+}
+#Staff_Details_tableDiv table{
+    width: 100%;
+    border-collapse: collapse;
+}
+#Staff_Details_wrapperDiv #headerTable{
+    height:84px;
+    color: #000000;
+    font-size: 1.2rem;
+    font-weight: lighter;
+}
+#Staff_Details_tableDiv tr{
+    color: #666666;
+    font-size: 0.9rem;
+    height: 13.88rem;
+    border-bottom: 1px solid #c5c4c4;
+}
+#Staff_Details_wrapperDiv th,
+td {
+    padding: 0 30px;
+    box-sizing: border-box;
+}
+
+#Staff_Details_wrapperDiv th {
+    text-align: left;
+}
+#Staff_Details_tableDiv tr img{
+    width: 5rem;
+    height: 5rem;
+}
+
+#Staff_Details_tableDiv tr:nth-child(2){
+    border-bottom: none;
+}
+#Staff_Details_tableDiv #BankDetails_Div{
+    display: flex;
+    flex-direction: column;
+}
+#Staff_Details_tableDiv .BankDetails_BoldText{
+    font-weight: bold;
+    margin-top: -8px;
+}
+#Staff_Details_tableDiv #statusText{
+    width: 3.2rem;
+    height: 26px;
+    background-color: rgba(49, 195, 100, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    padding: 5px; 
+    box-sizing: border-box;
+    color: #31C364;
+}
+#Staff_Details_Chart_StatsDiv{
+    width: 100%;
+}
+#Staff_Details_BarChart{
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
+    border-radius: 25px;
+    padding: 0 1rem;
+    box-sizing: border-box;
+    width: 100%;
+    height: 20rem;
+}
+#Staff_Details_BarChart p{
+    color: #000000;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 3rem;
+    box-sizing: border-box;
+
+}
+
+#Staff_details_Daily_CallDiv{
+    width: 100%;
+    height: 29.37rem;
+    background-color: #FFFFFF;
+    border-radius: 1rem; 
+    color: #767676;
+    box-sizing: border-box;
+}
+#Daily_Call_headerDiv{
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1rem;
+    padding: 0 2rem;
+    box-sizing: border-box;
+    color: #003E79;
+}
+#Daily_Call_headerDiv #dateText{
+    font-size: 0.95rem;
+    color:#767676 ;
+}
+#Staff_details_Daily_CallDiv table{
+    width: 100%;
+}
+#Staff_details_Daily_CallDiv tr{
+    color: #767676;
+    font-size: 1.2rem;
+    height: 3rem;
+}
+
+.Daily_CallText{
+    color: #075070;
+    font-weight: bold;
+}
+#Staff_Details_Card_wrapper{
+    display: flex;
+    column-gap: 2rem;
+    margin-top: 2.3rem;
+}
+.Staff_Details_CardDiv{
+    width: 18.62rem;
+    height: 111px;
+    justify-content:space-around;
+    align-items: center;
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    display: flex;
+}
+.Card_figure{
+    color: #000000;
+    font-size: 1.5rem;
+    height: 8px;
+}
+.Card_text{
+    font-size: 1.2rem;
+    color: #717171;
+}
+#Staff_Details_hoursDaily_logDiv{
+    display: flex;
+    column-gap: 4rem;
+    margin-top: 2.62rem;
+}
+
+.react-calendar-heatmap .color-scale-1 { fill: #d6e685; }
+.react-calendar-heatmap .color-scale-2 { fill: #8cc665; }
+.react-calendar-heatmap .color-scale-3 { fill: #44a340; }
+.react-calendar-heatmap .color-scale-4 { fill: #1e6823; }
+.react-calendar-heatmap .color-scale-4{
+    fill: #003E79;
+}
+
+#Staff_Details_workingHours_TextDiv{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#Staff_Details_workingHours_TextDiv button{
+    border: none;
+    background-color: #43C22F;
+    width: 7.9rem;
+    height: 2.3rem;
+    border-radius: 0.5rem;
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    margin-top: -0.5rem;
+}

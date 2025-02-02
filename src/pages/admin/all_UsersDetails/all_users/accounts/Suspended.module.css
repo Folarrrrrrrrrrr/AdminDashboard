@@ -1,0 +1,70 @@
+#All_Users_mainDiv{
+    width: 100%;
+    min-height: 100vh;
+    background-color: #F9F9F9;
+}
+#All_Users_wrapperDiv{
+   padding: 0 7.5rem;
+}
+#All_Users_toggleDiv{
+    width: 18rem;
+    height: 3.06rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.62rem;
+    margin-top: 2rem;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    background: linear-gradient(120deg, #F6F6F6, #F2EFEF) ;
+}
+.All_Users_listDiv_button{
+    background-color: transparent;
+    border: none;
+    color: #666666;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+.toggleDiv_buttonActive{
+    min-width: 3.1rem;
+    background-color: #0E093C;
+    border: none;
+    color: #FFFFFF;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    height: 2rem;
+    font-size: 0.9rem;
+}
+
+#All_Users_Card{
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+    /* justify-content: center; */
+    gap: 2rem;
+}
+#button_Div{
+    display: flex;
+    justify-content: end;
+    column-gap: 1rem;
+    position: relative;
+    margin-top: -2rem;
+}
+#button_Div button{
+    width: 8.75rem;
+    height: 2.3rem;
+    border-radius: 0.5rem;
+    border: none;
+    font-size: 0.8rem;
+    cursor: pointer;
+    font-weight: 400;
+    color: #FFFFFF;
+    padding: 0.5rem;
+    box-sizing: border-box;
+}
+#button{
+    background-color: #FC9E2F;
+}
+#accounts_btn{
+    background-color: #ED2F2F;
+}

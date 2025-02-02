@@ -1,0 +1,29 @@
+#CreateNew_Account_Nav{
+    height: 90px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 75px;
+    align-items: center;
+}
+#CreateNew_Account_Nav div{
+    display: flex;
+    justify-content: center;
+    column-gap: 5px;
+    align-items: center;
+    width: 78px;
+    height: 33px;
+    border: 1px solid #777777;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    color: #003E79;
+}
+#CreateNew_Account_form_MainDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#CreateNew_Account_form_MainDiv p{
+    font-size: 1.25rem;
+    color: #0095FF;
+}

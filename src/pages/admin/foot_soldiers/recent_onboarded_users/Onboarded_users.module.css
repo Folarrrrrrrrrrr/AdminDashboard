@@ -1,0 +1,137 @@
+#Onboarded_users_mainDiv{
+    width: 100%;
+    min-height: 100vh;
+    background-color: #F9F9F9;
+}
+#Onboarded_users_wrapperDiv{
+    padding: 5rem 7.5rem;
+}
+#Onboarded_users_input_FilterDiv{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    column-gap: 1.5rem;
+    margin-bottom: 2.1rem;
+
+}
+#Onboarded_users_input_FilterDiv p{
+    font-size: 0.93rem;
+    color: #707070;
+    margin-top: 2rem;
+    box-sizing: border-box;
+    /* height: 0; */
+    display: flex;
+    align-items: center;
+}
+#Onboarded_users_input_FilterDiv p img{
+    width: 1rem;
+}
+#Onboarded_users_input_FilterDiv #searchDiv img{
+    position: absolute;
+    width: 15px;
+    padding-left: 0.7rem;
+    padding-top: 0.9rem;
+
+}
+#searchDiv{
+    display: flex;
+    align-items: center;
+}
+#searchDiv input{
+    position: relative;
+    width: 14.5rem;
+    border-radius: 0.75rem;
+    padding-left:2.5rem;
+    box-sizing: border-box;
+    height: 2.43rem;  
+}
+#imgDiv img{
+    height: 2.3rem;
+    margin-right: 0.4rem;
+    margin-bottom: -1rem;
+}
+#Onboarded_users_tableWrapperDiv{
+    width: 100%;
+    background-color: #FFFFFF;
+    padding: 1rem 1.5rem 0;
+    box-sizing: border-box;
+    border-radius: 1rem;
+}
+#HeaderText{
+    font-size: 0.95rem ;
+    color: #707070;
+}
+#Onboarded_users_tableWrapperDiv table{
+    width: inherit;
+    border-collapse: collapse;
+}
+#Onboarded_users_tableWrapperDiv #headerTable{
+    height: 2.75rem;
+    background-color: #F1F1F1;
+    color: #000000;
+    border-bottom: none;
+    text-align: left;
+}
+#Onboarded_users_tableWrapperDiv th, td{
+    padding: 0 1rem;
+}
+#Onboarded_users_tableWrapperDiv tbody tr{
+    height: 4.7rem;
+    color: #666666;
+    border-bottom: 1px solid #C4C4C4;
+}
+#Onboarded_users_tableWrapperDiv tr:last-child{
+    border-bottom: none;
+}
+#status_text{
+    width: 5.56rem;
+    height: 1.62rem;
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(49, 195, 100, .2);
+    color: #31C364;
+    font-size: 0.81rem;
+}
+
+@media(max-width: 480px){
+    #Onboarded_users_mainDiv{
+        width: 100vw;
+    }
+    #Onboarded_users_wrapperDiv{
+        width: 100vw;
+        /* border: 2px solid red; */
+    }
+    #Onboarded_users_input_FilterDiv{
+        width: 100vw;
+        /* border: 2px solid red; */
+        position: relative;
+        left: -120px;
+        top: -30px;
+    }
+    #dateText{
+        margin-right:  -145px; 
+    }
+    #searchDiv{
+        position: relative;
+        right:  -130px;
+    }
+    #imgDiv{
+       display: flex;
+       position: relative;
+        top:  -50px;
+    }
+    #Onboarded_users_tableWrapperDiv{
+        /* border: 2px solid red; */
+        position: relative;
+        right:  120px;
+        top: -50px;
+        overflow: scroll;
+    }    
+    #table{
+        margin-top: 40px; 
+        margin-left: -15px; 
+    }
+    
+}

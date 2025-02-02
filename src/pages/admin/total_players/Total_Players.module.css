@@ -1,0 +1,101 @@
+#Total_Player_mainDiv{
+    width: 100%;
+    min-height: 100vh;
+    background-color: #F9F9F9;
+}
+#Total_Player_wrapperDiv{
+    padding: 7.5rem;
+}
+#TotalPlayer_input_FilterDiv{
+    width: 100%;
+    display: flex;
+    column-gap: 30px;
+    align-items: end;
+    justify-content: end;
+
+}
+#TotalPlayer_input_FilterDiv p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10px;
+    column-gap: 8px;
+    font-size: 0.932rem;
+    color: #707070;
+    width: 130px;
+    margin-right: -20px;
+}
+
+#TotalPlayer_input_FilterDiv #searchDiv img{
+    position: absolute;
+    width: 15px;
+    left: 1rem;
+    top: 1rem;
+    fill: #9e9ea7;
+}
+#searchDiv{
+    margin-top: -15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#searchDiv input{
+    width: 14.5rem;
+    border-radius: 12px;
+    padding-left:40px ;
+    box-sizing: border-box;
+    height: 39px;  
+}
+#TotalPlayer_input_FilterDiv img{
+    height: 39px;
+}
+#Total_Player_tableDiv{
+    width: 100%;
+    height: 33.81rem;
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    margin-top: 16px;
+    box-sizing: border-box;
+}
+#Total_Player_tableDiv table{
+    width: 100%;
+    border-collapse: collapse;
+}
+#Total_Player_tableDiv #headerTable{
+    height:84px;
+    color: #000000;
+    font-size: 1.2rem;
+    font-weight: lighter;
+}
+#Total_Player_tableDiv tr{
+    color: #666666;
+    font-size: 0.9rem;
+    height: 13.88rem;
+    border-bottom: 1px solid #c5c4c4;
+}
+
+#Total_Player_tableDiv tr:nth-child(3){
+    border-bottom: none;
+}
+#Total_Player_tableDiv #BankDetails_Div{
+    display: flex;
+    flex-direction: column;
+}
+#Total_Player_tableDiv .BankDetails_BoldText{
+    font-weight: bold;
+    margin-top: -8px;
+}
+#Total_Player_tableDiv #statusText{
+    width: 3.2rem;
+    height: 26px;
+    background-color: rgba(49, 195, 100, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    padding: 5px; 
+    box-sizing: border-box;
+    color: #31C364;
+}

@@ -1,0 +1,67 @@
+#All_Staff_mainDiv{
+    width: 100%;
+    min-height: 100vh;
+    background-color: #F9F9F9;
+}
+#All_Staff_EntireCard_Wrapper{
+    padding: 3rem 7.5rem 6.3rem 7.5rem;
+}
+#Staff_CardDiv{
+    column-gap: 1.18rem;
+    align-items: center;
+    display: flex;
+    margin-bottom: 2rem ;
+}
+#input_FilterDiv{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    column-gap: 1.8rem;
+    margin-bottom: 1.6rem;
+}
+
+#input_FilterDiv input{
+    width: 23.56rem;
+    height: 2.5rem;
+}
+#input_FilterDiv img{
+    height: 2.43rem;
+    margin-right: 0.75rem;
+}
+#searchDiv{
+   margin-top: -0.93rem;
+    position: relative;
+}
+#searchDiv img{
+    position: absolute;
+    top: 1rem;
+    width: 0.93rem;
+    left: 1rem;
+    fill: #9e9ea7;   
+}
+#searchDiv input{
+    width: 14.5rem;
+    border-radius: 0.75rem;
+    padding-left:2.5rem;
+    box-sizing: border-box;
+    height: 2.43rem;  
+}
+
+.All_StaffText{
+    color: #000000;
+    font-size: 1.56rem;
+    height: 1.5rem;
+}
+#All_Staff_Card{
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    justify-content: center;
+    gap: 2rem;
+    /* display: flex;
+    column-gap: 2rem;
+    row-gap: 2rem;
+    flex-wrap: wrap;  */
+}

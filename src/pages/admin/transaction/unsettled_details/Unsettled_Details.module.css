@@ -1,0 +1,61 @@
+#Unsettled_Details_mainDiv{
+    width: 100%;
+    background-color: #F9F9F9;
+}
+#Unsettled_Details_wrapperDiv{
+    padding: 2rem 7.5rem;
+}
+.headerText{
+    font-size: 1.5rem;
+    color: #000000;
+    margin-top: 3.3rem;
+}
+#Unsettled_Details_tableWrapperDiv{
+    width: 100%;
+    height: 24.3rem;
+    background-color: #FFFFFF;
+}
+#Unsettled_Details_tableWrapperDiv table{
+    width: 100%;
+    border-collapse: collapse;
+}
+#Unsettled_Details_tableWrapperDiv th, td{
+    padding: 0 1.5rem;
+    text-align: left;
+}
+#headerTable{
+    color: #000000;
+    font-size: 1rem;
+    height: 5.25rem;
+    border-bottom: 1px solid #C4C4C4;
+}
+.userDetail_Text{
+    display: flex;
+    align-items: center;
+    column-gap: 0.5rem;
+    font-size: o.9rem;
+    color: #262626;
+    font-weight: 600;
+}
+.userDetail_Text img{
+    width: 1.75rem;
+}
+#statusText{
+    min-width: 3.2rem;
+    max-width: 4.5rem;
+    height: 1.62rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.25rem;
+}
+#players_imgDiv img{
+    width: 1.12rem;
+    height: 1.12rem;
+    border-radius: 100%;
+}
+#players_imgDiv{
+    display: flex;
+    align-items: center;
+    column-gap: 0.5rem;
+}
