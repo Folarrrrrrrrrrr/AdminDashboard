@@ -9,14 +9,13 @@ const InputField = (props) => {
     <div className={Style.InputDiv}>
          <label className={Style.label}>{label}</label> 
         <input
-                className={Style.input}
-                placeholder={placeholder}
-                type={type}
-                value={value}
-                name={name}
-                onChange={OnChange}
-                // style={{border: `${error ? "1px solid red" : "none"}`}}
-            />
+          className={Style.input}
+          placeholder={placeholder}
+          type={type}
+          value={value}
+          name={name}
+          onChange={OnChange}
+        />
               
     </div>
   )

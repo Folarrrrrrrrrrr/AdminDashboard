@@ -12,20 +12,24 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 2.5rem;
+    border-radius: 20px ;
+    max-height: 40px;
+    padding: 10px;
+    background-color: rgba(217, 217, 217, 0.19);
 }
 
 #Input_filterDiv{
     display: flex;
     align-items: center;
     column-gap: 0.9rem;
-    /* margin-bottom: 0.7rem; */
 }
 #Input_filterDiv #searchDiv img{
     position: absolute;
     width: 0.93rem;
     left: 1rem;
     top: 1.7rem;
-    fill: #9e9ea7;
+    /* fill: #FFFFFF;
+    background-color: #ffffff; */
 }
 #searchDiv{
     margin-top: -1.2rem;
@@ -90,6 +94,9 @@
     font-size: 1rem;
     font-weight: lighter;
     border-bottom: 1px solid #C4C4C4;
+    max-height: 30px;
+    background-color:rgba(217, 217, 217, 0.19);
+    border-radius: 10px;
 }
 
 #Reports_Table_WrapperDiv tr {

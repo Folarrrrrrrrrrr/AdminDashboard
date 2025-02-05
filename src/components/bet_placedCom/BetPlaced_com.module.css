@@ -214,11 +214,11 @@
   }
   #BetFullDetailsBody{
     position: absolute;
-    top:-35%;
-    left: 20%;
-    width: 60%;
-    height: 100%;
-    background-color: rgba(20, 18, 53, 0.541);
+    top:-40%;
+    left: 15%;
+    width: 70%;
+    height: 110%;
+    background-color: rgba(251, 251, 252, 0.541);
     padding: 20px;
     border-radius: 30px;
   }
@@ -230,9 +230,29 @@
     right: 0;
     bottom: 0;
     position: fixed;
-    background-color: rgba(36, 28, 28, 0.63);
+    background-color: rgba(230, 230, 230, 0.05);
   }
 
+  #modalHeading{
+    /* border: 2px solid white; */
+    width:600px;
+    height:50px;
+    display: flex;
+  }
+  #headerTextsDiv{
+    /* border: 2px solid white; */
+    height: 40px;
+  }#HeroText{
+    font-family: 'lato' , sans-serif ;
+    font-size:30px;
+    margin-top: -1px;
+    font-weight:300;
+  }
+  #heroSummary{
+    margin-top: -30px;
+    font-weight:200;
+    font-family:'lato', sans-serif;
+  }
   #RowOne{
     display: flex;
     justify-content: space-between;
@@ -244,13 +264,11 @@
   }
   #HeroHighlights{
     margin: 20px;
-    color: #fff;
+    color: #000000;
   }
   #dice{
-    width: 190px;
-    position: absolute;
-    left: 450px;
-    top: 450px;
+    width: 80px;
+
   }
   #sport{
     width: 100px;
@@ -258,32 +276,75 @@
     left: 520px;
     top: 460px;
   }
-  #WinnerCard{
-    background-color: #fff;
+  #avatarSection{
+    /* border: 2px solid white; */
+    width: 680px;
+    height: 200px;
     display: flex;
-    /*justify-content: space-between;*/
-    margin-top: 10px;
-    margin-right: 20px;
-    width: 45%;
-    height: 210px;
-    border-radius: 30px;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+    background-color: rgba(196, 196, 196, 0.14);
+
+
   }
-  /* #WinnerTexts{} */
-  #Winner{
-    margin-left: 15px;
-    font-weight:600;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  #profileCard{
+    /* border: 2px solid white; */
+    color: #000000;
+    height: 160px;
   }
-  
-  #WinnerImg{
-    margin-left: -5% ;
-    margin-top: 15% ;
-    border-radius: 25px;
+  .profileAvatar{
+    width:105px;
+    z-index: 1;
   }
-  #winBetFigures{
+  #CrownAvatar{
+    width: 70px;
+    position: relative;
+    top: -60px;
+    left: -40px;
+    margin-right: -200px;
+    /* z-index: 0; */
+  }
+  #playersFullname{
+    margin-bottom: -10px;
+    font-family: 'lato', sans-serif;
+    font-weight: 300;
+  }
+  #locationDiv{
     display: flex;
-    justify-content: space-between;
-    width: 350px;
+    /* border: 2px solid white; */
+  }
+  #playerslocation{
+    font-weight: 300;
+    font-family: 'lato', sans-serif;
+  }
+  /* #SummarySection{ 
+  } */
+  #summaryHeader{
+    margin-bottom: -30px;
+  }
+  #tableHeader{
+    background-color: rgba(196, 196, 196, 0.14); 
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    border-radius: 10px;
+    width: 730px;
+    max-height: 20px;
+    margin-bottom: 10px;
+  }
+  #tableHeader div{
+    width: 90px;
+  }
+  #tablerow{
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    width: 730px;
+    max-height: 30px;
+  }
+  #tablerow div{
+    width: 90px;
   }
   
   @media (max-width: 480px) {

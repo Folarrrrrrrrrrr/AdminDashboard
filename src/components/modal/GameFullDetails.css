@@ -1,0 +1,138 @@
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  
+  /* Show Modal */
+  .modal-overlay.show {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  /* Modal Content */
+  .modal-content {
+    background: white;
+    width: 90%;
+    max-width: 500px;
+    padding: 20px;
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+  }
+  
+  /* Close Button */
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #555;
+  }
+  
+  /* Title */
+  .modal-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  /* Game Info */
+  .game-info {
+    font-size: 14px;
+    color: gray;
+  }
+  
+  .bet-id {
+    color: blue;
+    font-weight: bold;
+  }
+  
+  /* Players Section */
+  .players {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px 0;
+  }
+  
+  .player-card {
+    text-align: center;
+  }
+  
+  .player-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+  }
+  
+  .player-name {
+    font-weight: bold;
+    margin-top: 5px;
+  }
+  
+  .player-location {
+    font-size: 12px;
+    color: gray;
+  }
+  
+  /* Section Titles */
+  .section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 15px 0;
+  }
+  
+  /* Summary Box */
+  .summary-box,
+  .winner-box {
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: left;
+  }
+  
+  .summary-box p,
+  .winner-box p {
+    margin: 5px 0;
+  }
+  
+  /* Status Badge */
+  .status {
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  
+  .status.ongoing {
+    background-color: yellow;
+  }
+  
+  .status.completed {
+    background-color: green;
+    color: white;
+  }
+  
+  /* Prize Status */
+  .prize-status {
+    padding: 2px 8px;
+    border-radius: 5px;
+    background: lightgreen;
+    font-weight: bold;
+  }
+  

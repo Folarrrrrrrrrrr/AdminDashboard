@@ -20,7 +20,7 @@
     font-size: 16px;
     font-size: 500;
     outline: none;
-    background-color: transparent;
+    background-color: #FFFFFF;
     color: #000000;
     &:focus{
         border: 1px solid #CBC4C4;

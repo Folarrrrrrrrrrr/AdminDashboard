@@ -15,6 +15,11 @@ import FilterModal from "../../popUps/filterPopUp/filterPopUp";
 import WinnerImg from "../../assets/images/Person1.png";
 import fastforward from "../../assets/images/fast-forward.png";
 import backArrow from "../../assets/images/backArrow.png";
+import Hulk from "../../assets/images/HulkAvatar.png";
+import peaceLadyAvatar from "../../assets/images/peaceLadyAvatar.png";
+import coolBoiAvatar from "../../assets/images/coolBoyAvatar.png";
+import crownAvatar from "../../assets/images/WinnerCrown.png";
+import location from "../../assets/images/location.png";
 
 const BetPlaced_com = (props) => {
   const location = useLocation();
@@ -91,13 +96,37 @@ const BetPlaced_com = (props) => {
     setSelectedDate(newDate);
     setIsCalendarOpen(false);
   };
-  const [betDetailsModal, setBetDetrailsModal] = useState(false);
+  
+  const [betDetailsModal, setBetDetailsModal] = useState(false);
+  const [selectedBet, setSelectedBet] = useState(null);
 
-  const HandleViewMoreBtn = (id) => {
-    setBetDetrailsModal(!betDetailsModal);
-
-    console.log(id);
+  const HandleViewMoreBtn = (bet) => {
+    setSelectedBet(bet);
+    setBetDetailsModal(!betDetailsModal);
+    // console.log(id);
   };
+  let playersData =[
+    {
+      name: 'Samuel Daniel (Host)',
+      image:'',
+      location:'Lagos, Nigeria'
+    },
+    {
+      name: 'Folawe Oluwole',
+      image:'',
+      location:'Lagos, Nigeria'
+    },
+    {
+      name: 'David Adeshina',
+      image:'',
+      location:'Lagos, Nigeria'
+    },
+    {
+      name: 'Faloye David',
+      image:'',
+      location:'Lagos, Nigeria'
+    },
+  ]
 
   const toggleCalendar = () => setIsCalendarOpen(true);
 
@@ -190,7 +219,7 @@ const BetPlaced_com = (props) => {
 
           <div id={Style.imgDiv}>
             <FilterModal
-              isOpen={isModalOpen}
+              // isOpen={isModalOpen}
               onClose={handleCloseModal}
               onApplyFilters={handleApplyFilters}
             />
@@ -215,17 +244,17 @@ const BetPlaced_com = (props) => {
             <thead>
               <tr id={Style.headerTable}>
                 <th>S/N</th>
-                {source == "Sports" ? <th> Opponent ID</th> : source == "Dice Games" ? <th> Dice GameID</th>: null}
+                {source == "Sports" ? <th> Bet ID</th> : source == "Dice Games" ? <th> Dice GameID</th>: null}
                 {/* <th> {source} </th> */}
                 {/* <th> {GameTypeColumn} </th> */}
-                {source === "Sports" ? <th> Ticket Id </th> : null }
+                {/* {source === "Sports" ? <th> Ticket ID </th> : null } */}
                 <th> Bet Type </th>
-                {source === "Sports" ? <th> Match ID </th> : null}
-                {source === "Sports" ? <th> Team </th> : null}
-                {source === "Sports" ? <th> League </th> : null}
                 <th>Amount Staked</th>
+                {source === "Sports" ? <th> Match ID </th> : null}
+                {/* {source === "Sports" ? <th> Bet Type </th> : null} */}
+                {/* {source === "Sports" ? <th> League </th> : null} */}
                 <th>Players</th>
-                {toggleIndex == 0 ? null : <th>Status</th>}
+                {/* {toggleIndex == 0 ? null : <th>Status</th>} */}
                 <th> Date </th>
                 <th> Time </th>
                 <th>Action</th>
@@ -241,25 +270,26 @@ const BetPlaced_com = (props) => {
                     <tr id={Style.tableRows} key={index}>
                       <td>{index + 1}</td>
                       <td>{user.bet_id}</td>
-                      {source === "Sports" ? <td>{user.game}</td>: source === "Dice Games" ? <td>No BetType</td>:null }
+                      {source === "Sports" ? <td> { !user.type ? 'bet type not found': user.bet_type } </td>: source === "Dice Games" ? <td>{ !user.bet_type ? 'bet type not found': user.bet_type}</td>:null }
                       {/* <td>{user.bet_Type}</td> */}
                       {/* {source === "Sports" ? <td></td> : null} */}
-                      {source === "Sports" ? (
-                        <td>{user.amount_staked}</td>
-                      ) : source === "Dice Games"?  <td>{user.amount_staked} </td>: null}
+                      {source === "Sports" ? 
+                        <td>{!user.amount? 'amount not found': user.amount }</td>
+                      : source === "Dice Games"?  <td>{!user.amount_staked? 'amount not found': user.amount_staked} </td>: null}
+                      {source==='Sports'? <td>{!user.matchid? 'match ID not found': user.matchid} </td>: null}
                       {
                         source === "Dice Games"?<td>
                         <div id={Style.players_imgDiv}>
-                          {user.players}
+                          {!user.players? 'data not found': user.players}
                         </div>
                       </td>: <td>
                         <div id={Style.players_imgDiv}>
-                          {user.players_in_game}
+                          {!user.players_in_game? 'data not found': user.players_in_game}
                         </div>
                       </td>
                       }
-                      {source === "Sports" ? <td>Check Date</td> : source === "Dice Games" ?<td>No Date</td> : null}
-                      {source === "Sports" ? <td>Check Time</td> : source === "Dice Games" ?<td>No Time</td> : null}
+                      {source === "Sports" ? <td>{!createdAt?'Date not found': createdAt} </td> : source === "Dice Games" ?<td>No Date</td> : null}
+                      {source === "Sports" ? <td>{!createdAt?'Date not found': createdAt}</td> : source === "Dice Games" ?<td>No Time</td> : null}
                       
                       {/* <td><div id={Style.statusText} style={{ backgroundColor: lost ? "#eb575733" : "#31c36433", color: lost ? "#EB5757" : "#31C364" }}>{user.status}</div></td> */}
                       {/* <td>{user.Winners}</td>
@@ -268,7 +298,7 @@ const BetPlaced_com = (props) => {
                         <div id={Style.action_field}>
                           <button
                             onClick={() => {
-                              HandleViewMoreBtn(index);
+                              HandleViewMoreBtn(user);
                             }}
                             // style={{
                             //   backgroundColor: "#eb575733",
@@ -284,14 +314,15 @@ const BetPlaced_com = (props) => {
                               <div
                                 id={Style.modalOverlay}
                                 onClick={() => {
-                                  HandleViewMoreBtn(index);
+                                  HandleViewMoreBtn(user);
                                 }}
                               ></div>
+  
                               <span id={Style.BetFullDetailsBackground}></span>
                               <div id={Style.BetFullDetailsBody}>
                                 <div id={Style.RowOne}>
                                   <div id={Style.HeroHighlights}>
-                                    <div>
+                                    <div id={Style.modalHeading}>
                                       <img
                                         src={
                                           source === "Dice Games"
@@ -306,111 +337,137 @@ const BetPlaced_com = (props) => {
                                             : Style.dice
                                         }
                                       />
-                                      <h2 id={Style.SportBetType}>
-                                        {user.game} Bet Analysis
-                                      </h2>
+                                      <div id={Style.headerTextsDiv}>
+                                        <h3 id={Style.HeroText} >Game Details</h3>
+                                        <p id={Style.heroSummary}>Complete information for {selectedBet.bet_id}</p>
+                                      </div>
                                     </div>
-                                    <h3 id={Style.SportBetType}>
-                                      {user.bet_Type
-                                        ? user.bet_Type
-                                        : "no Bet Type data"}
-                                    </h3>
-                                    <h3 id={Style.winBetFigures}>
-                                      <h4 id={Style.amountStaked}>
-                                        {" "}
-                                        Stake: WHC{" "}
-                                        {!user.amount_staked
-                                          ? "0.00000"
-                                          : user.amount_staked}
-                                      </h4>
-                                      <h4 id={Style.amountWon}>
-                                        {" "}
-                                        Win: WHC{" "}
-                                        {!user.win ? "0.00000" : user.win}
-                                      </h4>
-                                    </h3>
-                                  </div>
-                                  <div id={Style.WinnerCard}>
-                                    <div id={Style.WinnerTexts}>
-                                      <h2 id={Style.Winner}> WINNER </h2>
-                                      <h2 id={Style.Winner}>
-                                        {" "}
-                                        {user.bet_Type
-                                          ? user.bet_Type
-                                          : "John Doe"}{" "}
-                                      </h2>
-                                    </div>
-                                    <div id={Style.WinnerProfilePicture}>
-                                      {/* <h2 id={Style.Winner}> WINNER </h2> */}
-                                      <img
-                                        src={WinnerImg}
-                                        id={Style.WinnerImg}
-                                        alt=""
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <div id={Style.RowTwo}>
-                                  <div id={Style.WinnerCard}>
-                                    <div id={Style.WinnerTexts}>
-                                      <h2 id={Style.Winner}> OPPONENT </h2>
-                                      <h2 id={Style.Winner}>
-                                        {" "}
-                                        {user.bet_Type
-                                          ? user.bet_Type
-                                          : "John Doe"}{" "}
-                                      </h2>
-                                      <h2 id={Style.league}>
-                                        {" "}
-                                        {user.bet_Type
-                                          ? user.bet_Type
-                                          : "John Doe"}{" "}
-                                      </h2>
+                                    <div id={Style.avatarSection}>
+
+                                      <div id={Style.profileCard} >
+                                        <div>
+                                          
+                                        </div>
+                                        <img className={Style.profileAvatar} src={Hulk} alt="" />
+                                        <img id={Style.CrownAvatar} src={crownAvatar} alt="" />
+                                        <h3 id={Style.playersFullname}> Samuel Daniel </h3>
+                                        <div id={Style.locationDiv}>
+                                          {/* <img src={location} alt="" srcset="" /> */}
+                                          <img id={Style.locationsvg} src={location} alt="" />
+                                          <p id={Style.playerslocation}> Lagos, Nigeria </p>
+                                        </div>
+                                      </div>
+
+                                      <div id={Style.profileCard} >
+                                        <img className={Style.profileAvatar}  src={peaceLadyAvatar} alt="" />
+                                        <h3 id={Style.playersFullname}> Samuel Daniel </h3>
+                                        <div id={Style.locationDiv}>
+                                          <img id={Style.locationsvg} src={location} alt=""/>
+                                          <p id={Style.playerslocation}> Lagos, Nigeria </p>
+                                        </div>
+                                      </div>
+
+                                      <div id={Style.profileCard} >
+                                        <img className={Style.profileAvatar} src={coolBoiAvatar} alt="" />
+                                        <h3 id={Style.playersFullname}> Samuel Daniel </h3>
+                                        <div id={Style.locationDiv}>
+                                          <img id={Style.locationsvg} src={location} alt=""/>
+                                          <p id={Style.playerslocation}> Lagos, Nigeria </p>
+                                        </div>
+                                      </div>
+
                                     </div>
 
-                                    <div id={Style.WinnerProfilePicture}>
-                                      {/* <h2 id={Style.Winner}> WINNER </h2> */}
-                                      <img
-                                        src={WinnerImg}
-                                        id={Style.WinnerImg}
-                                        alt=""
-                                      />
-                                    </div>
                                   </div>
-                                  <div id={Style.HeroHighlights}>
-                                    <div>
-                                      {/* <img src={ source === 'Dice Games'? dice: null} id={Style.dice}/> */}
-                                      <h2 id={Style.SportBetType}>
-                                        {user.game} Bet Analysis
-                                      </h2>
-                                    </div>
-                                    <h3 id={Style.SportBetType}>
-                                      {user.bet_Type
-                                        ? user.bet_Type
-                                        : "no Bet Type data"}
-                                    </h3>
-                                    <h3 id={Style.winBetFigures}>
-                                      <h4 id={Style.amountStaked}>
-                                        {" "}
-                                        Stake: WHC{" "}
-                                        {!user.amount_staked
-                                          ? "0.00000"
-                                          : user.amount_staked}
-                                      </h4>
-                                      <h4 id={Style.amountWon}>
-                                        {" "}
-                                        Win: WHC{" "}
-                                        {!user.win ? "0.00000" : user.win}
-                                      </h4>
-                                    </h3>
+                                </div>
+                                <div id={Style.SummarySection}>
+                                  <h3 id={Style.summaryHeader}> Game summary</h3>
+                                  <div id={Style.tableDiv}>
+                                    <table>
+                                      <tr id={Style.tableHeader}>
+                                        <div>Bet Type</div>
+                                        <div>Game Status</div>
+                                        <div>Staked</div>
+                                        <div>Players</div>
+                                        <div>Winner</div>
+                                        <div>Time</div>
+                                        <div>Date</div>
+                                        <div>Final Score</div>
+                                      </tr>
+                                      <tr id={Style.tablerow}>
+                                        <div> Top Score</div>
+                                        <div> finished</div>
+                                        <div> 200</div>
+                                        <div> 2 </div>
+                                        <div> Daniel</div>
+                                        <div>12:04</div>
+                                        <div>25-05-12</div>
+                                        <div>12</div>
+                                      </tr>
+                                    </table>
+                                  </div>
+                                </div>
+                                <div id={Style.SummarySection}>
+                                  <h3 id={Style.summaryHeader}> Winner </h3>
+                                  <div id={Style.tableDiv}>
+                                    <table>
+                                       <tr id={Style.tableHeader}>
+                                        <div>Bet Type</div>
+                                        <div>Game Status</div>
+                                        <div>Staked</div>
+                                        <div>Players</div>
+                                        <div>Winner</div>
+                                        <div>Time</div>
+                                        <div>Date</div>
+                                        <div>Final Score</div>
+                                      </tr>
+                                      <tr id={Style.tablerow}>
+                                        <div> Top Score</div>
+                                        <div> finished</div>
+                                        <div> 200</div>
+                                        <div> 2 </div>
+                                        <div> Daniel</div>
+                                        <div>12:04</div>
+                                        <div>25-05-12</div>
+                                        <div>12</div>
+                                      </tr>
+                                    </table>
+                                  </div>
+                                </div>
+                                <div id={Style.SummarySection}>
+                                  <h3 id={Style.summaryHeader}> Other Players </h3>
+                                  <div id={Style.tableDiv}>
+                                    <table>
+                                      <tr id={Style.tableHeader}>
+                                        <div>Bet Type</div>
+                                        <div>Game Status</div>
+                                        <div>Staked</div>
+                                        <div>Players</div>
+                                        <div>Winner</div>
+                                        <div>Time</div>
+                                        <div>Date</div>
+                                        <div>Final Score</div>
+                                      </tr>
+                                      <tr id={Style.tablerow}>
+                                        <div> Top Score</div>
+                                        <div> finished</div>
+                                        <div> 200</div>
+                                        <div> 2 </div>
+                                        <div> Daniel</div>
+                                        <div>12:04</div>
+                                        <div>25-05-12</div>
+                                        <div>12</div>
+                                      </tr>
+                                    </table>
                                   </div>
                                 </div>
                               </div>
+
+
                             </div>
+                              // <div>
+                              //   id={`modalOverLay`}
+                              // </div>
                           ) : (
                             <></>
                           )}

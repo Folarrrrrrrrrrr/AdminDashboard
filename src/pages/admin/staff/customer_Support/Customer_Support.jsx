@@ -285,19 +285,20 @@ const Customer_Support = () => {
 
                 {CCPerformanceData.map((performance, i) => {
                   if (i <= 6) {
+                    let adjustedResp = performance.queries;
                     return (
                       <tr>
                         <td>{performance.agentName}</td>
                         <td className={performance.type}>
                           {" "}
-                          {performance.queries[2].count}{" "}
+                          {adjustedResp[i].count}{" "}
                         </td>
                         <td className={performance.type}>
-                          {performance.queries[1].count}
+                          {adjustedResp[i].count}
                         </td>
                         <td className={Style.performing_agentText}>
                           {" "}
-                          {performance.queries[0].count}
+                          {adjustedResp[i].count}
                         </td>
                         <td>
                           <Button text={"View Details"} />
