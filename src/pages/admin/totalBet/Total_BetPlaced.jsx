@@ -8,6 +8,7 @@ import delete_list from '../../../assets/svg/product_delete.svg'
 // import InputField from '../../../components/input/InputField'
 import { useParams, useLocation} from 'react-router-dom'
 import BetPlaced_com from '../../../components/bet_placedCom/BetPlaced_com'
+// import ListTable from '../../../components/bet_placedCom/ListTable'
 // import { TotalDiceBetProvider } from '../api_detaills/provider/DiceProvider'
 import { PopupContextHook } from '../../../WhiteHouse_PopupContext'
 // import {useBetApiContext} from '../api_detaills/GlobalStates/BetsContext'
@@ -217,7 +218,9 @@ const Total_BetPlaced = () => {
     //   }
     // }
   // ]
-
+ 
+  const diceHeaders=[ 'S/N', 'dice gameID', 'bet type', 'players', 'date', 'time', 'action']
+  const footballHeaders=[ 'S/N', 'dice gameID', 'bet type', 'players', 'date', 'time', 'action']
   return (
     <div id={Style.Total_BetPlaced_mainDiv}>
       <Header
@@ -225,12 +228,18 @@ const Total_BetPlaced = () => {
         headerInfo={"Here’s an information on all placed bets"} />
 
       <div id={Style.TotalBet_wrapperDiv}>
-        <BetPlaced_com arr={arr}
-         winningdata={winningdata}
-        //  losingdata={losingdata} 
+        <BetPlaced_com 
+        arr={arr}
+         winningdata={winningdata} 
          initialIndex = {paramIndex}
           GameTypeColumn={Sports} 
-          isDiceGame={true} />
+          isDiceGame={true} 
+          />
+      
+      {/* <ListTable
+        headers={source === 'Dice Games'? diceHeaders :source === 'Sports'? footballHeaders: null}
+      /> */}
+      
       </div> 
     </div>
   )

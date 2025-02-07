@@ -42,17 +42,17 @@ const Reports = () => {
     {
       image1: three_users,
       price: "200",
-      text: "In-app Message Queries",
+      text: "In-app Message ",
       to: "/placebet",
       divText: "View All",
     },
-    // {
-    //     image1: issues,
-    //     price: "200",
-    //     text: "Mail Queries",
-    //     to: "/placebet",
-    //     divText: "View All"
-    // },
+    {
+        image1: issues,
+        price: "200",
+        text: "Mail Queries",
+        to: "/placebet",
+        divText: "View All"
+    },
     {
       image1: resolve,
       price: "180",
@@ -140,7 +140,7 @@ const Reports = () => {
             {stats_card4.map((obj, index) => {
               let isBlack = index == toggleIndex ? true : false;
               return (
-                <div id={window.innerWidth < 480 ? Style.Cards : null}>
+                <div id={window.innerWidth < 480 ? Style.Cards : Style.firstCardSet}>
                   <Total_Card
                     key={index}
                     text={obj.text}
@@ -170,6 +170,10 @@ const Reports = () => {
                   to={obj.to}
                   colourChange={colourChange}
                   onClick={() => toggle(index + 4)}
+                  isPurple={index == 0 ? "true" : null}
+                  isGreen={index == 1 ? "true" : null}
+                  isRed={index == 2 ? "true" : null}
+                  isBlack={index == 3 ? "true" : null}
                 />
               );
             })}
@@ -207,17 +211,17 @@ const Reports = () => {
 
         <div id={Style.Reports_Table_WrapperDiv}>
           <table>
-            <tr id={Style.headerTable}>
-              <th>S/N</th>
-              <th>Date</th>
-              <th>QueryType</th>
-              <th>Category</th>
-              <th>Username</th>
-              <th>Headline</th>
-              <th>Query</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
+            <div id={Style.headerTable}>
+              <div>S/N</div>
+              <div>Date</div>
+              <div>QueryType</div>
+              <div>Category</div>
+              <div>Username</div>
+              {/* <div>Headline</div> */}
+              {/* <div>Query</div> */}
+              <div>Status</div>
+              <div>Action</div>
+            </div>
 
             {toggleIndex == 100 ? (
               <tbody>
@@ -225,21 +229,14 @@ const Reports = () => {
                   let color = obj.status === "Pending" ? true : false;
 
                   return (
-                    <tr id={Style.Personal_Info_tr}>
-                      <td>{index + 1}</td>
-                      <td>{obj.date}</td>
-                      <td className={Style.tableText}>{obj.queryType}</td>
-                      <td className={Style.tableText}>{obj.category}</td>
-                      <td className={Style.tableText}>{obj.username}</td>
-                      <td className={Style.tableText}>{obj.headline}</td>
-                      <td>
-                        <div className={Style.QueryText}>
-                          {/* <p className={Style.Media_query}><img src={obj.attachments.img} alt="" /></p>
-                                                            <p className={Style.Media_query}><img src={obj.query.img2} alt="" />{obj.query.text2}</p> */}
-                          {obj.query}
-                        </div>
-                      </td>
-                      <td>
+                    <div id={Style.Personal_Info_tr}>
+                      <div> {index +1}</div>
+                      <div>{obj.date || '20/2/24'}</div>
+                      <div className={Style.tableText}>{obj.queryType}</div>
+                      <div className={Style.tableText}>{obj.category}</div>
+                      <div className={Style.tableText}>{obj.username}</div>
+                      {/* <div className={Style.tableText}>{obj.headline}</div> */}
+                      <div>
                         <div
                           className={Style.statusText}
                           style={{
@@ -249,8 +246,8 @@ const Reports = () => {
                         >
                           {obj.status}
                         </div>
-                      </td>
-                      <td>
+                      </div>
+                      <div>
                         <button
                           style={{
                             backgroundColor: "#0E093C",
@@ -264,410 +261,105 @@ const Reports = () => {
                         >
                           {obj.action}
                         </button>
-                      </td>
-                    </tr>
+                      </div>
+                    </div>
                   );
                 })}
-
-                <tr id={Style.Personal_Info_tr}>
-                  <td>3</td>
-                  <td>8/7/2024</td>
-                  <td className={Style.tableText}>In-app Call</td>
-                  <td className={Style.tableText}>Payment</td>
-                  <td className={Style.tableText}>Lighty</td>
-                  <td className={Style.tableText}>Lorem ipsum dolo</td>
-                  <td>
-                    <div className={Style.ReportDiv}>
-                      <p className={Style.Media_query}>
-                        <img src={microphone} alt="" /> 4:23
-                      </p>
-                      <p className={Style.Media_query}>
-                        <img src={recording} alt="" />
-                        Play Recording
-                      </p>
-                    </div>
-                  </td>
-                  <td>
-                    <div id={Style.statusText2}>Resolved</div>
-                  </td>
-                  <td>
-                    <button
-                      style={{
-                        backgroundColor: "#0E093C",
-                        border: "none",
-                        color: "#FFFFFF",
-                        fontSize: "0.7rem",
-                        width: "5.18rem",
-                        borderRadius: "8px",
-                        height: "1.37rem",
-                      }}
-                    >
-                      Review
-                    </button>
-                  </td>
-                </tr>
-
-                <tr id={Style.Personal_Info_tr}>
-                  <td>4</td>
-                  <td>8/7/2024</td>
-                  <td className={Style.tableText}>Toll Call</td>
-                  <td className={Style.tableText}>Payment</td>
-                  <td className={Style.tableText}>Lighty</td>
-                  <td className={Style.tableText}>Lorem ipsum dolo</td>
-                  <td>
-                    <div className={Style.ReportDiv}>
-                      <p className={Style.Media_query}>
-                        <img src={microphone} alt="" /> 4:23
-                      </p>
-                      <p className={Style.Media_query}>
-                        <img src={recording} alt="" />
-                        Play Recording
-                      </p>
-                    </div>
-                  </td>
-                  <td>
-                    <div id={Style.statusText2}>Resolved</div>
-                  </td>
-                  <td>
-                    <button
-                      style={{
-                        backgroundColor: "#0E093C",
-                        border: "none",
-                        color: "#FFFFFF",
-                        fontSize: "0.7rem",
-                        width: "5.18rem",
-                        borderRadius: "8px",
-                        height: "1.37rem",
-                      }}
-                    >
-                      Review
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
+             </tbody>
             ) : (
               "what"
             )}
 
             {toggleIndex === 0 || toggleIndex === 1 ? (
               <tbody>
-                <tr id={Style.Personal_Info_tr}>
-                  <td>1</td>
-                  <td>8/7/2024</td>
-                  <td className={Style.tableText}>In-app Message </td>
-                  <td className={Style.tableText}>Billing</td>
-                  <td className={Style.tableText}>Lighty</td>
-                  <td className={Style.tableText}>Lorem ipsum dolo</td>
-                  <td>
-                    <div className={Style.ReportDiv}>
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur. Odio ornare id
-                        enim vulputate
-                      </p>
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur. Odio ornare id
-                        enim vulputateLorem ipsum dolor sit amet consectetur.
-                        Odio ornare id enim vulputate
-                      </p>
-                    </div>
-                  </td>
-                  <td>
-                    <div className={Style.statusText}>Pending</div>
-                  </td>
-                  <td>
-                    <button
-                      style={{
-                        backgroundColor: "#0E093C",
-                        border: "none",
-                        color: "#FFFFFF",
-                        fontSize: "0.7rem",
-                        width: "5.18rem",
-                        borderRadius: "8px",
-                        height: "1.37rem",
-                      }}
-                    >
-                      Review
-                    </button>
-                  </td>
-                </tr>
-                <tr id={Style.Personal_Info_tr}>
-                  <td>2</td>
-                  <td>8/7/2024</td>
-                  <td className={Style.tableText}>Mail</td>
-                  <td className={Style.tableText}>Account</td>
-                  <td className={Style.tableText}>Lighty</td>
-                  <td className={Style.tableText}>Lorem ipsum dolo</td>
-                  <td>
-                    <div className={Style.ReportDiv}>
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur. Odio ornare id
-                        enim vulputate
-                      </p>
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur. Odio ornare id
-                        enim vulputateLorem ipsum dolor sit amet consectetur.
-                        Odio ornare id enim vulputate
-                      </p>
-                    </div>
-                  </td>
-                  <td>
-                    <div id={Style.statusText2}>Resolved</div>
-                  </td>
-                  <td>
-                    <button
-                      style={{
-                        backgroundColor: "#0E093C",
-                        border: "none",
-                        color: "#FFFFFF",
-                        fontSize: "0.7rem",
-                        width: "5.18rem",
-                        borderRadius: "8px",
-                        height: "1.37rem",
-                      }}
-                    >
-                      Review
-                    </button>
-                  </td>
-                </tr>
+                {QueryList.map((obj, index) => {
+                  let color = obj.status === "Pending" ? true : false;
 
-                <tr id={Style.Personal_Info_tr}>
-                  <td>2</td>
-                  <td>8/7/2024</td>
-                  <td className={Style.tableText}>Mail</td>
-                  <td className={Style.tableText}>Account</td>
-                  <td className={Style.tableText}>Lighty</td>
-                  <td className={Style.tableText}>Lorem ipsum dolo</td>
-                  <td>
-                    <div className={Style.ReportDiv}>
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur. Odio ornare id
-                        enim vulputate
-                      </p>
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur. Odio ornare id
-                        enim vulputateLorem ipsum dolor sit amet consectetur.
-                        Odio ornare id enim vulputate
-                      </p>
+                  return (
+                    <div id={Style.Personal_Info_tr}>
+                      <div> {index + 1}</div>
+                      <div>{obj.date || '20/2/24'}</div>
+                      <div className={Style.tableText}>{obj.queryType}</div>
+                      <div className={Style.tableText}>{obj.category}</div>
+                      <div className={Style.tableText}>{obj.username}</div>
+                      {/* <div className={Style.tableText}>{obj.headline}</div> */}
+                      <div>
+                        <div
+                          className={Style.statusText}
+                          style={{
+                            backgroundColor: color ? "#fc9e2f33" : "#31c36433",
+                            color: color ? "#FC9E2F" : "#31C364",
+                          }}
+                        >
+                          {obj.status}
+                        </div>
+                      </div>
+                      <div>
+                        <button
+                          style={{
+                            backgroundColor: "#0E093C",
+                            border: "none",
+                            color: "#FFFFFF",
+                            fontSize: "0.7rem",
+                            width: "5.18rem",
+                            borderRadius: "8px",
+                            height: "1.37rem",
+                          }}
+                        >
+                          {obj.action}
+                        </button>
+                      </div>
                     </div>
-                  </td>
-                  <td>
-                    <div id={Style.statusText2}>Resolved</div>
-                  </td>
-                  <td>
-                    <button
-                      style={{
-                        backgroundColor: "#0E093C",
-                        border: "none",
-                        color: "#FFFFFF",
-                        fontSize: "0.7rem",
-                        width: "5.18rem",
-                        borderRadius: "8px",
-                        height: "1.37rem",
-                      }}
-                    >
-                      Review
-                    </button>
-                  </td>
-                </tr>
-
-                <tr id={Style.Personal_Info_tr}>
-                  <td>2</td>
-                  <td>8/7/2024</td>
-                  <td className={Style.tableText}>Mail</td>
-                  <td className={Style.tableText}>Account</td>
-                  <td className={Style.tableText}>Lighty</td>
-                  <td className={Style.tableText}>Lorem ipsum dolo</td>
-                  <td>
-                    <div className={Style.ReportDiv}>
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur. Odio ornare id
-                        enim vulputate
-                      </p>
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur. Odio ornare id
-                        enim vulputateLorem ipsum dolor sit amet consectetur.
-                        Odio ornare id enim vulputate
-                      </p>
-                    </div>
-                  </td>
-                  <td>
-                    <div id={Style.statusText2}>Resolved</div>
-                  </td>
-                  <td>
-                    <button
-                      style={{
-                        backgroundColor: "#0E093C",
-                        border: "none",
-                        color: "#FFFFFF",
-                        fontSize: "0.7rem",
-                        width: "5.18rem",
-                        borderRadius: "8px",
-                        height: "1.37rem",
-                      }}
-                    >
-                      Review
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
+                  );
+                })}
+             </tbody>
             ) : (
               "what"
             )}
 
             {toggleIndex === 2 || toggleIndex === 3 ? (
-              <tbody>
-                <tr id={Style.Personal_Info_tr}>
-                  <td>2</td>
-                  <td>8/7/2024</td>
-                  <td className={Style.tableText}>Toll Call</td>
-                  <td className={Style.tableText}>Payment</td>
-                  <td className={Style.tableText}>Lighty</td>
-                  <td className={Style.tableText}>Lorem ipsum dolo</td>
-                  <td>
-                    <div className={Style.ReportDiv}>
-                      <p className={Style.Media_query}>
-                        <img src={microphone} alt="" /> 4:23
-                      </p>
-                      <p className={Style.Media_query}>
-                        <img src={recording} alt="" />
-                        Play Recording
-                      </p>
-                    </div>
-                  </td>
-                  <td>
-                    <div id={Style.statusText2}>Resolved</div>
-                  </td>
-                  <td>
-                    <button
-                      style={{
-                        backgroundColor: "#0E093C",
-                        border: "none",
-                        color: "#FFFFFF",
-                        fontSize: "0.7rem",
-                        width: "5.18rem",
-                        borderRadius: "8px",
-                        height: "1.37rem",
-                      }}
-                    >
-                      Review
-                    </button>
-                  </td>
-                </tr>
+               <tbody>
+                {QueryList.map((obj, index) => {
+                  let color = obj.status === "Pending" ? true : false;
 
-                <tr id={Style.Personal_Info_tr}>
-                  <td>2</td>
-                  <td>8/7/2024</td>
-                  <td className={Style.tableText}>Toll Call</td>
-                  <td className={Style.tableText}>Payment</td>
-                  <td className={Style.tableText}>Lighty</td>
-                  <td className={Style.tableText}>Lorem ipsum dolo</td>
-                  <td>
-                    <div className={Style.ReportDiv}>
-                      <p className={Style.Media_query}>
-                        <img src={microphone} alt="" /> 4:23
-                      </p>
-                      <p className={Style.Media_query}>
-                        <img src={recording} alt="" />
-                        Play Recording
-                      </p>
+                  return (
+                    <div id={Style.Personal_Info_tr}>
+                      <div> {index +1}</div>
+                      <div>{obj.date || '20/2/24'}</div>
+                      <div className={Style.tableText}>{obj.queryType}</div>
+                      <div className={Style.tableText}>{obj.category}</div>
+                      <div className={Style.tableText}>{obj.username}</div>
+                      {/* <div className={Style.tableText}>{obj.headline}</div> */}
+                      <div>
+                        <div
+                          className={Style.statusText}
+                          style={{
+                            backgroundColor: color ? "#fc9e2f33" : "#31c36433",
+                            color: color ? "#FC9E2F" : "#31C364",
+                          }}
+                        >
+                          {obj.status}
+                        </div>
+                      </div>
+                      <div>
+                        <button
+                          style={{
+                            backgroundColor: "#0E093C",
+                            border: "none",
+                            color: "#FFFFFF",
+                            fontSize: "0.7rem",
+                            width: "5.18rem",
+                            borderRadius: "8px",
+                            height: "1.37rem",
+                          }}
+                        >
+                          {obj.action}
+                        </button>
+                      </div>
                     </div>
-                  </td>
-                  <td>
-                    <div id={Style.statusText2}>Resolved</div>
-                  </td>
-                  <td>
-                    <button
-                      style={{
-                        backgroundColor: "#0E093C",
-                        border: "none",
-                        color: "#FFFFFF",
-                        fontSize: "0.7rem",
-                        width: "5.18rem",
-                        borderRadius: "8px",
-                        height: "1.37rem",
-                      }}
-                    >
-                      Review
-                    </button>
-                  </td>
-                </tr>
-
-                <tr id={Style.Personal_Info_tr}>
-                  <td>2</td>
-                  <td>8/7/2024</td>
-                  <td className={Style.tableText}>Toll Call</td>
-                  <td className={Style.tableText}>Payment</td>
-                  <td className={Style.tableText}>Lighty</td>
-                  <td className={Style.tableText}>Lorem ipsum dolo</td>
-                  <td>
-                    <div className={Style.ReportDiv}>
-                      <p className={Style.Media_query}>
-                        <img src={microphone} alt="" /> 4:23
-                      </p>
-                      <p className={Style.Media_query}>
-                        <img src={recording} alt="" />
-                        Play Recording
-                      </p>
-                    </div>
-                  </td>
-                  <td>
-                    <div id={Style.statusText2}>Resolved</div>
-                  </td>
-                  <td>
-                    <button
-                      style={{
-                        backgroundColor: "#0E093C",
-                        border: "none",
-                        color: "#FFFFFF",
-                        fontSize: "0.7rem",
-                        width: "5.18rem",
-                        borderRadius: "8px",
-                        height: "1.37rem",
-                      }}
-                    >
-                      Review
-                    </button>
-                  </td>
-                </tr>
-
-                <tr id={Style.Personal_Info_tr}>
-                  <td>2</td>
-                  <td>8/7/2024</td>
-                  <td className={Style.tableText}>Toll Call</td>
-                  <td className={Style.tableText}>Payment</td>
-                  <td className={Style.tableText}>Lighty</td>
-                  <td className={Style.tableText}>Lorem ipsum dolo</td>
-                  <td>
-                    <div className={Style.ReportDiv}>
-                      <p className={Style.Media_query}>
-                        <img src={microphone} alt="" /> 4:23
-                      </p>
-                      <p className={Style.Media_query}>
-                        <img src={recording} alt="" />
-                        Play Recording
-                      </p>
-                    </div>
-                  </td>
-                  <td>
-                    <div id={Style.statusText2}>Resolved</div>
-                  </td>
-                  <td>
-                    <button
-                      style={{
-                        backgroundColor: "#0E093C",
-                        border: "none",
-                        color: "#FFFFFF",
-                        fontSize: "0.7rem",
-                        width: "5.18rem",
-                        borderRadius: "8px",
-                        height: "1.37rem",
-                      }}
-                    >
-                      Review
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
+                  );
+                })}
+             </tbody>
             ) : (
               "what"
             )}

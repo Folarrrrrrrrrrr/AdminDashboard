@@ -2,10 +2,12 @@
     width: 100%;
     min-height: 100vh;
     background-color: #F9F9F9;
+    padding-top: -60px;
 }
 
 #Reports_WrapperDiv {
     padding: 5rem 7.5rem;
+    margin-top: -80px;
 }
 #Query_header_filterDiv{
     display: flex;
@@ -18,10 +20,17 @@
     background-color: rgba(217, 217, 217, 0.19);
 }
 
+#CustomStatsCard{
+    height: 140px;
+}
+#CustomStatsCardWidth{
+    width: 760px;
+}
 #Input_filterDiv{
     display: flex;
     align-items: center;
     column-gap: 0.9rem;
+    max-height: 15px;
 }
 #Input_filterDiv #searchDiv img{
     position: absolute;
@@ -57,6 +66,7 @@
     column-gap: 1.5rem;
 }
 
+
 #Reports_mapDiv {
     width: 100%;
     display: flex;
@@ -76,34 +86,63 @@
 }
 
 #Reports_Table_WrapperDiv {
-    width: 100%;
-    background-color: #FFFFFF;
-    border-radius: 16px;
+    /* background-color: #FFFFFF; */
     box-sizing: border-box;
     margin-top: 1rem;
+    width: 81vw;
 }
 
 #Reports_Table_WrapperDiv table {
-    width: 100%;
+    /* width: 100%; */
     border-collapse: collapse;
 }
 
 #Reports_Table_WrapperDiv #headerTable {
     height: 4.5rem;
     color: #000000;
-    font-size: 1rem;
-    font-weight: lighter;
-    border-bottom: 1px solid #C4C4C4;
-    max-height: 30px;
-    background-color:rgba(217, 217, 217, 0.19);
-    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    width: 81vw;
+    max-height: 60px;
+    background-color: rgba(217, 217, 217, 0.19);
+    /* border: 2px solid black; */
+    margin-bottom: -15px;
+    /* text-align: left; */
+}
+#headerTable div{
+    /* border: 2px solid black; */
+    align-content: center;  
+    min-width: 120px;
+    padding-left: 20px;
+    text-align: center;
+    /* margin-right: 30px;   */
 }
 
-#Reports_Table_WrapperDiv tr {
+#Personal_Info_tr {
+    min-height: 50px;
+    width: 81vw;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    /* border: 2px solid black; */
+    color: #000000;
+    /* margin-bottom: 20px; */
+    border-top: 1px solid #5f5b5b;
+    background-color:#ffffff ;
+}
+#Personal_Info_tr div{
+    /* border: 2px solid black; */
+    align-content: center;  
+    min-width: 120px;
+    padding-left: 20px;
+    text-align: center;
+}
+#Reports_Table_WrapperDiv tr{
     color: #666666;
     font-size: 0.9rem;
-    height: 15.5rem;
-    border-bottom: 1px solid #C4C4C4;
+    height: 2.5rem;
+    max-height: 60px;
+    margin-bottom: 10px;
 }
 #Reports_Table_WrapperDiv tr:last-child{
     border-bottom: none;
@@ -173,9 +212,10 @@ td {
         padding-left: 0%;
         /* width: 80vw; */
         display: grid;
+        margin-top: -50px;
     }
     #Total_Stats_CardWrapper{
-        display: grid;
+        display: none;
     }
     #Reports_mapDiv{
         display: grid;

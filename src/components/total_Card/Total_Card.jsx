@@ -22,10 +22,10 @@ const Total_Card = (props) => {
               <div id={Style.Total_CardText} style={{ color: isBlack ? "#FFFFFF" : "#777777", }}>{text}</div>
             </div>
 
-            {view_div == true ? <div id={Style.Total_Card_imgDiv} style={{ borderColor: isBlack ? "#ffffff" : "#0E093C", backgroundColor:  isBlack ? 'rgb(4, 135, 155)' : isPurple?  'rgba(11, 67, 141, 0.45)': isGreen? 'rgba(49,195,100, 0.15)': isRed?'rgba(237, 114, 13, 0.37)':"transparent" }} >
-
+            {view_div == true ? 
+            <div id={Style.Total_Card_imgDiv} style={{ borderColor: isBlack ? "#ffffff" : "#0E093C", backgroundColor:  isBlack ? 'rgb(4, 135, 155)' : isPurple?  'rgba(11, 67, 141, 0.45)': isGreen? 'rgba(49,195,100, 0.15)': isRed?'rgba(237, 114, 13, 0.37)':"transparent" }} >
               <Link to={to}>
-                <div id={divTextColor}>{divText}</div>
+                <div id={divTextColor }>{divText}</div>
               </Link>
             </div> : ""}
 

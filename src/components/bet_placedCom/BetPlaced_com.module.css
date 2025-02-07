@@ -75,6 +75,11 @@
     border: none;
     border-radius: 20px;
   }
+  #searchInput{
+    position: relative;
+    top:9px;
+    border: none;
+  }
   #searchDiv input {
     margin-top: -1rem;
     width: 14.5rem;
@@ -92,27 +97,29 @@
     justify-content: space-between;
     height: 70px;
     margin:0px 20px ;
-    /* justify-content: center; */
     align-items: center;
-    /* border: 2px solid black; */
     color: #003e79;
     font-size: 1.2rem;
     padding-top:10px ;
-    /* padding: 0rem 0 0.81rem 3.5rem; */
     box-sizing: border-box;
   }
   #paginationByNumberDiv{
     display: flex;
     list-style: none;
-    /* border: 2px solid black; */
-    width: 150px;
+    width: 350px;
     padding: 0;
+    margin-left: -20px;
   }
   #pageNumbers{
     /* border: 2px solid black; */
     width: 20px;
+    margin: 7px;
     text-align: center;
     /* margin-right: 30px; */
+  }
+  #paginationBtn{
+    border-radius: 10px;
+    min-width: 70px;
   }
   #Btn{
     width: 100px;
@@ -218,19 +225,20 @@
     left: 15%;
     width: 605;
     height: 110%;
-    background-color: rgba(251, 251, 252, 0.541);
+    background-color: rgba(231, 231, 233, 0.445);
     padding: 20px;
     border-radius: 30px;
   }
   #modalOverlay {
     width: 100%;
-    height: 100vh;
+    overflow: hidden;
+    height: 100%;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     position: fixed;
-    background-color: rgba(230, 230, 230, 0.05);
+    background-color: rgba(255, 254, 254, 0.918);
   }
 
   #modalHeading{
@@ -284,6 +292,7 @@
     justify-content: space-around;
     align-items: center;
     margin-top: 20px;
+    border-radius: 30px;
     background-color: rgba(196, 196, 196, 0.14);
 
 
@@ -359,7 +368,7 @@
   
     #BetText {
       margin-top: -5%;
-      margin-left: 1%;
+      /* margin-left: 1%; */
     }
     #BetText span {
       color: #ff0000;

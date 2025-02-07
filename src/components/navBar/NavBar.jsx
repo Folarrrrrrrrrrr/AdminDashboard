@@ -43,9 +43,10 @@ const NavBar = () => {
           <h4>Welcome, Admin</h4>
           <p>Here is an overview of the dashboard </p>
         </div>
+
         <div id={hamburger ? Style.entireNav : Style.entireNavHide}>
           <div id={Style.NavBar_textDiv}>
-          <img src={scrollUp} className={Style.scrollUpIcon} alt="" />
+          {/* <img src={scrollUp} className={Style.scrollUpIcon} alt="" /> */}
             <p id={hamburger ? Style.logo :  Style.logo }  className="logo">Logo</p>
             <NavLink
               to={"/dashboard"}
@@ -137,9 +138,7 @@ const NavBar = () => {
             >
               <p>Queries</p>
             </NavLink>
-          </div>
-          <div id={Style.NavBar_ContactDiv}>
-          <img src={scrollUp} className={Style.scrollUpIcon} alt="" />
+
             <p
               onClick={toggleDropdown}
               className={`${Style.NavBar_text} ${
@@ -183,12 +182,16 @@ const NavBar = () => {
             >
               <p> Management</p>
             </NavLink>
+          </div>
+          <div id={Style.NavBar_ContactDiv}>
+          <img src={scrollUp} className={Style.scrollUpIcon} alt="" />
+          
             {/* <p>
               English <img src={arrowDown} alt="" />
             </p> */}
 
             <div id={Style.NavBar_lastlineDiv}>
-              <div id={Style.NavBar_line}></div>
+              {/* <div id={Style.NavBar_line}></div> */}
               <img src={mail} alt="" />
 
               <NavLink

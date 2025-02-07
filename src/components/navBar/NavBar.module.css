@@ -17,8 +17,14 @@
 
 #NavBar_textDiv{
   display: flex;
-  /* border:2px solid black; */
-  width:70%;
+  border-radius: 33px;
+  box-shadow: 0px 1.5px 2px 0px rgb(143, 141, 141);
+  padding-right: 10px;
+  padding-left: 10px;
+  /* border: 2px solid black; */
+  width:85%;
+  height: 50px;
+  align-self: center;
   justify-content:space-around;
 }
 
@@ -100,6 +106,8 @@ Nav_Bar_Wrapper p {
 #NavBar_lastlineDiv {
   display: flex;
   column-gap: 1rem;
+  /* border: 2px solid black; */
+  align-items: center;
 }
 
 #dropdown {
@@ -173,7 +181,7 @@ Nav_Bar_Wrapper p {
   display: flex;
   align-items: center;
   column-gap: 0.5rem;
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
 }
 #profile_img img {
   width: 1.1rem;

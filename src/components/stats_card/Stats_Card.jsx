@@ -8,11 +8,11 @@ import { Link } from 'react-router-dom'
 
 
 const Stats_Card = (props) => {
-    const { img, figure, text, to, colourChange, onClick, isBlack, isPurple, isGreen, isRed } = props
+    const { img, figure, text, to, colourChange, onClick, isBlack, isPurple, isGreen, isRed, customContainer,customContainerWidth } = props
     return (
         <div id={Style.Stats_Card_mainDiv} onClick={onClick}>
             <Link to={to}>
-                <div className={Style.Stats_CardDiv} style={{ backgroundColor: isBlack ? 'rgba(4, 135, 155, 0.4)' : isPurple?  'rgba(11,67,141, 0.15)': isGreen? 'rgba(49,195,100, 0.15)': isRed?'rgba(237,113,13,0.15)': "#FFFFFF", cursor: "pointer" }}>
+            <div className={Style.Stats_CardDiv} style={{ backgroundColor: isBlack ? 'rgba(4, 135, 155, 0.4)' : isPurple?  'rgba(11,67,141, 0.15)': isGreen? 'rgba(49,195,100, 0.15)': isRed?'rgba(237,113,13,0.15)': "#FFFFFF", cursor: "pointer" }}>
                     <div id={Style.Stats_Card_img_textDiv}>
                         <img src={img} alt="" />
                         <div>

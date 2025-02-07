@@ -34,6 +34,7 @@ const BetPlaced_com = (props) => {
   });
 
   console.log(arr);
+  console.log(extraData);
 
   // Save `arr` to localStorage whenever it changes
   useEffect(() => {
@@ -67,12 +68,6 @@ const BetPlaced_com = (props) => {
   activeFootbalBets = array.filter((bet) => bet.status === "active");
   console.log(activeFootbalBets);
 
-  // activeDiceBets = array.filter(bet => bet.status === "active")
-  // console.log(activeFootbalBets);
-
-  // pendingDiceBets = array.filter(bet => bet.status === "pending")
-  // console.log(pendingFootbalBets);
-
   closedFootballBets = array.filter((bet) => bet.status === "closed");
   // console.log(closedFootballBets);
 
@@ -96,7 +91,7 @@ const BetPlaced_com = (props) => {
     setSelectedDate(newDate);
     setIsCalendarOpen(false);
   };
-  
+
   const [betDetailsModal, setBetDetailsModal] = useState(false);
   const [selectedBet, setSelectedBet] = useState(null);
 
@@ -105,30 +100,104 @@ const BetPlaced_com = (props) => {
     setBetDetailsModal(!betDetailsModal);
     // console.log(id);
   };
-  let playersData =[
+  let playersData = [
     {
-      name: 'Samuel Daniel (Host)',
-      image:'',
-      location:'Lagos, Nigeria'
+      name: "Samuel Daniel (Host)",
+      image: "",
+      location: "Lagos, Nigeria",
     },
     {
-      name: 'Folawe Oluwole',
-      image:'',
-      location:'Lagos, Nigeria'
+      name: "Folawe Oluwole",
+      image: "",
+      location: "Lagos, Nigeria",
     },
     {
-      name: 'David Adeshina',
-      image:'',
-      location:'Lagos, Nigeria'
+      name: "David Adeshina",
+      image: "",
+      location: "Lagos, Nigeria",
     },
     {
-      name: 'Faloye David',
-      image:'',
-      location:'Lagos, Nigeria'
+      name: "Faloye David",
+      image: "",
+      location: "Lagos, Nigeria",
     },
-  ]
+  ];
 
   const toggleCalendar = () => setIsCalendarOpen(true);
+
+  // Sorting, Filtering, and Pagination States
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortColumn, setSortColumn] = useState(null);
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10; // Number of rows per page
+
+  const headers =
+    source === "Dice Games"
+      ? [
+          "s/n",
+          "Dice Game ID",
+          "Bet type",
+          "Amount Staked",
+          "date",
+          "time",
+          "action",
+        ]
+      : source === "Sports"
+      ? [
+          "s/n",
+          "football Game ID",
+          "Bet type",
+          "Match id",
+          "date",
+          "time",
+          "action",
+        ]
+      :source === "Dashboard"
+      ? [
+          "s/n",
+          "Game ID",
+          "Bet type",
+          "Amount Staked",
+          "date",
+          "time",
+          "action",
+        ]:null;
+
+  // **1. Filtering Logic**
+  const filteredData = source ==='Dashboard'? extraData.filter((row) =>
+    Object.values(row).some((value) =>
+      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  ): array.filter((row) =>
+    Object.values(row).some((value) =>
+      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  );
+
+  // **2. Sorting Logic**
+  const sortedData = [...filteredData].sort((a, b) => {
+    if (!sortColumn) return 0; // No sorting initially
+    const aValue = a[sortColumn];
+    const bValue = b[sortColumn];
+
+    if (aValue < bValue) return sortOrder === "asc" ? -1 : 1;
+    if (aValue > bValue) return sortOrder === "asc" ? 1 : -1;
+    return 0;
+  });
+
+  // **3. Pagination Logic**
+  const totalPages = Math.ceil(sortedData.length / pageSize);
+  const paginatedData = sortedData.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
+
+  // **Sorting Handler**
+  const handleSort = (column) => {
+    setSortOrder(sortColumn === column && sortOrder === "asc" ? "desc" : "asc");
+    setSortColumn(column);
+  };
 
   return (
     <div>
@@ -154,7 +223,7 @@ const BetPlaced_com = (props) => {
                     : Style.Transaction_listDiv_button
                 }
               >
-                All
+                 All
               </button>
               <button
                 onClick={() => toggle(1)}
@@ -164,7 +233,7 @@ const BetPlaced_com = (props) => {
                     : Style.Transaction_listDiv_button
                 }
               >
-                Winning Bets
+                { source === 'Dashboard'? 'Football Bets': '  Winning Bets'}
               </button>
               <button
                 onClick={() => toggle(2)}
@@ -174,7 +243,8 @@ const BetPlaced_com = (props) => {
                     : Style.Transaction_listDiv_button
                 }
               >
-                Losing Bets
+                
+                { source === 'Dashboard'? 'Dice Bets': '  Losing Bets'}
               </button>
             </div>
 
@@ -196,7 +266,13 @@ const BetPlaced_com = (props) => {
 
               <div id={Style.searchDiv}>
                 <img src={search} alt="Search" />
-                <InputField />
+                {/* <InputField /> */}
+                <input id={Style.searchInput}
+                  type="text"
+                  placeholder="Search..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
               </div>
             </div>
           </div>
@@ -204,18 +280,39 @@ const BetPlaced_com = (props) => {
 
         <div id={Style.BetText}>
           <p>
-            Bet Lists <span>(10 of {arr.length})</span>
+            Bet Lists{" "}
+            <span>
+              ({" "}
+              <span>
+                {" "}
+                Page {currentPage} of {totalPages}{" "}
+              </span>
+              )
+            </span>
           </p>
 
-          
-          <ul id={Style.paginationByNumberDiv}>
-              <li id={Style.pageNumbers}><img className={Style.NavigationBtns} src={backArrow} alt="" /></li>
-              <li id={Style.pageNumbers}>1</li>
-              <li id={Style.pageNumbers}>2</li>
-              <li id={Style.pageNumbers}>3</li>
-              <li id={Style.pageNumbers}>4</li>
-              <li id={Style.pageNumbers}> <img className={Style.RightNavigationBtns} src={fastforward} alt="" /> </li>
-          </ul>
+          {/* Pagination Controls */}
+          <div id={Style.paginationByNumberDiv}>
+            <button
+              id={Style.paginationBtn}
+              onClick={() => setCurrentPage(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </button>
+            <div id={Style.pageNumbers}>1</div>
+            <div id={Style.pageNumbers}>2</div>
+            <div id={Style.pageNumbers}>3</div>
+            <div id={Style.pageNumbers}>4</div>
+            <div id={Style.pageNumbers}> 5</div>
+            <button
+              id={Style.paginationBtn}
+              onClick={() => setCurrentPage(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </div>
 
           <div id={Style.imgDiv}>
             <FilterModal
@@ -229,7 +326,12 @@ const BetPlaced_com = (props) => {
                 <pre>{JSON.stringify(filters, null, 2)}</pre>
               </div>
             )}
-            <img id={Style.FilterBtn} src={filter_img} onClick={handleOpenModal} alt="Filter" />
+            <img
+              id={Style.FilterBtn}
+              src={filter_img}
+              onClick={handleOpenModal}
+              alt="Filter"
+            />
             <img src={download} alt="Download" />
           </div>
         </div>
@@ -242,55 +344,91 @@ const BetPlaced_com = (props) => {
           {/* {toggleIndex == 0 ? */}
           <table>
             <thead>
-              <tr id={Style.headerTable}>
-                <th>S/N</th>
-                {source == "Sports" ? <th> Bet ID</th> : source == "Dice Games" ? <th> Dice GameID</th>: null}
-                {/* <th> {source} </th> */}
-                {/* <th> {GameTypeColumn} </th> */}
-                {/* {source === "Sports" ? <th> Ticket ID </th> : null } */}
-                <th> Bet Type </th>
-                <th>Amount Staked</th>
-                {source === "Sports" ? <th> Match ID </th> : null}
-                {/* {source === "Sports" ? <th> Bet Type </th> : null} */}
-                {/* {source === "Sports" ? <th> League </th> : null} */}
-                <th>Players</th>
-                {/* {toggleIndex == 0 ? null : <th>Status</th>} */}
-                <th> Date </th>
-                <th> Time </th>
-                <th>Action</th>
-              </tr>
+              {headers.map((column) => (
+                <th
+                  id={Style.headerTable}
+                  key={column}
+                  onClick={() => handleSort(column)}
+                  style={{ cursor: "pointer" }}
+                >
+                  {column.toUpperCase()}{" "}
+                  {sortColumn === column
+                    ? sortOrder === "asc"
+                      ? "🔼"
+                      : "🔽"
+                    : ""}
+                </th>
+              ))}
             </thead>
 
             {toggleIndex == 0 ? (
               <tbody>
-                {array.map((user, index) => {
+                {paginatedData.map((user, index) => {
                   let lost = user.status == "Lost" ? true : false;
 
                   return (
                     <tr id={Style.tableRows} key={index}>
                       <td>{index + 1}</td>
                       <td>{user.bet_id}</td>
-                      {source === "Sports" ? <td> { !user.type ? 'bet type not found': user.bet_type } </td>: source === "Dice Games" ? <td>{ !user.bet_type ? 'bet type not found': user.bet_type}</td>:null }
-                      {/* <td>{user.bet_Type}</td> */}
-                      {/* {source === "Sports" ? <td></td> : null} */}
-                      {source === "Sports" ? 
-                        <td>{!user.amount? 'amount not found': user.amount }</td>
-                      : source === "Dice Games"?  <td>{!user.amount_staked? 'amount not found': user.amount_staked} </td>: null}
-                      {source==='Sports'? <td>{!user.matchid? 'match ID not found': user.matchid} </td>: null}
-                      {
-                        source === "Dice Games"?<td>
-                        <div id={Style.players_imgDiv}>
-                          {!user.players? 'data not found': user.players}
-                        </div>
-                      </td>: <td>
-                        <div id={Style.players_imgDiv}>
-                          {!user.players_in_game? 'data not found': user.players_in_game}
-                        </div>
-                      </td>
-                      }
-                      {source === "Sports" ? <td>{!createdAt?'Date not found': createdAt} </td> : source === "Dice Games" ?<td>No Date</td> : null}
-                      {source === "Sports" ? <td>{!createdAt?'Date not found': createdAt}</td> : source === "Dice Games" ?<td>No Time</td> : null}
-                      
+                      {source === "Sports" ? (
+                        <td>
+                          {" "}
+                          {!user.bet_type
+                            ? "bet type not found"
+                            : user.bet_type}{" "}
+                        </td>
+                      ) : source === "Dice Games" ? (
+                        <td>
+                          {!user.bet_type
+                            ? "bet type not found"
+                            : user.bet_type}
+                        </td>
+                      ) : source === "Dashboard" ? (
+                        <td>
+                          {!user.bet_type
+                            ? "bet type not found"
+                            : user.bet_type}
+                        </td>
+                      ) :null}
+                      {source === "Sports" ? (
+                        null
+                      ) : source === "Dice Games" ? (
+                        <td>
+                          {!user.amount_staked
+                            ? "amount not found"
+                            : user.amount_staked}{" "}
+                        </td>
+                      ) :source === "Dashboard" ? (
+                        <td>
+                          {!user.amount_staked
+                            ? "amount not found"
+                            : user.amount_staked}{" "}
+                        </td>
+                      ) : null}
+                      {source === "Sports" ? (
+                        <td>
+                          {!user.match_id ? "match ID not found" : user.match_id}{" "}
+                        </td>
+                      ) : null}
+                      {source === "Sports" ? (
+                        <td>{!user.createdAt ? "Date not found" : createdAt} </td>
+                      ) : source === "Dice Games" ? (
+                        <td>No Date</td>
+                      ) : source === "Dice Games" ? (
+                        <td>No Date</td>
+                      ) :source === "Dashboard" ? (
+                        <td>{!user.createdAt ? "Date not found" : createdAt} </td>
+                      ) : null}
+
+
+                      {source === "Sports" ? (
+                        <td>{!user.createdAt ? "Date not found" : createdAt}</td>
+                      ) : source === "Dice Games" ? (
+                        <td>No Time</td>
+                      ) :source === "Dashboard" ? (
+                        <td>{!user.createdAt ? "Date not found" : createdAt}</td>
+                      ) : null}
+
                       {/* <td><div id={Style.statusText} style={{ backgroundColor: lost ? "#eb575733" : "#31c36433", color: lost ? "#EB5757" : "#31C364" }}>{user.status}</div></td> */}
                       {/* <td>{user.Winners}</td>
                       <td>{user.win}</td> */}
@@ -307,7 +445,7 @@ const BetPlaced_com = (props) => {
                             // }}
                             id={Style.Btn}
                           >
-                            see details &#8811; 
+                            see details &#8811;
                           </button>
                           {betDetailsModal ? (
                             <div id={Style.BetFullDetails}>
@@ -317,7 +455,7 @@ const BetPlaced_com = (props) => {
                                   HandleViewMoreBtn(user);
                                 }}
                               ></div>
-  
+
                               <span id={Style.BetFullDetailsBackground}></span>
                               <div id={Style.BetFullDetailsBody}>
                                 <div id={Style.RowOne}>
@@ -338,50 +476,99 @@ const BetPlaced_com = (props) => {
                                         }
                                       />
                                       <div id={Style.headerTextsDiv}>
-                                        <h3 id={Style.HeroText} >Game Details</h3>
-                                        <p id={Style.heroSummary}>Complete information for {selectedBet.bet_id}</p>
+                                        <h3 id={Style.HeroText}>
+                                          Game Details
+                                        </h3>
+                                        <p id={Style.heroSummary}>
+                                          Complete information for{" "}
+                                          {selectedBet.bet_id}
+                                        </p>
                                       </div>
                                     </div>
                                     <div id={Style.avatarSection}>
-
-                                      <div id={Style.profileCard} >
-                                        <div>
-                                          
-                                        </div>
-                                        <img className={Style.profileAvatar} src={Hulk} alt="" />
-                                        <img id={Style.CrownAvatar} src={crownAvatar} alt="" />
-                                        <h3 id={Style.playersFullname}> Samuel Daniel </h3>
+                                      <div id={Style.profileCard}>
+                                        <div></div>
+                                        <img
+                                          className={Style.profileAvatar}
+                                          src={Hulk}
+                                          alt=""
+                                        />
+                                        <img
+                                          id={Style.CrownAvatar}
+                                          src={crownAvatar}
+                                          alt=""
+                                        />
+                                        <h3 id={Style.playersFullname}>
+                                          {" "}
+                                          Samuel Daniel{" "}
+                                        </h3>
                                         <div id={Style.locationDiv}>
                                           {/* <img src={location} alt="" srcset="" /> */}
-                                          <img id={Style.locationsvg} src={location} alt="" />
-                                          <p id={Style.playerslocation}> Lagos, Nigeria </p>
+                                          <img
+                                            id={Style.locationsvg}
+                                            src={location}
+                                            alt=""
+                                          />
+                                          <p id={Style.playerslocation}>
+                                            {" "}
+                                            Lagos, Nigeria{" "}
+                                          </p>
                                         </div>
                                       </div>
 
-                                      <div id={Style.profileCard} >
-                                        <img className={Style.profileAvatar}  src={peaceLadyAvatar} alt="" />
-                                        <h3 id={Style.playersFullname}> Samuel Daniel </h3>
+                                      <div id={Style.profileCard}>
+                                        <img
+                                          className={Style.profileAvatar}
+                                          src={peaceLadyAvatar}
+                                          alt=""
+                                        />
+                                        <h3 id={Style.playersFullname}>
+                                          {" "}
+                                          Samuel Daniel{" "}
+                                        </h3>
                                         <div id={Style.locationDiv}>
-                                          <img id={Style.locationsvg} src={location} alt=""/>
-                                          <p id={Style.playerslocation}> Lagos, Nigeria </p>
+                                          <img
+                                            id={Style.locationsvg}
+                                            src={location}
+                                            alt=""
+                                          />
+                                          <p id={Style.playerslocation}>
+                                            {" "}
+                                            Lagos, Nigeria{" "}
+                                          </p>
                                         </div>
                                       </div>
 
-                                      <div id={Style.profileCard} >
-                                        <img className={Style.profileAvatar} src={coolBoiAvatar} alt="" />
-                                        <h3 id={Style.playersFullname}> Samuel Daniel </h3>
+                                      <div id={Style.profileCard}>
+                                        <img
+                                          className={Style.profileAvatar}
+                                          src={coolBoiAvatar}
+                                          alt=""
+                                        />
+                                        <h3 id={Style.playersFullname}>
+                                          {" "}
+                                          Samuel Daniel{" "}
+                                        </h3>
                                         <div id={Style.locationDiv}>
-                                          <img id={Style.locationsvg} src={location} alt=""/>
-                                          <p id={Style.playerslocation}> Lagos, Nigeria </p>
+                                          <img
+                                            id={Style.locationsvg}
+                                            src={location}
+                                            alt=""
+                                          />
+                                          <p id={Style.playerslocation}>
+                                            {" "}
+                                            Lagos, Nigeria{" "}
+                                          </p>
                                         </div>
                                       </div>
-
                                     </div>
-
                                   </div>
                                 </div>
                                 <div id={Style.SummarySection}>
-                                  <h3 id={Style.summaryHeader}> Game summary</h3>
+                                  <h3 id={Style.summaryHeader}>
+                                    {" "}
+                                    Game summary
+                                  </h3>
                                   <div id={Style.tableDiv}>
                                     <table>
                                       <tr id={Style.tableHeader}>
@@ -411,7 +598,7 @@ const BetPlaced_com = (props) => {
                                   <h3 id={Style.summaryHeader}> Winner </h3>
                                   <div id={Style.tableDiv}>
                                     <table>
-                                       <tr id={Style.tableHeader}>
+                                      <tr id={Style.tableHeader}>
                                         <div>Bet Type</div>
                                         <div>Game Status</div>
                                         <div>Staked</div>
@@ -435,7 +622,10 @@ const BetPlaced_com = (props) => {
                                   </div>
                                 </div>
                                 <div id={Style.SummarySection}>
-                                  <h3 id={Style.summaryHeader}> Other Players </h3>
+                                  <h3 id={Style.summaryHeader}>
+                                    {" "}
+                                    Other Players{" "}
+                                  </h3>
                                   <div id={Style.tableDiv}>
                                     <table>
                                       <tr id={Style.tableHeader}>
@@ -462,13 +652,11 @@ const BetPlaced_com = (props) => {
                                   </div>
                                 </div>
                               </div>
-
-
                             </div>
-                              // <div>
-                              //   id={`modalOverLay`}
-                              // </div>
                           ) : (
+                            // <div>
+                            //   id={`modalOverLay`}
+                            // </div>
                             <></>
                           )}
                         </div>
@@ -478,35 +666,10 @@ const BetPlaced_com = (props) => {
                 })}
               </tbody>
             ) : toggleIndex == 1 ? (
-              //winner Bet
               <tbody>
                 {sortedArrayTwo.map((user, index) => {
                   // let lost = user.status == "Lost" ? true : false
                   return (
-                    // <tr key={index}>
-                    //     <td>{index + 1}</td>
-                    //     <td>{user.userID}</td>
-                    //     <td>{user.BetID}</td>
-                    //     <td>{user.game}</td>
-                    //     <td>{user.amount}</td>
-                    //     <td>
-                    //         <div id={Style.players_imgDiv}>
-                    //             <img src={user.players} alt="" />
-                    //             <img src={user.players} alt="" />
-                    //             <img src={user.players} alt="" />
-                    //             <img src={user.players} alt="" />
-                    //         </div>
-                    //     </td>
-                    //     {/* <td><div id={Style.statusText}>{user.status}</div></td> */}
-                    //     <td>{user.win}</td>
-                    //     <td>
-                    //         <div id={Style.action_field}>
-                    //             <img src={user.action.eye} alt="" />
-                    //             <img src={user.action.warning} alt="" />
-                    //             <img src={user.action.delete} alt="" />
-                    //         </div>
-                    //     </td>
-                    // </tr>
                     <tr key={index}>
                       <td>{index + 1}</td>
                       {/* <td>{user.bet_id}</td> */}
@@ -542,7 +705,6 @@ const BetPlaced_com = (props) => {
                 })}
               </tbody>
             ) : toggleIndex == 2 ? (
-              //Dice_Bet_Placed Lost screen
               <tbody>
                 {sortedArray.map((user, index) => {
                   let lost = user.status == "Lost" ? true : false;
