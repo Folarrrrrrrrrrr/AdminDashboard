@@ -1,28 +1,38 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// import DiceSummaries from "../constant/url_path"
-const API_URL = "https://white-house-api.onrender.com/api/v1/admin/dice-summary";
 
-// Async thunk for fetching dice summary data
+const API_URL = "https://stake-cut-api.onrender.com/api/v1/admin/games/dice/dice-summary";
+
 export const fetchDiceSummary = createAsyncThunk(
   "diceSummary/fetch",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch(API_URL);
-      // console.log(response)
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      const accessToken = localStorage.getItem("token");
+      if (!accessToken) {
+        throw new Error("No access token found");
       }
+
+      const response = await fetch(API_URL, {
+        method: "GET",
+        headers: {
+          // "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
       const data = await response.json();
-      // console.log(data);
-      const apiBody = data.responeBody;
-      return apiBody; // Extract the relevant data
+      console.log(data);
+      return data.responeBody;
     } catch (error) {
+      console.log("Fetch Dice Summary Error:", error.message);
       return rejectWithValue(error.message);
     }
   }
 );
 
-// Slice for managing dice summary
 const diceSummarySlice = createSlice({
   name: "diceSummary",
   initialState: {
@@ -35,7 +45,6 @@ const diceSummarySlice = createSlice({
     loading: false,
     error: null,
   },
-
   reducers: {},
   extraReducers: (builder) => {
     builder

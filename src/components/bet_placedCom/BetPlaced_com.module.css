@@ -16,20 +16,22 @@
     align-items: center;
     width: 15.93rem;
     height: 3rem;
-    background-color: #efefef;
     justify-content: space-between;
     padding: 0.62rem;
+    /* background-color: #8886861f; */
     box-sizing: border-box;
     border-radius: 0.5rem;
+    align-self: center;
+    justify-self: center; 
+    margin-top: -10px;   
   }
   #ToggleRow{
-    /* display:none; */
-    /* background-color: #0e093c; */
-    /* border: 2px solid black; */
+    max-height: 40px;
     padding-top: 10px;
-    border-radius: 20px;
+    border-radius: 10px;
     height: 60px;
     background-color: #8886861f;
+
   }
   .Transaction_listDiv_button {
     border: none;
@@ -40,19 +42,19 @@
   }
   .toggleDiv_buttonActive {
     min-width: 2.3rem;
-    background-color: #0e093c;
+    background-color: #8886861f;
     border: none;
-    color: #ffffff;
+    color: #666666;
     cursor: pointer;
     border-radius: 0.5rem;
-    height: 2rem;
+    height: 1.5rem;
     font-size: 0.9rem;
     cursor: pointer;
   }
   #Amount_Paid_input_FilterDiv {
     display: flex;
     align-items: center;
-    column-gap: 1rem;
+    column-gap: 1rem;margin-top: -7px;
   }
   #Amount_Paid_input_FilterDiv h1 {
     display: flex;
@@ -144,8 +146,9 @@
     min-height: 10rem;
   }
   #winners_background {
-    margin-bottom: -4rem;
-    width: 100%;
+    /* margin-bottom: -4rem;
+    width: 100%; */
+    display: none;
   }
   
   #Total_BetPlaced_TableWrapperDiv table {
@@ -173,6 +176,13 @@
     color: #666666;
     font-size: 0.9rem;
     border-bottom: 1px solid #c4c4c4;
+  }
+  #tableContentDiv{
+    max-height: 150px;
+    overflow: scroll;
+    scrollbar-width: none;
+    /* border: 2px solid black; */
+    /* display: none; */
   }
   #tableRows{
     background-color: #ffffffa7;
@@ -216,16 +226,29 @@
   #BetTables{
     /* width: 200px; */
     /* width: 1110px; */
-    height: 450px;
-    overflow:  scroll;
+    height: 150px;
+    overflow:  hidden;
+  }
+
+  @keyframes scaleIn {
+    0% {
+      transform: scale(0.5); /* Start smaller */
+      opacity: 0; /* Fully transparent */
+    }
+    100% {
+      transform: scale(1); /* Normal size */
+      opacity: 1; /* Fully visible */
+    }
   }
   #BetFullDetailsBody{
+    animation: scaleIn 0.5s ease-in-out;
+    background-color: #fffefe;
     position: absolute;
     top:-40%;
     left: 15%;
     width: 605;
     height: 110%;
-    background-color: rgba(231, 231, 233, 0.445);
+    /* background-color: rgba(231, 231, 233, 0.445); */
     padding: 20px;
     border-radius: 30px;
   }
@@ -238,7 +261,7 @@
     right: 0;
     bottom: 0;
     position: fixed;
-    background-color: rgba(255, 254, 254, 0.918);
+    background-color: rgba(255, 254, 254, 0.24);
   }
 
   #modalHeading{

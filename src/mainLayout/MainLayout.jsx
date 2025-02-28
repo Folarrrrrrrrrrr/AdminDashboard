@@ -78,7 +78,7 @@ const MainLayout = () => {
       {loadingPopup && <Loading/>} */}
 
 
-      <div><Outlet /></div>
+      <div id={Style.generalBody}><Outlet /></div>
     </div>
   )
 }

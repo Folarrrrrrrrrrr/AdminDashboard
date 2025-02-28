@@ -6,11 +6,12 @@
   justify-content: space-between;
   align-items: center;
   z-index: 9999;
+  position: fixed;
+  margin-top: -20px;
 }
 #bigScreensNav {
   display: flex;
 }
-
 .scrollUpIcon{
   display: none;  
 }
@@ -79,20 +80,16 @@ Nav_Bar_Wrapper p {
 
 
 /* Add this to NavBar.module.css */
-.Nav_styled_Link {
-  font-weight: bold;
-  color: #4a4a4a; /* Choose your active color */
-  border-bottom: 2px solid #4a4a4a; /* Optional underline */
-}
 
 .Nav_styled_Link {
-  background-color: #0e093c;
+  /* background-color: #0e093c; */
+  font-weight: bold;
+  color: rgb(149, 4, 4); /* Choose your active color */
+  border-bottom: 1px solid  rgb(149, 4, 4); /* Optional underline */
   align-items: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #ffffff;
-  border: 1px solid #ffffff;
   font-size: 1rem;
   min-width: 5rem;
   padding-top: 20px;

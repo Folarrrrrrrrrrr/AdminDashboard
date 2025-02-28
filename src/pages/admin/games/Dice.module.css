@@ -1,13 +1,13 @@
 #DiceGame_mainDiv {
     width: 100%;
     min-height: 100vh;
-    background-color: #F9F9F9;
+    background-color: #ffffff;
+    margin-top: 70px;
 }
-
 #DiceGame_wrapperDiv {
     padding: 2.5rem 7.5rem 10rem 7.5rem;
+    margin-top: 40px;
 }
-
 .PlaceBet_headerText {
     color: #1A1A1A;
     background-color: rgba(196, 196, 196, 0.14);
@@ -33,8 +33,11 @@
     font-size: 1.55rem;
     line-height: 38px;
     font-weight: 400;
-    margin-top: -80px;
-    margin-left: 110px;
+    position: relative;
+    top: -160px;
+    left: 120px;
+    /* margin-top: -0px; */
+    /* margin-left: 110px; */
 }
 
 #DiceGame_Card_mapDiv {
@@ -46,24 +49,48 @@
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
-    width: 100%;
-    height: 15.37rem;
+    width: 28%;
+    height: auto;
+    position: relative;
+    left: 90px;
+    /* border: 2px solid black; */
+    justify-content: center;
+    align-content:center;
+}
+#nanoTableDiv{
+    /* border: 1px solid black; */
+    max-width: 400px;
+    height: 120vh;
+    overflow: scroll;
 }
 #DoughnutChartDiv{
-    width: 50vw;
-    margin-top:-25px;
+    width: 70%;
+    position: relative;
+    top: 100px;
+    left: 190px;
     align-content: center;
     color:black;
     display:flex;
+    flex-direction: row;
+    /* border: 2px solid black; */
+    padding-top: 20px;
 }
 #DoughnutChartContainer{
-    /* display: none; */
+    display: grid;
     width: 35vw;
-    /* height: 20vh; */
-    /* border: 2px solid  black; */
-    /* border-radius: 50px; */
-    margin-bottom: 40px;
+    /* height: 40vh; */
+    /* border: 2px solid black; */
+    margin-top: -60px;
+    /* margin-right: 50px; */
 
+}
+#doughnutChart{
+    /* border: 2px solid black; */
+    width: 35vw ;
+    max-height: 38vh;
+    position: relative;
+    /* top: 40px; */
+    left: 45px;
 }
 .Revenue_earningDiv {
     width: 100%;
@@ -136,30 +163,38 @@
 }
 
 #DiceGame_cardGraph_wrapper {
-    width: 85%;
-    height: 85vh;
-    margin-top: -10px;
+    width: 100%;
+    margin-top: -170px;
     justify-self: center;
     display: flex;
-    column-gap: 2rem;
-    padding: 50px;
-    /* border: 2px solid black; */
+    justify-content: space-between;
     border-radius: 50px;
+    /* padding-right: 20px; */
+    /* border: 3px solid black; */
 }
 #DiceGame_Card_wrapper :hover{
     box-shadow:2px 0px  102px 0px rgb(219, 218, 218) ;
     border-radius: 30px;
+
 }
 #DoughnutChartContainer :hover{
-    box-shadow:2px 0px  102px 0px rgb(219, 218, 218) ;
+    /* box-shadow:2px 0px  102px 0px rgb(219, 218, 218) ; */
     border-radius: 30px;
 }
 #AreaChartDiv{
     /* display: none; */
-    margin-top: 20px;   
+    max-width: 80%;
+    max-height: 90%;
+    margin-left: -140px;   
+    /* border: 2px solid black; */
+    align-self: center;
+    justify-self: center;
+    padding-left: -60px;
+    align-content: left;
+    justify-content: left;
 }
 #AreaChartDiv:hover{
-    box-shadow:2px 0px  102px 0px rgb(219, 218, 218) ;
+    /* box-shadow:2px 0px  102px 0px rgb(219, 218, 218) ; */
     border-radius: 30px;
 }
 #Revenue_progressDiv img {
@@ -192,7 +227,8 @@
 #AreaChartDiv #AreaChart_TextDiv {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 3.5rem;
+    margin-bottom: 10px;
+    margin-top: -50px;
     box-sizing: border-box;
 }
 
@@ -229,7 +265,7 @@
     color: #003E79;
 }
 #DiceGame_Card_wrapper{
-    margin-right: 150px;
+    margin-left: 100px;
 }
 #DiceGame_Card_wrapper_two{
     display: flex;
@@ -270,6 +306,7 @@
         display: grid;
         width: 100vw;
         justify-self: center;
+        margin-top: 30px;
     }
     .PlaceBet_headerText{
         position: relative;

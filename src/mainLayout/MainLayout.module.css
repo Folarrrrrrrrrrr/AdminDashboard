@@ -5,6 +5,11 @@
     color: white;
     position: relative;
     overflow: hidden;
+    scrollbar-width: none;
+    background-color: #ffffff;
+}
+#generalBody{
+    margin-top: 5%;
 }
 
 /* Mobile view */

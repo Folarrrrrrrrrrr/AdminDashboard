@@ -1,11 +1,12 @@
 #Revenue_mainDiv {
     width: 100%;
     min-height: 100vh;
-    background-color: #F9F9F9;
+    background-color: #fff;
+    margin-top: 70px;
 }
 #Revenue_First_WrapperDiv{
     padding: 7.3rem 7.5rem;
-
+    margin-top: -20px;
 }
 #Revenue_wrapperDiv {
     display: flex;

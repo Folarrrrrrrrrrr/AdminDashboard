@@ -1,24 +1,22 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// import NigerianUsers from "../constant/url_path"
-// const API_URL = "http://white-house-api.onrender.com//api/v1/admin/get-all-staffs";
-// Async thunk for fetching dice summary data
- 
 
 export const fetchStaffDetails = createAsyncThunk(
     "StaffProfile/fetch",
-    async ( email, _) => {
+    async (email, { rejectWithValue }) => {
         try {
-            const response = await fetch(`https://white-house-api.onrender.com/api/v1/admin/get-staff-details/${email}`);
-            // console.log(response)
+            const accessToken = localStorage.getItem("accessToken");
+            const response = await fetch(`https://stay-cut-api.onrender.com/api/v1/admin/staffs/get-staff-details/${email}`, {
+                method: "GET",
+                headers: {
+                    // "Content-Type": "application/json",
+                    Authorization: `Bearer ${accessToken}`
+                }
+            });
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const StaffProfileData = await response.json();
-            // console.log(data);
-
-            // console.log(data.responseBody);
-            return StaffProfileData.responseBody; // Extract the relevant data
-
+            return StaffProfileData.responseBody;
         } catch (error) {
             console.log(error.message);
             return rejectWithValue(error.message);
@@ -26,7 +24,6 @@ export const fetchStaffDetails = createAsyncThunk(
     }
 );
 
-// Slice for managing dice summary
 const StaffProfileSlice = createSlice({
     name: "StaffProfile",
     initialState: {

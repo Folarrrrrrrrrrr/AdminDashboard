@@ -1,40 +1,46 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// import NigerianUsers from "../constant/url_path"
-const API_URL = "https://white-house-api.onrender.com/api/v1/admin/football-summary";
 
-// Async thunk for fetching dice summary data
+const API_URL = "https://stake-cut-api.onrender.com/api/v1/admin/games/sports/football/football-summary";
+
 export const fetchFootballBetSummary = createAsyncThunk(
   "FootballBetsSummary/fetch",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch(API_URL);
-      // console.log(response)
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      const accessToken = localStorage.getItem("token");
+      if (!accessToken) {
+        throw new Error("No access token found");
       }
-      const FootballSummary = await response.json();
-      console.log(FootballSummary);
-     
-      // console.log(data.responseBody);
-      return FootballSummary.responseBody; // Extract the relevant data
 
+      const response = await fetch(API_URL, {
+        method: "GET",
+        headers: {
+          // "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const footballSummary = await response.json();
+      return footballSummary.responseBody;
     } catch (error) {
-      console.log(error.message);
+      console.log("Fetch Football Bet Summary Error:", error.message);
       return rejectWithValue(error.message);
     }
   }
 );
-// Slice for managing dice summary
+
 const FootballSummarySlice = createSlice({
   name: "footballBetSummary",
   initialState: {
     FootballSummary: {
-        "totalBetPlaced": 0,
-        "totalPlayers": 0,
-        "totalWinners": 0,
-        "totalLosers": 0
+      totalBetPlaced: 0,
+      totalPlayers: 0,
+      totalWinners: 0,
+      totalLosers: 0,
     },
-
     FootballSummaryLoading: false,
     FootballSummaryError: null,
   },

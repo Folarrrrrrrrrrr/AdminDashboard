@@ -73,7 +73,7 @@ export const updateProfile_Service = async (email, body) => {
 };
 
 export const dashboard_Service = async () => {
-  const response = await axios.get(dashboard);
+  const response = await authAxios.get(dashboard);
 
   // console.log(response);
 

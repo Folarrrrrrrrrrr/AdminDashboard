@@ -1,29 +1,33 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// import NigerianUsers from "../constant/url_path"
-// const API_URL = "http://white-house-api.onrender.com/api/v1/admin/dice-bet-list";
-// Async thunk for fetching dice summary data
+
 export const fetchFootSolidersProfile = createAsyncThunk(
   "FootSolidersProfile/fetch",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch('https://white-house-api.onrender.com/api/v1/admin/footsoldier-profile');
-      // console.log(response)
+      const accessToken = localStorage.getItem("token");
+      console.log(accessToken);
+      
+      const response = await fetch('https://stake-cut-api.onrender.com/api/v1/admin/footsoldier/footsoldier-profile', {
+        method: "GET",
+        headers: {
+          // "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`
+        }
+      });
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
+      
       const footSoldierProfiles = await response.json();
-      // console.log(data);
-     
-      // console.log(data.responseBody);
-      return footSoldierProfiles.responseBody; // Extract the relevant dat
+      return footSoldierProfiles.responseBody;
     } catch (error) {
-      console.log(error.message);      
+      console.log(error.message);
       return rejectWithValue(error.message);
     }
   }
 );
 
-// Slice for managing dice summary
 const footSoldierProfilesSlice = createSlice({
   name: "FootSoldierProfiles",
   initialState: {
@@ -36,11 +40,10 @@ const footSoldierProfilesSlice = createSlice({
         "country": "Nigeria",
         "region": null,
         "status": "pending"
-    },
-  ],
-
-  FootSolidersProfileloading: false,
-  FootSolidersProfileerror: null,
+      },
+    ],
+    FootSolidersProfileloading: false,
+    FootSolidersProfileerror: null,
   },
   reducers: {},
   extraReducers: (builder) => {

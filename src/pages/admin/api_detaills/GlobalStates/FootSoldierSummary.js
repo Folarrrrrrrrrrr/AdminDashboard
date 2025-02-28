@@ -1,32 +1,38 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// import NigerianUsers from "../constant/url_path"
-// const API_URL = "https://white-house-api.onrender.com/api/v1/admin/dice-bet-list";
 
-// Async thunk for fetching dice summary data
-export const fetchFootSoldiersSummary= createAsyncThunk(
+export const fetchFootSoldiersSummary = createAsyncThunk(
   "footSoldiersSummary/fetch",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch('http://white-house-api.onrender.com/api/v1/admin/footsoldier-summary');
-      // console.log(response)
+      const accessToken = localStorage.getItem("token");
+      console.log(accessToken);
+      
+      const response = await fetch('https://stake-cut-api.onrender.com/api/v1/admin/footsoldier/footsoldier-summary', {
+        method: "GET",
+        headers: {
+          // "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`
+        }
+      //   headers: {
+      //     Authorization: `Bearer ${getToken()}`
+      // }
+
+      });
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
+      
       const footSoldiersSummaryData = await response.json();
-      // console.log(data);
-     
-      // console.log(data.responseBody);
-      return footSoldiersSummaryData.responseBody; // Extract the relevant data
-
+      return footSoldiersSummaryData.responseBody;
     } catch (error) {
-      console.log(error.message);      
+      console.log(error.message);
       return rejectWithValue(error.message);
     }
   }
 );
 
-// Slice for managing dice summary
-const footSoldiersSummarySlice= createSlice({
+const footSoldiersSummarySlice = createSlice({
   name: "FootSoldiersPayments",
   initialState: {
     footSoldiersSummaryData: {
@@ -68,7 +74,7 @@ const footSoldiersSummarySlice= createSlice({
       })
       .addCase(fetchFootSoldiersSummary.rejected, (state, action) => {
         state.footSoldiersSummaryloading = false;
-        state.footSoldierPaymentserror = action.payload;
+        state.footSoldiersSummaryerror = action.payload;
       });
   },
 });

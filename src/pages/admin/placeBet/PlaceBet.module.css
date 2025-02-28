@@ -1,10 +1,12 @@
 #PlaceBet_mainDiv{
     width: 100%;
     min-height: 100vh;
-    background-color: #F9F9F9;
+    background-color: #ffffff;
+    margin-top: 80px;
 }
 #PlaceBet_wrapperDiv{
     padding: 4rem 8rem 5rem 7.5rem;
+    margin-top: -20px;
 }
 #Total_Card_mapDiv{
     width: 100%;

@@ -31,7 +31,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchDiceSummary } from "../api_detaills/GlobalStates/diceSummarySlice";
 import { fetchDiceBetList } from "../api_detaills/GlobalStates/DiceBetsList";
 import DoughnutChart from "../../../components/chart/DoughnutChart";
-import NanoTable from '../../../components/NanoTable/NanoTable'
+import NanoTable from "../../../components/NanoTable/NanoTable";
 // import NanoTableTwo from '../../../components/NanoTable/NanoTable'
 
 const DiceGame = () => {
@@ -47,13 +47,13 @@ const DiceGame = () => {
 
   const { data, loading, error } = useSelector((state) => state.diceSummary);
 
-  console.log(data);
+  // console.log(data);
 
   const { DiceBetsdata, DiceBetsloading, DiceBetserror } = useSelector(
     (state) => state.DiceBetsList
   );
 
-  console.log(DiceBetsdata);
+  // console.log(DiceBetsdata);
 
   const navigate = useNavigate();
 
@@ -167,30 +167,27 @@ const DiceGame = () => {
   ];
 
   const NanoTableData = [
-    { photo: 1, name: "Alice", details: "view details" },
-    { photo: 2, name: "Bob", details: "view details" },
-    { photo: 3, name: "Charlie", details: "view details" },
-    { photo: 4, name: "David", details: "view details" },
-    { photo: 5, name: "Eve", details: "view details" },
-    { photo: 6, name: "Frank", details: "view details" },
-    { photo: 7, name: "Alice", details: "view details" },
-    { photo: 8, name: "Bob", details: "view details" },
-    { photo: 9, name: "Charlie", details: "view details" },
-    { photo: 10, name: "David", details: "view details" },
-    { photo: 11, name: "Eve", details: "view details" },
-    { photo: 12, name: "Frank", details: "view details" },
-    { photo: 13, name: "Eve", details: "view details" },
-    { photo: 14, name: "Frank", details: "view details" },
-    { photo: 15, name: "Frank", details: "view details" },
+    { name: "Alice", details: "view details" },
+    { name: "Bob", details: "view details" },
+    { name: "Charlie", details: "view details" },
+    { name: "David", details: "view details" },
+    { name: "Eve", details: "view details" },
+    { name: "Frank", details: "view details" },
+    { name: "Alice", details: "view details" },
+    { name: "Bob", details: "view details" },
+    { name: "Charlie", details: "view details" },
+    {  name: "David", details: "view details" },
+    {  name: "Eve", details: "view details" },
+    {  name: "Frank", details: "view details" },
+    {  name: "Eve", details: "view details" },
+    {  name: "Frank", details: "view details" },
+    {  name: "Frank", details: "view details" },
   ];
-  
+
   const NanoTableColumns = [
-    { key: "photo", label: "photot" },
     { key: "name", label: "Name" },
-    // { key: "age", label: "Age" },
     { key: "details", label: "view details" },
   ];
-  
 
   return (
     <div id={Style.DiceGame_mainDiv}>
@@ -228,69 +225,61 @@ const DiceGame = () => {
       <p className={Style.PlaceBet_headerText_Two}>Overview</p>
       <div id={Style.DiceGame_cardGraph_wrapper}>
         <div id={Style.DiceGame_Card_wrapper}>
-          {/* {stats_card2.map((obj) => {
-            return (
-              <Stats_Card
-                img={obj.img}
-                figure={obj.figure}
-                text={obj.text}
-                to={obj.to}
-              />
-            );
-          })} */}
-          <NanoTable columns={NanoTableColumns} data={NanoTableData}/>
+          {/* <div id={Style.nanoTableDiv}> */}
+            <NanoTable columns={NanoTableColumns} data={NanoTableData} />
+          {/* </div> */}
         </div>
-
-
-        <div id={Style.DoughnutChartDiv} >
+        <div id={Style.DoughnutChartDiv}>
           <div id={Style.DoughnutChartContainer}>
-              <DoughnutChart 
-                totalRevenue={32678} 
-                goalRevenue={50000} 
-                dailyRevenue={3000} 
-                monthlyEarnings={23000} 
+            <div id={Style.doughnutChart}> 
+              <DoughnutChart
+                totalRevenue={32678}
+                goalRevenue={50000}
+                dailyRevenue={3000}
+                monthlyEarnings={23000}
               />
-               <div id={Style.AreaChartDiv}>
-          <div id={Style.AreaChart_TextDiv}>
-            <p id={Style.AreaChart_weeklyText}>Weekly Revenue Report</p>
-            <p id={Style.AreaChart_dateText}>
-              Week One October, 2024 <img src={arrow_down} alt="" />
-            </p>
-          </div>
-          <ResponsiveContainer width="100%" height="70%">
-            <AreaChart
-              width={500}
-              height={300}
-              data={datas}
-              margin={{
-                top: 0,
-                right: 0,
-                left: -20,
-                bottom: 0,
-              }}
-            >
-              <XAxis dataKey="name" axisLine={false} tickLine={false} />
-              <YAxis
-                axisLine={false}
-                tickLine={false}
-                tickFormatter={customTickFormatter}
-              />
-              <Tooltip />
-              <Area
-                type="normal"
-                dataKey="uv"
-                dot={true}
-                stroke="#332D5B"
-                fill="#332d5b80"
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
             </div>
+            <div id={Style.AreaChartDiv}>
+              <div id={Style.AreaChart_TextDiv}>
+                <p id={Style.AreaChart_weeklyText}>Weekly Revenue Report</p>
+                <p id={Style.AreaChart_dateText}>
+                  Week One October, 2024 <img src={arrow_down} alt="" />
+                </p>
+              </div>
+              <ResponsiveContainer width="100%" height="70%">
+                <AreaChart
+                  width={500}
+                  height={300}
+                  data={datas}
+                  margin={{
+                    top: 0,
+                    right: 0,
+                    left: -20,
+                    bottom: 0,
+                  }}
+                >
+                  <XAxis dataKey="name" axisLine={false} tickLine={false} />
+                  <YAxis
+                    axisLine={false}
+                    tickLine={false}
+                    tickFormatter={customTickFormatter}
+                  />
+                  <Tooltip />
+                  <Area
+                    type="normal"
+                    dataKey="uv"
+                    dot={true}
+                    stroke="#332D5B"
+                    fill="#332d5b80"
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
         </div>
       </div>
       {/* <div id={Style.DiceGame_lastline_graphDiv}> */}
-        {/* <div id={Style.BarChart_TextWrapperDiv}>
+      {/* <div id={Style.BarChart_TextWrapperDiv}>
           <div id={Style.Chart_mainDiv}>
             <div id={Style.PayoutsText}>Bet Placed</div>
             <ResponsiveContainer width="100%" height="100%">
@@ -343,7 +332,7 @@ const DiceGame = () => {
 
             </div>
         </div> */}
-      </div>
+    </div>
   );
 };
 

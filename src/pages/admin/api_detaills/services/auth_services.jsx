@@ -17,7 +17,7 @@ export const login_service = async (body) => {
                 //Assuming the token is in response.data.token
                 if (response.data["responseBody"]) {
 
-                    setToken(response.data["responseBody"]);
+                    setToken(response.data["responseBody"].accessToken);
         
                     // Store the email in local storage
                     if (body.email) {
@@ -26,7 +26,7 @@ export const login_service = async (body) => {
                 } else {
                     console.warn('Token not found in response');
                 }
-                console.log(response.data["responseBody"]);
+                console.log(response.data["responseBody"].accessToken);
 
         return response;
 

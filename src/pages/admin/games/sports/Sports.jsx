@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Style from "../Dice.module.css";
+import Style from "./Sports.module.css";
 import {
   AreaChart,
   Area,
@@ -294,25 +294,25 @@ const Sports = () => {
   ];
 
   const NanoTableData = [
-    { photo: 1, name: "Alice", details: "view details" },
-    { photo: 2, name: "Bob", details: "view details" },
-    { photo: 3, name: "Charlie", details: "view details" },
-    { photo: 4, name: "David", details: "view details" },
-    { photo: 5, name: "Eve", details: "view details" },
-    { photo: 6, name: "Frank", details: "view details" },
-    { photo: 7, name: "Alice", details: "view details" },
-    { photo: 8, name: "Bob", details: "view details" },
-    { photo: 9, name: "Charlie", details: "view details" },
-    { photo: 10, name: "David", details: "view details" },
-    { photo: 11, name: "Eve", details: "view details" },
-    { photo: 12, name: "Frank", details: "view details" },
-    { photo: 13, name: "Eve", details: "view details" },
-    { photo: 14, name: "Frank", details: "view details" },
-    { photo: 15, name: "Frank", details: "view details" },
+    {name: "Alice", details: "view details" },
+    {name: "Bob", details: "view details" },
+    {name: "Charlie", details: "view details" },
+    {name: "David", details: "view details" },
+    {name: "Eve", details: "view details" },
+    {name: "Frank", details: "view details" },
+    {name: "Alice", details: "view details" },
+    {name: "Bob", details: "view details" },
+    {name: "Charlie", details: "view details" },
+    { name: "David", details: "view details" },
+    { name: "Eve", details: "view details" },
+    { name: "Frank", details: "view details" },
+    { name: "Eve", details: "view details" },
+    { name: "Frank", details: "view details" },
+    { name: "Frank", details: "view details" },
   ];
 
   const NanoTableColumns = [
-    { key: "photo", label: "photot" },
+    // { key: "photo", label: "photot" },
     { key: "name", label: "Name" },
     // { key: "age", label: "Age" },
     { key: "details", label: "view details" },
@@ -358,61 +358,62 @@ const Sports = () => {
             );
           })}
         </div>
-        <p className={Style.PlaceBet_headerText}>Overview</p>
-        <div id={Style.DiceGame_cardGraph_wrapper}>
-          <div id={Style.DiceGame_Card_wrapper}>
-           <NanoTable columns={NanoTableColumns} data={NanoTableData} />
-          </div>
-
-          <div id={Style.DoughnutChartDiv}>
-            <div>
-             <div id={Style.DoughnutChartContainer}>
-               <DoughnutChart
+        <p className={Style.PlaceBet_headerText_Two}>Overview</p>
+      <div id={Style.DiceGame_cardGraph_wrapper}>
+        <div id={Style.DiceGame_Card_wrapper}>
+          {/* <div id={Style.nanoTableDiv}> */}
+            <NanoTable columns={NanoTableColumns} data={NanoTableData} />
+          {/* </div> */}
+        </div>
+        <div id={Style.DoughnutChartDiv}>
+          <div id={Style.DoughnutChartContainer}>
+            <div id={Style.doughnutChart}> 
+              <DoughnutChart
                 totalRevenue={32678}
                 goalRevenue={50000}
                 dailyRevenue={3000}
                 monthlyEarnings={23000}
               />
+            </div>
+            <div id={Style.AreaChartDiv}>
+              <div id={Style.AreaChart_TextDiv}>
+                <p id={Style.AreaChart_weeklyText}>Weekly Revenue Report</p>
+                <p id={Style.AreaChart_dateText}>
+                  Week One October, 2024 <img src={arrow_down} alt="" />
+                </p>
               </div>
-              <div id={Style.AreaChartDiv}>
-                <div id={Style.AreaChart_TextDiv}>
-                  <p id={Style.AreaChart_weeklyText}>Weekly Revenue Report</p>
-                  <p id={Style.AreaChart_dateText}>
-                    Week One October, 2024 <img src={arrow_down} alt="" />
-                  </p>
-                </div>
-                <ResponsiveContainer width="100%" height="70%">
-                  <AreaChart
-                    width={500}
-                    height={300}
-                    data={datas}
-                    margin={{
-                      top: 0,
-                      right: 0,
-                      left: -20,
-                      bottom: 0,
-                    }}
-                  >
-                    <XAxis dataKey="name" axisLine={false} tickLine={false} />
-                    <YAxis
-                      axisLine={false}
-                      tickLine={false}
-                      tickFormatter={customTickFormatter}
-                    />
-                    <Tooltip />
-                    <Area
-                      type="normal"
-                      dataKey="uv"
-                      dot={true}
-                      stroke="#332D5B"
-                      fill="#332d5b80"
-                    />
-                  </AreaChart>
-                </ResponsiveContainer>
-              </div>
+              <ResponsiveContainer width="140%" height="100%">
+                <AreaChart
+                  width={500}
+                  height={300}
+                  data={datas}
+                  margin={{
+                    top: 0,
+                    right: 10,
+                    left: 0,
+                    bottom: 0,
+                  }}
+                >
+                  <XAxis dataKey="name" axisLine={false} tickLine={false} />
+                  <YAxis
+                    axisLine={false}
+                    tickLine={false}
+                    // tickFormatter={customTickFormatter}
+                  />
+                  <Tooltip />
+                  <Area
+                    type="normal"
+                    dataKey="uv"
+                    dot={true}
+                    stroke="#332D5B"
+                    fill="#332d5b80"
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
             </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

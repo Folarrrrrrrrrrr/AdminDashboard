@@ -7,10 +7,11 @@ import Activity from '../../../assets/svg/Activity.svg'
 import total_users from '../../../assets/svg/total_users.svg'
 import winner from '../../../assets/svg/winner.svg'
 import loosers from '../../../assets/svg/loosers.svg'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import fetchOnlineUsers from "../api_detaills/GlobalStates/onlineUsers";
-
+import { fetchFootballBetList } from "../api_detaills/GlobalStates/FootballBetList";
+import { fetchDiceBetList } from "../api_detaills/GlobalStates/DiceBetsList";
 
 
 const PlaceBet = () => {
@@ -144,7 +145,42 @@ const PlaceBet = () => {
             to: `/totalBetPlaced/${2}`
         },
     ]
+      useEffect(() => {
+        dispatch(fetchFootballBetList());
+        dispatch(fetchDiceBetList());
+      }, [dispatch]);
+    
+      const { DiceBetsdata, DiceBetsloading, DiceBetserror } = useSelector(
+        (state) => state.DiceBetsList
+      );
+      const { footballBetsList, footballBetsListloading, footballBetsListerror } =
+        useSelector((state) => state.FootballBetList);
+    
+      function interleaveArrays(arr1, arr2) {
+        const maxLength = Math.max(arr1.length, arr2.length);
+        const result = [];
+    
+        for (let i = 0; i < maxLength; i++) {
+          if (i < arr1.length) {
+            result.push(arr1[i]);
+          }
+          if (i < arr2.length) {
+            result.push(arr2[i]);
+          }
+        }
+    
+        return result;
+      }
+      const mixedArray = interleaveArrays(DiceBetsdata, footballBetsList);
+    
 
+  const navigate = useNavigate();
+
+    const handleTotalBetsClick = () => {
+        navigate(`/totalBetPlaced/${0}`, {
+          state: { source: "Placed Bets", extraData: mixedArray },
+        });
+      };
     return (
         <div id={Style.PlaceBet_mainDiv}>
 

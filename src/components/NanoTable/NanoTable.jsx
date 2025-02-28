@@ -45,13 +45,17 @@ const NanoTable = ({ columns, data }) => {
   return (
     <div id={Style.tableContainer}>
       {/* Search Input */}
-      <input
-        type="text"
-        placeholder="Search..."
-        className= {Style.searchBox}
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-      />
+      <div id={Style.searchDiv}>
+        <input
+          id={Style.nanoTableSearch}
+          type="text"
+          placeholder="Search..."
+          className= {Style.searchBox}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <p id={Style.nanoTableHeader}>active players</p>
+      </div>
 
       {/* Table */}
       <table className={Style.customTable}>

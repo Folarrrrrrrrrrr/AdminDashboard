@@ -282,7 +282,7 @@ const Transaction = () => {
             let isBlack = index == cardToggleIndex ? true : false;
 
             return (
-              <div id={ window.innerWidth < 480 ? Style.Cards : null}>
+              <div id={ window.innerWidth < 480 ? Style.Cards : Style.footSoldiersCard}>
                 <Total_Card
                   key={index}
                   text={obj.text}

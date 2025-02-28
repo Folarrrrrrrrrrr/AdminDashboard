@@ -1,69 +1,45 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// import NigerianUsers from "../constant/url_path"
-// const API_URL = "http://white-house-api.onrender.com/api/v1/admin/dice-bet-list";
 
-// Async thunk for fetching dice summary data
 export const fetchDiceBetList = createAsyncThunk(
   "DiceBetsList/fetch",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch('https://white-house-api.onrender.com/api/v1/admin/dice-bet-list');
-      // console.log(response)
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      const accessToken = localStorage.getItem("token");
+      if (!accessToken) {
+        throw new Error("No access token found");
       }
-      const DiceBetsdata = await response.json();
-      // console.log(data);
-     
-      // console.log(data.responseBody);
-      return DiceBetsdata.responseBody; // Extract the relevant data
 
+      const response = await fetch(
+        "https://stake-cut-api.onrender.com/api/v1/admin/games/dice/dice-bet-list",
+        {
+          method: "GET",
+          headers: {
+            // "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const DiceBetsdata = await response.json();
+      // console.log(DiceBetsdata)
+      return DiceBetsdata.responseBody;
     } catch (error) {
-      console.log(error.message);      
+      console.log("Fetch Dice Bet List Error:", error.message);
       return rejectWithValue(error.message);
     }
   }
 );
 
-// Slice for managing dice summary
 const DiceBetsSlice = createSlice({
   name: "DiceBetsList",
   initialState: {
-    DiceBetsdata: [
-      {
-      id: '',
-      bet_id: '',
-      user_id: '',
-      game: "",
-      bet_Type:"",
-      amount_staked: "",
-      players_in_game: '55',
-      status:"",
-      Winners: "",
-      timestamp: "",
-      action: "",
-      createdAt: "2024-12-05T14:16:52.000Z",
-      updatedAt: "2024-12-05T14:16:52.000Z",
-    },
-    {
-      id: '',
-      bet_id: '',
-      user_id: '',
-      game: "",
-      bet_Type:"",
-      amount_staked: "",
-      players_in_game: '55',
-      status:"",
-      Winners: "",
-      timestamp: "",
-      action: "",
-      createdAt: "2024-12-05T14:16:52.000Z",
-      updatedAt: "2024-12-05T14:16:52.000Z",
-    },
-  ],
-
-  DiceBetsloading: false,
-  DiceBetserror: null,
+    DiceBetsdata: [],
+    DiceBetsloading: false,
+    DiceBetserror: null,
   },
   reducers: {},
   extraReducers: (builder) => {

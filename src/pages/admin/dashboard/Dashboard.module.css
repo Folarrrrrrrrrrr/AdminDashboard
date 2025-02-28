@@ -1,7 +1,9 @@
 #Dashboard_MainDiv {
-    background-color: #F9F9F9;
+    background-color: #ffffff;
     min-height: 100vh;
     width: 100%;
+    margin-top:60px;
+    scrollbar-width: none;
 
 }
 #Dashboard_WrapperDiv {
@@ -75,6 +77,11 @@
     color: #333333;
     margin-bottom: 1rem;
 }
+#mapImage{
+  width: 650px;
+  height: 700px;
+  border-radius: 20px;
+}
 
 #Dashboard_lineChart_Two {
     display: flex;
@@ -83,7 +90,7 @@
     border-radius: 25px;
     padding: 0 1rem;
     box-sizing: border-box;
-    width: 100%;
+    width: 90%;
     height: 19.56rem;
 }
 

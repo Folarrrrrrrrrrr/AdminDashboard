@@ -26,6 +26,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchFootballBetList } from "../api_detaills/GlobalStates/FootballBetList";
 import { fetchDiceBetList } from "../api_detaills/GlobalStates/DiceBetsList";
 import { motion } from "framer-motion";
+import physicalMap from '../../../assets/images/physicalMap.jpg'
 
 const Dashboard = () => {
   const { updateErrorText, updateErrorPopup } = PopupContextHook();
@@ -75,7 +76,8 @@ const Dashboard = () => {
   }
   const mixedArray = interleaveArrays(DiceBetsdata, footballBetsList);
 
-  //   console.log(mixedArray); // Output: [1, 2, 3, 4, 5, 6, 8, 10]
+    console.log(mixedArray); 
+  // // Output: [1, 2, 3, 4, 5, 6, 8, 10]
 
   const navigate = useNavigate();
   const handleTotalBetsClick = () => {
@@ -98,7 +100,7 @@ const Dashboard = () => {
 
   const { totalBetPlaced, totalUsers, totalCountries, totalFootSoldiers } =
     dashboardCount;
-  // console.log(totalBetPlaced);
+  console.log(totalBetPlaced);
 
   const line_data = [
     {
@@ -282,7 +284,8 @@ const Dashboard = () => {
             </div>
             <div id={Style.Dashboard_lineChart}>
               {/* <p id={Style.Dashboard_RevenueText}>Revenue</p> */}
-              <RevenuePerformanceMap />
+              {/* <RevenuePerformanceMap /> */}
+              <img id={Style.mapImage} src={physicalMap} alt="" />
               {/* <RevisedMap/> */}
             </div>
           </div>

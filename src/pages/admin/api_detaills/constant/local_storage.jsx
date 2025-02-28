@@ -12,6 +12,7 @@ export const setEmail = (email) => {
     localStorage.setItem('caEmail', email);
 };
 
+
 export const getEmail = () => {
     return localStorage.getItem('caEmail');
 };

@@ -16,6 +16,8 @@ import CCPerformanceReducer from "./pages/admin/api_detaills/GlobalStates/CCWeek
 import QueriesReducer from "./pages/admin/api_detaills/GlobalStates/QueriesReducer";
 import AllStaffsReducer from "./pages/admin/api_detaills/GlobalStates/AllStaffs";
 import StaffsProfileReducer from "./pages/admin/api_detaills/GlobalStates/AllStaffsProfile";
+import QueryDetails from "./pages/admin/api_detaills/GlobalStates/QueryDetails";
+import ResolveQuery from "./pages/admin/api_detaills/GlobalStates/ResolveQuery";
 
 
 
@@ -38,7 +40,8 @@ const store = configureStore({
     CCPerformanceWeekly : CCPerformanceReducer,
     Queries : QueriesReducer,
     AllStaffsList : AllStaffsReducer,
-    StaffsProfile : StaffsProfileReducer,
+    userQueryDetailsReducer : QueryDetails,
+    ResolveQueryReducer : ResolveQuery,
     // TopPerformingCCList : TopPerformingCC,
     
 

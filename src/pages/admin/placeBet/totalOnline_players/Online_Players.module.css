@@ -1,10 +1,12 @@
 #Online_Players_mainDiv{
     width: 100%;
     min-height: 100vh;
-    background-color: #F9F9F9; 
+    background-color: #fff; 
+    margin-top: 70px;
 }
 #Online_Players_wrapperDiv{
     padding: 6.4rem 7.5rem;
+    margin-top: -20px;
 }
 #headerText{
     color: #0E093C;

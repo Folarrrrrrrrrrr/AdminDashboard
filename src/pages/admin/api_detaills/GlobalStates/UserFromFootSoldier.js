@@ -1,13 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // import NigerianUsers from "../constant/url_path"
-// const API_URL = "http://white-house-api.onrender.com/api/v1/admin/dice-bet-list";
+const API_URL = 'https://stake-cut-api.onrender.com/api/v1/admin/footsoldiers-soldiers-users';
 
 // Async thunk for fetching dice summary data
 export const fetchFootSolidersOnboardedUsers = createAsyncThunk(
   "FootSolidersOnboardedUsers/fetch",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch( 'https://white-house-api.onrender.com/api/v1/admin/footsoldiers-soldiers-users');
+      const token = localStorage.getItem("token");
+      const response = await fetch( API_URL,{
+        headers:{
+          Authorization:`bearer${token}`,
+        }
+      });
       // console.log(response)
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

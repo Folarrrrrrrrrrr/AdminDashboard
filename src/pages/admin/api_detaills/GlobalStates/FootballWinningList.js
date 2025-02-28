@@ -1,52 +1,41 @@
-
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// import NigerianUsers from "../constant/url_path"
-const API_URL = "https://white-house-api.onrender.com/api/v1/admin/football-winning-bets";
 
+const API_URL = "https://white-house-api.onrender.com/api/v1/admin/games/sports/football/football-winning-bets";
 
-// Async thunk for fetching dice summary data
 export const fetchFootballWinningDiceBet = createAsyncThunk(
-  "DiceBetsList/fetch",
+  "FootballWinningBets/fetch",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch(API_URL);
-      // console.log(response)
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      const accessToken = localStorage.getItem("token");
+      if (!accessToken) {
+        throw new Error("No access token found");
       }
-      const FootballWinningdata = await response.json();
-      // console.log(data);
-     
-      // console.log(data.responseBody);
-      return FootballWinningdata.responseBody; // Extract the relevant data
 
+      const response = await fetch(API_URL, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${accessToken}`,
+        },
+      });
+        
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const footballWinningData = await response.json();
+      return footballWinningData.responseBody;
     } catch (error) {
-      console.log(error.message); 
+      console.log("Fetch Football Winning Bets Error:", error.message);
       return rejectWithValue(error.message);
     }
   }
 );
 
-// Slice for managing dice summary
 const FootballWinningBetsSlice = createSlice({
-  name: "WinningDiceBetsList",
+  name: "footballWinningBets",
   initialState: {
-    FootballWinningdata: [{
-      id: '',
-      bet_id: '',
-      user_id: '',
-      game: "",
-      bet_Type:"",
-      amount_staked: "",
-      players_in_game: '',
-      status:"",
-      Winners: "",
-      timestamp: "",
-      action: "",
-      createdAt: "2024-12-05T14:16:52.000Z",
-      updatedAt: "2024-12-05T14:16:52.000Z",
-    }],
-
+    FootballWinningdata: [],
     FootballWinningLoading: false,
     FootballWinningError: null,
   },
@@ -59,7 +48,7 @@ const FootballWinningBetsSlice = createSlice({
       })
       .addCase(fetchFootballWinningDiceBet.fulfilled, (state, action) => {
         state.FootballWinningLoading = false;
-        state.data = action.payload;
+        state.FootballWinningdata = action.payload;
       })
       .addCase(fetchFootballWinningDiceBet.rejected, (state, action) => {
         state.FootballWinningLoading = false;

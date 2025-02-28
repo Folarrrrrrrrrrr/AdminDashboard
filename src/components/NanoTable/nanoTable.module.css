@@ -1,21 +1,39 @@
 #tableContainer {
-  width: 100%;
-  max-width: 800px;
   margin: auto;
-  padding: 20px;
   background: white;
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
+  /* max-height: none;
+  max-width: none; */
+  overflow: auto; 
+  scrollbar-width: none;
 }
 
+#searchDiv{
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-around;
+  width: 99%;
+  /* border: 2px solid black; */
+  color: #000;
+}
+#nanoTableHeader{
+  /* font-weight: 600; */
+  text-align: center;
+}
 /* Search Box */
 .searchBox {
-  width: 100%;
+  width: 50%;
   padding: 8px;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
   border: 1px solid #ddd;
   border-radius: 4px;
+  justify-content: center;
+  align-content: center;
+  align-self: center;
 }
+
 
 /* Table Styles */
 .customTable {
@@ -33,7 +51,7 @@
 #tableHeader {
   padding: 3px;
   cursor: pointer;
-  border: .5px solid black;
+  /* border: .5px solid black; */
   color: black;
   text-align: center;
   /* border-radius: 50px; */

@@ -1,46 +1,47 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// import NigerianUsers from "../constant/url_path"
-// const API_URL = "http://white-house-api.onrender.com//api/v1/admin/get-all-staffs";
 
-// Async thunk for fetching dice summary data
+// Async thunk for fetching all staff data with authorization
 export const fetchAllStaffs = createAsyncThunk(
     "WeeklyPerformance/fetch",
-    async (_, { rejectWithValue }, id = '') => {
+    async (_, { rejectWithValue, getState }) => {
         try {
-            const response = await fetch('https://white-house-api.onrender.com/api/v1/admin/get-all-staffs');
-            // console.log(response)
+            // Retrieve token from Redux state or localStorage
+            // const token = getState().auth?.token || localStorage.getItem("accessToken");
+            // console.log(token);
+
+            const accessToken = localStorage.getItem("token");
+      if (!accessToken) {
+        throw new Error("No access token found");
+      }
+
+      const response = await fetch('http://stake-cut-api.onrendercom/api/v1/admin/staff/get-all-staffs', {
+        method: "GET",
+        headers: {
+          // "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                throw new Error(`HTTP error! Status: ${response.status}`);
             }
+
             const AllStaffsData = await response.json();
-            // console.log(data);
-
-            // console.log(data.responseBody);
+            console.log(AllStaffsData);
+            
             return AllStaffsData.responseBody.staffs; // Extract the relevant data
-
         } catch (error) {
-            console.log(error.message);
+            console.error(error.message);
             return rejectWithValue(error.message);
         }
     }
 );
 
-// Slice for managing dice summary
+// Slice for managing staff data
 const AllStaffsDataSlice = createSlice({
     name: "AllStaffsList",
     initialState: {
-        AllStaffsData: 
-             [
-                    {
-                        "fullname": "Faruq Abiodun",
-                        "email": "faruqhassan176@gmail.com",
-                        "phone_number": "",
-                        "photo": "",
-                        "country": "",
-                        "status": "active",
-                        "designation": "support-agent"
-                    },
-                ],
+        AllStaffsData: [],
         AllStaffsDataLoading: false,
         AllStaffsDataError: null,
     },

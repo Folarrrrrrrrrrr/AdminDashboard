@@ -1,56 +1,55 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// import NigerianUsers from "../constant/url_path"
-// const API_URL = "http://white-house-api.onrender.com/api/v1/admin/dice-bet-list";
 
-// Async thunk for fetching dice summary data
 export const fetchCCWeeklyPerformance = createAsyncThunk(
   "WeeklyPerformance/fetch",
-  async (_, { rejectWithValue }, id ='') => {
+  async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch('https://white-house-api.onrender.com/customer-care-admin/api/top-performing-agents');
-      // console.log(response)
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      const accessToken = localStorage.getItem("token");
+      if (!accessToken) {
+        throw new Error("No access token found");
       }
-      const CCPerformanceData = await response.json();
-      console.log(CCPerformanceData);
-     
-      // console.log(data.responseBody);
-      return CCPerformanceData.responseBody; // Extract the relevant data
 
+      const response = await fetch(
+        "https://stake-cut-api.onrender.com/customer-care-admin/api/top-performing-agents",
+        {
+          method: "GET",
+          headers: {
+            // "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorText}`);
+      }
+
+      const CCPerformanceData = await response.json();
+      return CCPerformanceData.responseBody;
     } catch (error) {
-      console.log(error.message);      
+      console.log("Fetch Weekly Performance Error:", error.message);
       return rejectWithValue(error.message);
     }
   }
 );
 
-// Slice for managing dice summary
 const CCPerformanceSlice = createSlice({
   name: "CCPerformanceList",
   initialState: {
-    CCPerformanceData: [ {
-      "agentName": "Faruq Abiodun",
-      "resolvedCount": 20,
-      "queries": [
-        {
-          "type": "In-app-message",
-          "count": 20
-        },
-        {
-          "type": "Calls",
-          "count": 0
-        },
-        {
-          "type": "Msg",
-          "count": 0
-        }
-      ]
-    }
+    CCPerformanceData: [
+      {
+        agentName: "Faruq Abiodun",
+        resolvedCount: 20,
+        queries: [
+          { type: "In-app-message", count: 20 },
+          { type: "Calls", count: 0 },
+          { type: "Msg", count: 0 },
+        ],
+      },
     ],
-
-  CCPerformanceLoading: false,
-  CCPerformanceError: null,
+    CCPerformanceLoading: false,
+    CCPerformanceError: null,
   },
   reducers: {},
   extraReducers: (builder) => {
