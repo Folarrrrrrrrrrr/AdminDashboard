@@ -24,6 +24,25 @@ const AllUsers_com = (props) => {
         setToggleIndex(index)
     }
 
+    const [searchUser, setSearchUser] = useState("");
+    const [sortList, setSortList] = useState("name"); // Default sort by name
+    
+
+    // Filter users based on search input
+    const filteredUsers = allUsers.filter(user => 
+        user.username.toLowerCase().includes(searchUser.toLowerCase()));
+
+    // Sort users based on selected option
+    const sortedUsers = [...filteredUsers].sort((a, b) => {
+        if (sortList === "name") {
+            return a.username.localeCompare(b.username);
+        } else if (sortList === "country") {
+            return a.country.localeCompare(b.country);
+        }
+        return 0;
+    });
+
+
     return (
         <div>
 
@@ -34,15 +53,35 @@ const AllUsers_com = (props) => {
                     <button onClick={() => transactionToggle(1)} className={toggleIndex == 1 ? Style.toggleDiv_buttonActive : Style.All_Users_listDiv_button}>Subscribed</button>
                     <button onClick={() => transactionToggle(2)} className={toggleIndex == 2 ? Style.toggleDiv_buttonActive : Style.All_Users_listDiv_button}>Unsubscribed</button>
                     {/* <button onClick={() => transactionToggle(3)} className={toggleIndex == 3 ? Style.toggleDiv_buttonActive : Style.All_Users_listDiv_button}>Not-Subscribed</button> */}
-                </div>
+                 </div>
+                <div id={Style.sortNfilterDiv}>
+                    {/* Search Input */}
+                    <input
+                    id={Style.inputBox}
+                        type="text"
+                        placeholder="Search Username"
+                        value={searchUser}
+                        onChange={(e) => setSearchUser(e.target.value)}
+                        className="search-box"
+                    />
 
+                    {/* Sorting Dropdown */}
+                    <select
+                        id={Style.inputBox}
+                        onChange={(e) => setSortOption(e.target.value)}
+                        className="sort-dropdown"
+                    >
+                        <option value="name">Sort by Name</option>
+                        <option value="country">Sort by Country</option>
+                    </select>
+                </div>
             </div>
 
             <div id={Style.All_Users_Card}>
                 {
                     toggleIndex === 0 &&
-
-                    allUsers.map((object) => {
+                    // <div id={Style.UserCardsDiv}>
+                    sortedUsers.map((object) => {
 
                         let statusColor = object.status === "Online" ? true : false
 
@@ -62,7 +101,7 @@ const AllUsers_com = (props) => {
                                 statusColor={statusColor} />
                         )
                     })
-
+                    // </div>
                 }
 
                 {

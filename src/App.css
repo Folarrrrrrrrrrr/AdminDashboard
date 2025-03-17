@@ -27,4 +27,7 @@
     color: white;
     border: 1px solid #4CAF50;
   }
+  button{
+    cursor: pointer;
+  }
   

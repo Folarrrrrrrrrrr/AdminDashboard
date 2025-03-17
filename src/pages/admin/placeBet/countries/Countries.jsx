@@ -7,16 +7,14 @@ import Header from '../../../../components/header/Header'
 import { Link } from 'react-router-dom'
 import { PopupContextHook } from '../../../../WhiteHouse_PopupContext'
 import { getRegCountriesProvider } from '../../api_detaills/provider/user_provider'
-
-
+import LoadingScreen from "../../../../components/loader/LoadingSreen";
 
 const Countries = () => {
 
 
     const { updateErrorPopup, updateErrorText } = PopupContextHook()
 
-
-
+    const [loading, setLoading ]= useState(true);
     const [countries, setCountries] = useState([])
 
 
@@ -38,10 +36,12 @@ const Countries = () => {
 
 
 
-
+    useEffect(()=>{
+        setTimeout(()=> countries ? setLoading(false): setLoading(true), 3000)
+      }, [])
 
     return (
-
+    loading ? <LoadingScreen/> :
         <div id={Style.Winner_loser_mainDiv}>
 
             <Header

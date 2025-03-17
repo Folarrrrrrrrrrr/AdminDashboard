@@ -20,7 +20,7 @@ import Date_Picker from '../../../../components/date_picker/Date_Picker'
 import { PopupContextHook } from '../../../../WhiteHouse_PopupContext'
 import App_Pagination from '../../../../components/app_Pagination/App_Pagination'
 import { getUserDetailsProvider } from '../../api_detaills/provider/user_provider'
-
+import LoadingScreen from '../../../../components/loader/LoadingSreen'
 
 
 
@@ -48,7 +48,7 @@ const Personal_Info = () => {
 
     const [selectedDate, setSelectedDate] = useState(new Date());  // Initialize with current date
     const [isCalendarOpen, setIsCalendarOpen] = useState(false);  // Initialize with current date
-
+    const [loading, setLoading ]= useState(true);
 
     // Function to handle date changes
 
@@ -302,9 +302,12 @@ const friendListString = encodeURIComponent(JSON.stringify(friendList));
         }
     ]
 
+    useEffect(()=>{
+          setTimeout(()=> userDetails? setLoading(false): setLoading(true), 3000)
+        }, [])
 
     return (
-
+     loading ? <LoadingScreen/> : 
         <div id={Style.Personal_Info_mainDiv}>
             <Header
                 headerText={"Personal Information"}

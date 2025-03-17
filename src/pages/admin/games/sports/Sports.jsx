@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Style from "./Sports.module.css";
 import {
   AreaChart,
@@ -31,6 +31,7 @@ import { fetchFootballBetSummary } from "../../api_detaills/GlobalStates/Footbal
 import { fetchFootballBetList } from "../../api_detaills/GlobalStates/FootballBetList";
 import NanoTable from "../../../../components/NanoTable/NanoTable";
 import DoughnutChart from "../../../../components/chart/DoughnutChart";
+import LoadingScreen from "../../../../components/loader/LoadingSreen";
 
 const Sports = () => {
   const navigate = useNavigate();
@@ -318,7 +319,14 @@ const Sports = () => {
     { key: "details", label: "view details" },
   ];
 
+  const [loading, setLoading ]= useState(true);
+
+   useEffect(()=>{
+        setTimeout(()=> FootballSummary ? setLoading(false): setLoading(true), 3000)
+      }, [])
+
   return (
+   loading ? <LoadingScreen/> : 
     <div id={Style.DiceGame_mainDiv}>
       <Header
         headerText={"Sports"}

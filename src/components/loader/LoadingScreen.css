@@ -1,0 +1,15 @@
+.loading-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background-color: #ebe5e565; /* Dark background */
+  }
+  
+  .speeding-object {
+    width: 100px; /* Adjust based on your image */
+    height: auto;
+  }
+  

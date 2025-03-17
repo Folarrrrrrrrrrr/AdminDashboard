@@ -14,9 +14,13 @@ import { PopupContextHook } from '../../../WhiteHouse_PopupContext'
 // import {useBetApiContext} from '../api_detaills/GlobalStates/BetsContext'
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDiceBetList } from "../api_detaills/GlobalStates/DiceBetsList";
+import LoadingScreen from '../../../components/loader/LoadingSreen'
 
 
 const Total_BetPlaced = () => {
+
+    const [loading, setLoading ]= useState(true);
+
   // const  {state} = useBetApiContext;
 
   // const { totalBets , loading, error } = state;
@@ -221,27 +225,33 @@ const Total_BetPlaced = () => {
  
   const diceHeaders=[ 'S/N', 'dice gameID', 'bet type', 'players', 'date', 'time', 'action']
   const footballHeaders=[ 'S/N', 'dice gameID', 'bet type', 'players', 'date', 'time', 'action']
-  return (
-    <div id={Style.Total_BetPlaced_mainDiv}>
-      <Header
-        headerText={"Total Bet Placed"}
-        headerInfo={"Here’s an information on all placed bets"} />
+  
+  useEffect(()=>{
+        setTimeout(()=> arr ? setLoading(false): setLoading(true), 3000)
+      }, [])
 
-      <div id={Style.TotalBet_wrapperDiv}>
-        <BetPlaced_com 
-        arr={arr}
-         winningdata={winningdata} 
-         initialIndex = {paramIndex}
-          GameTypeColumn={Sports} 
-          isDiceGame={true} 
-          />
-      
-      {/* <ListTable
-        headers={source === 'Dice Games'? diceHeaders :source === 'Sports'? footballHeaders: null}
-      /> */}
-      
-      </div> 
-    </div>
+  return (
+    loading ? <LoadingScreen/> : 
+      <div id={Style.Total_BetPlaced_mainDiv}>
+        <Header
+          headerText={"Total Bet Placed"}
+          headerInfo={"Here’s an information on all placed bets"} />
+
+        <div id={Style.TotalBet_wrapperDiv}>
+          <BetPlaced_com 
+          arr={arr}
+          winningdata={winningdata} 
+          initialIndex = {paramIndex}
+            GameTypeColumn={Sports} 
+            isDiceGame={true} 
+            />
+        
+        {/* <ListTable
+          headers={source === 'Dice Games'? diceHeaders :source === 'Sports'? footballHeaders: null}
+        /> */}
+        
+        </div> 
+      </div>
   )
 }
 

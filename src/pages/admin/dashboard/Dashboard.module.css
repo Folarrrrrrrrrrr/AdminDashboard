@@ -49,6 +49,14 @@
   margin-top:-320px ;
 }
 
+
+.activeMap{
+  border-radius: 20px;
+  border: none;
+  background-color: #003E79;
+  color: white;
+}
+
 #BarChart_Div {
     margin-top: -360px;
     width: 50%;

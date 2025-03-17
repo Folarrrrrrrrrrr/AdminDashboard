@@ -30,7 +30,24 @@
 #All_Users_toggle_dateDiv{
     display: flex;
     justify-content: space-between;
-    margin-top: 2.9rem;
+    margin-top: 1.9rem;
+    /* border: 2px solid black; */
+    border-radius:10px;
+    align-items: center;    
+    background: linear-gradient(120deg, #F6F6F6, #F2EFEF);
+    padding: 0 15px;
+}
+#sortNfilterDiv{
+    display: flex;
+    /* border: 1px solid black ; */
+    width:350px;
+    justify-content:space-between;
+}
+#inputBox{
+    border: none;
+    height: 30px;
+    background-color: #fff;
+    border-radius:5px;
 }
 #searchDiv input {
     background-color: #FFFFFF;
@@ -58,7 +75,8 @@
 #All_Users_Card{
     margin-top: 4rem;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+    grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
+    gap: 5px; /* Adds spacing between cards */
     justify-content: center;
     gap: 2rem;
 }

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import AllUsers_com from '../../../../components/allUsers_com/AllUsers_com'
 import { PopupContextHook } from '../../../../WhiteHouse_PopupContext'
 import { getAllUsersProvider } from '../../api_detaills/provider/user_provider'
-
+import LoadingScreen from '../../../../components/loader/LoadingSreen'
 
 
 
@@ -15,7 +15,7 @@ const All_Users = () => {
 
     // Extracting functions from PopupContextHook for error handling
     const { updateErrorText, updateErrorPopup } = PopupContextHook()
-
+    const [loading, setLoading ]= useState(true);
     // State to hold user data
     const [users, setUsers] = useState({
         allUsers: [],
@@ -41,9 +41,12 @@ const All_Users = () => {
         })
     }, []) // Empty dependency array means this runs once on mount
 
+    useEffect(()=>{
+          setTimeout(()=> users ? setLoading(false): setLoading(true), 3000)
+        }, [])
 
     return (
-
+        loading ? <LoadingScreen/> : 
         <div id={Style.All_Users_mainDiv}>
 
             <Header

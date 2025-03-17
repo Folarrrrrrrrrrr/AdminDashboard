@@ -42,7 +42,7 @@ const WorldMapWithDarkMode = () => {
       return newMode;
     });
   };
-
+ 
   const handleZoomChange = (newZoom) => setZoom(newZoom);
 
   const handleMapClick = () => setSelectedMarker(null);

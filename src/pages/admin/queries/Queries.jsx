@@ -19,6 +19,7 @@ import { submitQueryResolution } from "../api_detaills/GlobalStates/ResolveQuery
 import queryImage from "../../../assets/images/queryImage.png";
 import solar_ghost_broken from "../../../assets/images/solar_ghost_broken.png";
 import { Link } from "react-router-dom";
+import LoadingScreen from "../../../components/loader/LoadingSreen";
 // import queryImage from '../../../assests/images/queryImage'
 
 const Reports = () => {
@@ -222,6 +223,7 @@ const Reports = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [new_status, setnew_status] = useState("");
+  const [loading, setLoading ]= useState(true);
 
   const handleSendResolution = () => {
     let ticketId = userQueryList.ticket_id;
@@ -273,65 +275,24 @@ const Reports = () => {
   //   }
   // };
 
+   useEffect(()=>{
+        setTimeout(()=> QuerySummaryData ? setLoading(false): setLoading(true), 3000)
+      }, [])
+
   return (
+    
+   loading ? <LoadingScreen/> : 
     <div id={Style.Reports_mainDiv}>
       <Header
-        headerText={"Welcome, Admin"}
-        headerInfo={"Here’s an overview of White House"}
+        // headerText={"Welcome, Admin"}
+        // headerInfo={"Here’s an overview of White House"}
       />
 
       <div id={Style.Reports_WrapperDiv}>
         <p className={Style.ReportsText}>Queries Summary</p>
 
-        <div id={Style.Total_Stats_CardWrapper}>
-          <div id={Style.Reports_mapDiv}>
-            {stats_card4.map((obj, index) => {
-              let isBlack = index == toggleIndex ? true : false;
-              return (
-                <div
-                  id={
-                    window.innerWidth < 480 ? Style.Cards : Style.firstCardSet
-                  }
-                >
-                  <Total_Card
-                    key={index}
-                    text={obj.text}
-                    image1={obj.image1}
-                    divText={obj.divText}
-                    price={obj.price}
-                    // isBlack={isBlack}
-                    onClick={() => toggle(index)}
-                    isPurple={index == 0 ? "true" : null}
-                    isGreen={index == 1 ? "true" : null}
-                    isRed={index == 2 ? "true" : null}
-                    isBlack={index == 3 ? "true" : null}
-                  />
-                </div>
-              );
-            })}
-          </div>
 
-          <div id={Style.Query_Stats_MapCard}>
-            {stats_card3.map((obj, index) => {
-              let colourChange = index + 4 == toggleIndex ? true : false;
-              return (
-                <Stats_Card
-                  img={obj.img}
-                  figure={obj.figure}
-                  text={obj.text}
-                  to={obj.to}
-                  colourChange={colourChange}
-                  // onClick={() => toggle(index + 4)}
-                  isPurple={index == 0 ? "true" : null}
-                  isGreen={index == 1 ? "true" : null}
-                  isRed={index == 2 ? "true" : null}
-                  isBlack={index == 3 ? "true" : null}
-                />
-              );
-            })}
-          </div>
-        </div>
-
+        
         <div id={Style.Query_header_filterDiv}>
           {toggleIndex == 100 ? (
             <p className={Style.ReportsText}>All Queries</p>
@@ -358,7 +319,7 @@ const Reports = () => {
               <input
                 id={Style.searchBox}
                 type="text"
-                placeholder="Search..."
+                // placeholder="Search..."
                 onChange={(e) => setSearchText(e.target.value)}
               />
               <select
@@ -369,7 +330,7 @@ const Reports = () => {
                 <option value="resolved">Resolved</option>
                 <option value="in-progress">In Progress</option>
                 <option value="pending">Pending</option>
-              </select>
+              </select>   
             </div>
           </div>
         </div>
@@ -378,7 +339,7 @@ const Reports = () => {
           <table>
             <div id={Style.headerTable}>
               {headers.map((key) => (
-                <div key={key} onClick={() => handleSort(key)}>
+                <div id={Style.colums} key={key} onClick={() => handleSort(key)}>
                   {key}{" "}
                   {sortConfig.key === key
                     ? sortConfig.direction === "asc"
@@ -2218,6 +2179,57 @@ const Reports = () => {
             )}
           </table>
         </div>
+
+
+        <div id={Style.Total_Stats_CardWrapper}>
+          <div id={Style.Reports_mapDiv}>
+            {stats_card4.map((obj, index) => {
+              let isBlack = index == toggleIndex ? true : false;
+              return (
+                <div
+                  id={
+                    window.innerWidth < 480 ? Style.Cards : Style.firstCardSet
+                  }
+                >
+                  <Total_Card
+                    key={index}
+                    text={obj.text}
+                    image1={obj.image1}
+                    divText={obj.divText}
+                    price={obj.price}
+                    // isBlack={isBlack}
+                    onClick={() => toggle(index)}
+                    isPurple={index == 0 ? "true" : null}
+                    isGreen={index == 1 ? "true" : null}
+                    isRed={index == 2 ? "true" : null}
+                    isBlack={index == 3 ? "true" : null}
+                  />
+                </div>
+              );
+            })}
+          </div>
+
+          <div id={Style.Query_Stats_MapCard}>
+            {stats_card3.map((obj, index) => {
+              let colourChange = index + 4 == toggleIndex ? true : false;
+              return (
+                <Stats_Card
+                  img={obj.img}
+                  figure={obj.figure}
+                  text={obj.text}
+                  to={obj.to}
+                  colourChange={colourChange}
+                  // onClick={() => toggle(index + 4)}
+                  isPurple={index == 0 ? "true" : null}
+                  isGreen={index == 1 ? "true" : null}
+                  isRed={index == 2 ? "true" : null}
+                  isBlack={index == 3 ? "true" : null}
+                />
+              );
+            })}
+          </div>
+        </div>
+
       </div>
     </div>
   );

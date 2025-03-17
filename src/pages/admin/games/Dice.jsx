@@ -1,4 +1,4 @@
-import React from "react";
+import React,{ useState } from "react";
 import Style from "../games/Dice.module.css";
 import {
   AreaChart,
@@ -32,9 +32,11 @@ import { fetchDiceSummary } from "../api_detaills/GlobalStates/diceSummarySlice"
 import { fetchDiceBetList } from "../api_detaills/GlobalStates/DiceBetsList";
 import DoughnutChart from "../../../components/chart/DoughnutChart";
 import NanoTable from "../../../components/NanoTable/NanoTable";
+import LoadingScreen from "../../../components/loader/LoadingSreen";
 // import NanoTableTwo from '../../../components/NanoTable/NanoTable'
 
 const DiceGame = () => {
+  const [dataLoading, setLoading ]= useState(true);
   //Bets summary data from redus-tool-kit starts here
 
   const dispatch = useDispatch();
@@ -189,7 +191,12 @@ const DiceGame = () => {
     { key: "details", label: "view details" },
   ];
 
+  useEffect(()=>{
+        setTimeout(()=> data ? setLoading(false): setLoading(true), 3000)
+      }, [])
+
   return (
+    dataLoading ? <LoadingScreen/> : 
     <div id={Style.DiceGame_mainDiv}>
       <Header
         headerText={"Dice"}
@@ -223,115 +230,8 @@ const DiceGame = () => {
         </div>
       </div>
       <p className={Style.PlaceBet_headerText_Two}>Overview</p>
-      <div id={Style.DiceGame_cardGraph_wrapper}>
-        <div id={Style.DiceGame_Card_wrapper}>
-          {/* <div id={Style.nanoTableDiv}> */}
-            <NanoTable columns={NanoTableColumns} data={NanoTableData} />
-          {/* </div> */}
-        </div>
-        <div id={Style.DoughnutChartDiv}>
-          <div id={Style.DoughnutChartContainer}>
-            <div id={Style.doughnutChart}> 
-              <DoughnutChart
-                totalRevenue={32678}
-                goalRevenue={50000}
-                dailyRevenue={3000}
-                monthlyEarnings={23000}
-              />
-            </div>
-            <div id={Style.AreaChartDiv}>
-              <div id={Style.AreaChart_TextDiv}>
-                <p id={Style.AreaChart_weeklyText}>Weekly Revenue Report</p>
-                <p id={Style.AreaChart_dateText}>
-                  Week One October, 2024 <img src={arrow_down} alt="" />
-                </p>
-              </div>
-              <ResponsiveContainer width="100%" height="70%">
-                <AreaChart
-                  width={500}
-                  height={300}
-                  data={datas}
-                  margin={{
-                    top: 0,
-                    right: 0,
-                    left: -20,
-                    bottom: 0,
-                  }}
-                >
-                  <XAxis dataKey="name" axisLine={false} tickLine={false} />
-                  <YAxis
-                    axisLine={false}
-                    tickLine={false}
-                    tickFormatter={customTickFormatter}
-                  />
-                  <Tooltip />
-                  <Area
-                    type="normal"
-                    dataKey="uv"
-                    dot={true}
-                    stroke="#332D5B"
-                    fill="#332d5b80"
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* <div id={Style.DiceGame_lastline_graphDiv}> */}
-      {/* <div id={Style.BarChart_TextWrapperDiv}>
-          <div id={Style.Chart_mainDiv}>
-            <div id={Style.PayoutsText}>Bet Placed</div>
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                width={300}
-                height={100}
-                data={datas}
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: -20,
-                  bottom: 10,
-                }}
-              >
-                <XAxis
-                  dataKey="name"
-                  fontSize={"0.8rem"}
-                  axisLine={false}
-                  tickLine={false}
-                ></XAxis>
-                <YAxis
-                  fontSize={"0.7rem"}
-                  axisLine={false}
-                  tickLine={false}
-                ></YAxis>
-                <Tooltip></Tooltip>
-                <Bar
-                  dataKey="uv"
-                  stroke="none"
-                  stackId="a"
-                  fill="#332D5B"
-                ></Bar>
-                <Bar dataKey="pv" stackId="a" fill="#736EA0"></Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-
-          <div id={Style.DiceGame_Card_wrapper_two}>
-              {
-                stats_card3.map((obj) => {
-                  return (
-                    <Stats_Card
-                      img={obj.img}
-                      figure={obj.figure}
-                      text={obj.text}
-                      to={obj.to} />
-                  )
-                })
-              }
-
-            </div>
-        </div> */}
+      
+  
     </div>
   );
 };

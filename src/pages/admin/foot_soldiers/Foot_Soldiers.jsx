@@ -16,6 +16,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchFootSoldiersSummary } from "../api_detaills/GlobalStates/FootSoldierSummary";
 // import { fetchFootballBetList } from '../api_detaills/GlobalStates/FootballBetList'
 import footSoldiers from "../../../assets/images/footSoldiers.png";
+import LoadingScreen from "../../../components/loader/LoadingSreen";
+
 
 const Foot_Soldiers = () => {
   const dispatch = useDispatch();
@@ -121,6 +123,8 @@ const Foot_Soldiers = () => {
 
   // Card slider section.
 
+
+    const [loading, setLoading ]= useState(true);
     const [currentIndex, setCurrentIndex] = useState(0);
     const nextSlide = () => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % cards.length);
@@ -130,8 +134,11 @@ const Foot_Soldiers = () => {
       setCurrentIndex((prevIndex) => (prevIndex - 1 + cards.length) % cards.length);
     };
 
-    
+    useEffect(()=>{
+          setTimeout(()=> footSoldiersSummaryData ? setLoading(false): setLoading(true), 3000)
+        }, [])
   return (
+   loading ? <LoadingScreen/> : 
     <div id={Style.Foot_Soldiers_mainDiv}>
       <img src={footSoldiers} id={Style.footSoldiersImage} alt="" />
       <div id={Style.footSoldierHeaderDiv}>

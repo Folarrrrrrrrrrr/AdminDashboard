@@ -3,6 +3,7 @@ import Style from "./NavBar.module.css";
 import arrowDown from "../../assets/svg/arrow_down.svg";
 import mail from "../../assets/svg/transparent_mail.svg";
 import user from "../../assets/svg/transparent_contact.svg";
+import logo from "../../assets/svg/logo.svg";
 import alphaBet_logo from "../../assets/svg/Alpha_Bet_Black_Logo.svg";
 import mail_two from "../../assets/svg/staff_mail.svg";
 import person from "../../assets/svg/staff_person.svg";
@@ -46,8 +47,16 @@ const NavBar = () => {
 
         <div id={hamburger ? Style.entireNav : Style.entireNavHide}>
           <div id={Style.NavBar_textDiv}>
-          {/* <img src={scrollUp} className={Style.scrollUpIcon} alt="" /> */}
-            <p id={hamburger ? Style.logo :  Style.logo }  className="logo">Logo</p>
+          <NavLink
+              to={"/dashboard"}
+              className={`${Style.NavBar_text} ${
+                activeNav === "dashboard" ? Style.Nav_styled_Link : ""
+              }`}
+              onClick={() => {handleNavClick("dashboard") ; toggleMenu();}}
+            >
+          <img src={logo} alt="" />
+          </NavLink>
+            {/* <p id={hamburger ? Style.logo :  Style.logo }  className="logo">Logo</p> */}
             <NavLink
               to={"/dashboard"}
               className={`${Style.NavBar_text} ${
@@ -57,7 +66,7 @@ const NavBar = () => {
             >
             <p>Dashboard</p>
             </NavLink>
-            <NavLink
+            {/* <NavLink
               to={"/placebet"}
               className={`${Style.NavBar_text} ${
                 activeNav === "placebet" ? Style.Nav_styled_Link : ""
@@ -65,7 +74,7 @@ const NavBar = () => {
               onClick={() => { handleNavClick("placebet");toggleMenu();}}
             >
             <p>Bet Placed</p>
-            </NavLink>
+            </NavLink> */}
             <div
               className={`${Style.NavBar_text} ${
                 activeNav === "game" ? Style.Nav_styled_Link : ""
