@@ -53,13 +53,14 @@ import Soldiers_CountryDetails from "./pages/admin/foot_soldiers/countries/soldi
 
 const router = createBrowserRouter([
     {
+        index: "/signIn",
+        element:<WhiteHouse_PopupContext> <Admin_SignIn/> </WhiteHouse_PopupContext> 
+    },
+    {
         path: "/",
         element: <WhiteHouse_PopupContext><MainLayout/></WhiteHouse_PopupContext>,
         children: [
-            {
-                index: "/signIn",
-                element: <Admin_SignIn/>
-            },
+            
             {
                 path: "/dashboard",
                 element: <Dashboard />

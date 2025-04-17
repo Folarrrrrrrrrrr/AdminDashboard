@@ -17,7 +17,10 @@ import QueriesReducer from "./pages/admin/api_detaills/GlobalStates/QueriesReduc
 import AllStaffsReducer from "./pages/admin/api_detaills/GlobalStates/AllStaffs";
 import StaffsProfileReducer from "./pages/admin/api_detaills/GlobalStates/AllStaffsProfile";
 import QueryDetails from "./pages/admin/api_detaills/GlobalStates/QueryDetails";
+import FootballBetDetails from "./pages/admin/api_detaills/GlobalStates/FootballBetDetails";
 import ResolveQuery from "./pages/admin/api_detaills/GlobalStates/ResolveQuery";
+import authReducer from "./pages/admin/api_detaills/GlobalStates/authSlice";
+import RevenueReducer from "./pages/admin/api_detaills/GlobalStates/Revenue"
 
 
 
@@ -41,7 +44,10 @@ const store = configureStore({
     Queries : QueriesReducer,
     AllStaffsList : AllStaffsReducer,
     userQueryDetailsReducer : QueryDetails,
+    FootballBetDetailsReducer : FootballBetDetails,
     ResolveQueryReducer : ResolveQuery,
+    auth : authReducer,
+    RevenueReducer : RevenueReducer,
     // TopPerformingCCList : TopPerformingCC,
     
 

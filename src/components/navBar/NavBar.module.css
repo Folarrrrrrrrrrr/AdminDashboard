@@ -5,9 +5,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  align-content: center;
+  justify-items: center;
   z-index: 9999;
   position: fixed;
-  margin-top: -20px;
+  margin-top: -19px;
 }
 #bigScreensNav {
   display: flex;
@@ -19,14 +21,19 @@
 #NavBar_textDiv{
   display: flex;
   border-radius: 33px;
-  box-shadow: 0px 1.5px 2px 0px rgb(143, 141, 141);
+  box-shadow: 1px 3px 9px 0px rgba(128, 128, 128, 0.226) ;
   padding-right: 10px;
   padding-left: 10px;
-  /* border: 2px solid black; */
   width:85%;
   height: 50px;
   align-self: center;
+  /* margin-left: 100px; */
   justify-content:space-around;
+}
+#NavBar_profile{
+  width: 20%;
+  color: black;
+  justify-content: space-evenly;
 }
 
 #entireNavHide {
@@ -64,6 +71,7 @@ Nav_Bar_Wrapper p {
   align-items: center;
   color: #0e093c;
   cursor: pointer;
+  width: 25%;
 }
 
 #NavBar_ContactDiv #NavBar_line {
@@ -82,10 +90,7 @@ Nav_Bar_Wrapper p {
 /* Add this to NavBar.module.css */
 
 .Nav_styled_Link {
-  /* background-color: #0e093c; */
   font-weight: bold;
-  color: rgb(149, 4, 4); /* Choose your active color */
-  border-bottom: 1px solid  rgb(149, 4, 4); /* Optional underline */
   align-items: center;
   display: flex;
   justify-content: center;
@@ -97,8 +102,9 @@ Nav_Bar_Wrapper p {
   text-align:center;
   box-sizing: border-box;
   height: 2.18rem;
-  border-radius: 7px;
+  border-radius: 5px;
 }
+
 
 #NavBar_lastlineDiv {
   display: flex;
@@ -152,6 +158,8 @@ Nav_Bar_Wrapper p {
 
 #Business_name_dropdown {
   display: none;
+  border: solid black;
+  margin-right: -60px;
 }
 .NavBar_text:hover #Business_name_dropdown {
   display: block;
@@ -183,7 +191,20 @@ Nav_Bar_Wrapper p {
 #profile_img img {
   width: 1.1rem;
 }
-
+#logOutBox{
+  display: flex;
+  height:  30px ;
+  width: 90px ;
+  /* border: solid black; */
+  box-shadow: 1px 3px 9px 0px rgba(128, 128, 128, 0.226) ;
+  align-items: center;
+  justify-content: space-evenly;
+}
+#logOutIcon{
+  height: 15px ;
+  justify-content: center;
+  align-content: center;
+}
 #CustomerCare_details_mainDiv {
   position: absolute;
 }
@@ -198,7 +219,7 @@ Nav_Bar_Wrapper p {
   justify-content: center;
   margin: 1rem 0 0 -2rem;
   box-sizing: border-box;
-  box-shadow: 0.5rem 0.5rem 1rem 0 rgb(0, 0, 0, 0.2);
+  box-shadow: 1px 3px 9px 0px rgba(128, 128, 128, 0.226) ;
 }
 #CustomerCare_details_wrapperDiv p {
   text-align: center;
@@ -361,7 +382,9 @@ Nav_Bar_Wrapper p {
   align-self: center;
   margin-top: -33px;
   } */
- /* #NavBar_businessName{
+ /* #NavBar_busin
+ 
+ essName{
     margin-bottom: 50px;
   } */
   /* #Business_name_dropdown{

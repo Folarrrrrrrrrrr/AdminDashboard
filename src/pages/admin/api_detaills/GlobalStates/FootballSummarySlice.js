@@ -24,6 +24,8 @@ export const fetchFootballBetSummary = createAsyncThunk(
       }
 
       const footballSummary = await response.json();
+      console.log(footballSummary);
+      
       return footballSummary.responseBody;
     } catch (error) {
       console.log("Fetch Football Bet Summary Error:", error.message);

@@ -1,3 +1,24 @@
+/*  loading-container */
+.loadingContainer {
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(17, 10, 10, 0.397); /* Dark background */
+}
+
+.speeding-object {
+  z-index: 99999;
+  width: 100px; /* Adjust based on your image */
+  height: auto;
+}
+/*  loading-container ends here*/ 
+
 #Dashboard_MainDiv {
     background-color: #ffffff;
     min-height: 100vh;
@@ -25,9 +46,29 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.statCards:hover {
-  border-radius:20px;
+#isBlack:hover{
+  cursor: pointer;
+  background-color: rgba(4, 135, 155, 0.4);
+  border-radius:10px;
   transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+} #isPurple:hover{
+  cursor: pointer;
+  background-color: rgba(11,67,141, 0.15);
+  border-radius:10px;
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}  #isGreen:hover{
+  cursor: pointer;
+  background-color: rgba(49,195,100, 0.15);
+  border-radius:10px;
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+} #isRed:hover{
+  cursor: pointer;
+  background-color: rgba(237,113,13,0.15);
+  border-radius:10px;
+  transform: scale(1.05) ease;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 /* #Dashboard_Card_wrapper {

@@ -1,3 +1,5 @@
+
+
 #All_Users_toggleDiv{
     width: 23.81rem;
     height: 3.06rem;
@@ -79,6 +81,8 @@
     gap: 5px; /* Adds spacing between cards */
     justify-content: center;
     gap: 2rem;
+    width: 100vw;
+    justify-self: center;
 }
 .empty_userDiv{
     display: flex;
@@ -88,6 +92,19 @@
     color: #000000;
     font-size: 1.25rem;
     margin-top: 1rem;
+}
+#eachCard{
+    width: 220px;
+    /* border: solid black ; */
+}
+.pagination{
+    /* border: solid black ; */
+    width: 90vw;
+    margin-top: 10px;
+    justify-self: center;
+    display: flex;
+    justify-content: space-between;
+    color: black;
 }
 
 

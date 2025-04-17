@@ -7,9 +7,7 @@ import Error from './popUps/error/Error'
 import { Provider } from "react-redux";
 import store from "./store"
 import { AnimatePresence } from 'framer-motion';
-
 function App() {
-
 
   return (
     <>

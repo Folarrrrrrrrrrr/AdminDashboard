@@ -22,6 +22,13 @@ import arrow_down from "../../../../assets/svg/arrow_down-dark.svg";
 import Stats_Card from "../../../../components/stats_card/Stats_Card";
 import winner from "../../../../assets/svg/winner.svg";
 import loosers from "../../../../assets/svg/loosers.svg";
+import ImgOne from "../../../../assets/images/HumanOne.png";
+import ImgTwo from "../../../../assets/images/HumanTwo.png";
+import ImgThree from "../../../../assets/images/HumanThree.png";
+import ImgFour from "../../../../assets/images/HumanFour.png";
+import ImgFive from "../../../../assets/images/HumanFive.png";
+import ImgSix from "../../../../assets/images/HumanSix.png";
+import Imgseven from "../../../../assets/images/Humanseven.png";
 import Activity from "../../../../assets/svg/Activity.svg";
 import three_users from "../../../../assets/svg/three_users.svg";
 import sports from "../../../../assets/svg/sport.svg";
@@ -32,6 +39,16 @@ import { fetchFootballBetList } from "../../api_detaills/GlobalStates/FootballBe
 import NanoTable from "../../../../components/NanoTable/NanoTable";
 import DoughnutChart from "../../../../components/chart/DoughnutChart";
 import LoadingScreen from "../../../../components/loader/LoadingSreen";
+import arrowRight from "../../../../assets/images/rightArrowFrame.png"
+import Nigeria from "../../../../assets/images/NaijaFlagpng.png"
+import logo from "../../../../assets/images/S_icon.png"
+import Ghana from "../../../../assets/images/ghana.png"
+import Kenya from "../../../../assets/images/kenya.png"
+import SA from "../../../../assets/images/south-africa.png"
+import UK from "../../../../assets/images/united-kingdom.png"
+import rwanda from "../../../../assets/images/rwandaFlag.png"
+import { motion } from "framer-motion";
+
 
 const Sports = () => {
   const navigate = useNavigate();
@@ -318,6 +335,48 @@ const Sports = () => {
     // { key: "age", label: "Age" },
     { key: "details", label: "view details" },
   ];
+  const weeklyRevenueData = [
+    { day: "Mon", revenue: 1200 },
+    { day: "Tue", revenue: 2100 },
+    { day: "Wed", revenue: 1800 },
+    { day: "Thu", revenue: 2500 },
+    { day: "Fri", revenue: 3200 },
+    { day: "Sat", revenue: 2900 },
+    { day: "Sun", revenue: 3100 },
+  ];
+
+  const newUsers = [
+    {
+      name: "Isaac Mwavuli",
+      avatar:ImgOne,
+    },
+    {
+      name: "Rachel Brown",
+      avatar:ImgTwo,
+    },
+    {
+      name: "Gideon Payne",
+      avatar:ImgThree,
+    },
+    {
+      name: "Jonathan Abbey",
+      avatar:ImgFour
+    },
+    {
+      name: "Jonathan Abbey",
+      avatar:ImgFive
+    },
+    {
+      name: "Jonathan Abbey",
+      avatar:ImgSix
+    },
+    {
+      name: "Jonathan Abbey",
+      avatar:Imgseven
+    },
+  ];
+
+  const countries = ["ng","gh", "sa", "uk", "usa"];
 
   const [loading, setLoading ]= useState(true);
 
@@ -326,7 +385,31 @@ const Sports = () => {
       }, [])
 
   return (
-   loading ? <LoadingScreen/> : 
+      <>
+        {loading ? (
+          <div className={Style.loadingContainer}>
+            <motion.img
+              src={logo}
+              alt="Loading Object"
+              className="speeding-object"
+              initial={{
+                // x: "-100vw",
+                scale: 0.5,
+              }} // Starts small off-screen
+              animate={{
+                // x: ["-100vw", "50vw", "100vw"], // Moves from left -> center -> right
+                scale: [0.5, 1.2, 0.5], // Scales up in center, back down on exit
+              }}
+              transition={{
+                times: [0, 0.5, 1],
+                duration: 2,
+                ease: "easeInOut",
+                repeat: Infinity,
+                repeatDelay: 0.5,
+              }}
+            />
+          </div>
+        ) : null}
     <div id={Style.DiceGame_mainDiv}>
       <Header
         headerText={"Sports"}
@@ -366,64 +449,85 @@ const Sports = () => {
             );
           })}
         </div>
-        <p className={Style.PlaceBet_headerText_Two}>Overview</p>
-      <div id={Style.DiceGame_cardGraph_wrapper}>
-        <div id={Style.DiceGame_Card_wrapper}>
-          {/* <div id={Style.nanoTableDiv}> */}
-            <NanoTable columns={NanoTableColumns} data={NanoTableData} />
-          {/* </div> */}
-        </div>
-        <div id={Style.DoughnutChartDiv}>
-          <div id={Style.DoughnutChartContainer}>
-            <div id={Style.doughnutChart}> 
-              <DoughnutChart
-                totalRevenue={32678}
-                goalRevenue={50000}
-                dailyRevenue={3000}
-                monthlyEarnings={23000}
-              />
-            </div>
-            <div id={Style.AreaChartDiv}>
-              <div id={Style.AreaChart_TextDiv}>
-                <p id={Style.AreaChart_weeklyText}>Weekly Revenue Report</p>
-                <p id={Style.AreaChart_dateText}>
-                  Week One October, 2024 <img src={arrow_down} alt="" />
-                </p>
+       {/* <p className={Style.PlaceBet_headerText_Two}>Overview</p> */}
+      <div className={Style.gridContainer}>
+        <div style={{width:"800px"}}>
+          {/* Total Revenue */}
+          <div className={Style.card} >
+            <h2 className={Style.cardTitle}>Total Revenue</h2>
+            <div className={Style.chartContainer} >
+              <div id={Style.doughnutChart} style={{color:"black"}}>
+                <DoughnutChart
+                  totalRevenue={32678}
+                  goalRevenue={50000}
+                  dailyRevenue={3000}
+                  monthlyEarnings={23000}
+                />
               </div>
-              <ResponsiveContainer width="140%" height="100%">
-                <AreaChart
-                  width={500}
-                  height={300}
-                  data={datas}
-                  margin={{
-                    top: 0,
-                    right: 10,
-                    left: 0,
-                    bottom: 0,
-                  }}
-                >
-                  <XAxis dataKey="name" axisLine={false} tickLine={false} />
-                  <YAxis
-                    axisLine={false}
-                    tickLine={false}
-                    // tickFormatter={customTickFormatter}
+            </div>
+            <p className={Style.revenueAmount}>$32,678</p>
+          </div>
+
+          {/* Weekly Revenue Chart */}
+          <div className={Style.card} style={{paddingLeft: "5rem",paddingRight:"5rem", height:"400px"}}>
+            <h2 className={Style.cardTitle}>Weekly Revenue Report</h2>
+            <ResponsiveContainer width="100%" height={310}>
+              <LineChart data={weeklyRevenueData}>
+                <XAxis dataKey="day" stroke="#94A3B8" />
+                <YAxis stroke="#94A3B8" />
+                <Tooltip />
+                <Line
+                  type="monotone"
+                  dataKey="revenue"
+                  stroke="#1E3A8A"
+                  strokeWidth={2}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+            <p className={Style.increaseText}>+12.5% Increase</p>
+          </div>
+        </div>
+        <div style={{width:"350px"}}>
+        {/* New Users */}
+          <div className={Style.card} style={{ paddingTop:"2px", marginTop:"20px", width:"350px",height:"450px", marginBottom:"10px", color:"black",overflow:"scroll",}} >
+            <h2 className={Style.cardTitle} style={{marginLeft:"5px"}}>Online Players</h2>
+            <ul >
+              {newUsers.map((user, index) => (
+                <li key={index} className={Style.userItem} style={{color:"black", height:"40px", justifyContent:"space-evenly", marginLeft:"-50px"}}>
+                  <img
+                    src={user.avatar}
+                    alt={user.name}
+                    className={Style.userAvatar }
+                    id={Style.scaler}
                   />
-                  <Tooltip />
-                  <Area
-                    type="normal"
-                    dataKey="uv"
-                    dot={true}
-                    stroke="#332D5B"
-                    fill="#332d5b80"
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
+                  <span className={Style.userName} id={Style.scaler}>{user.name}</span>
+                    <div id={Style.scaler}>
+                    <p style={{color:"blue", cursor:"pointer", display:"flex", marginLeft:"10px"}}>View User <img src={arrowRight}></img></p>
+                  </div>
+                </li>
+              ))}
+              <button className={Style.viewAllBtn}> View all Users </button>
+            </ul>
+          </div>
+
+          {/* Registered Countries */}
+          <div className={Style.cardCentered} style={{color:"black"}}>
+            <h2 className={Style.cardTitle}>Registered Countries</h2>
+            <div className={Style.flagContainer}>
+              {countries.map((flag, index) => (
+                <div style={{color:"black"}}>
+                  <span key={index} className={Style.flag}>
+                    {flag.id}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
       </div>
     </div>
+    </>
   );
 };
 

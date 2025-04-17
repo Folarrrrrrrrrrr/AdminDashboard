@@ -6,9 +6,8 @@ import { Link } from 'react-router-dom'
 import AllUsers_com from '../../../../components/allUsers_com/AllUsers_com'
 import { PopupContextHook } from '../../../../WhiteHouse_PopupContext'
 import { getAllUsersProvider } from '../../api_detaills/provider/user_provider'
-import LoadingScreen from '../../../../components/loader/LoadingSreen'
-
-
+import logo from "../../../../assets/images/S_icon.png"
+import { motion } from "framer-motion";
 
 
 const All_Users = () => {
@@ -46,7 +45,31 @@ const All_Users = () => {
         }, [])
 
     return (
-        loading ? <LoadingScreen/> : 
+        <>
+         {loading ? (
+          <div className={Style.loadingContainer}>
+            <motion.img
+              src={logo}
+              alt="Loading Object"
+              className="speeding-object"
+              initial={{
+                // x: "-100vw",
+                scale: 0.5,
+              }} // Starts small off-screen
+              animate={{
+                // x: ["-100vw", "50vw", "100vw"], // Moves from left -> center -> right
+                scale: [0.5, 1.2, 0.5], // Scales up in center, back down on exit
+              }}
+              transition={{
+                times: [0, 0.5, 1],
+                duration: 2,
+                ease: "easeInOut",
+                repeat: Infinity,
+                repeatDelay: 0.5,
+              }}
+            />
+          </div>
+        ) : null}
         <div id={Style.All_Users_mainDiv}>
 
             <Header
@@ -69,6 +92,7 @@ const All_Users = () => {
                 </div>
             </div>
         </div>
+        </>
     )
 }
 

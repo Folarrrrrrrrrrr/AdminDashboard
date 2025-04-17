@@ -2,114 +2,158 @@ import React from 'react'
 import { login_url, getUserDetails, getSuspendedUsers, transactionSummary,
     getFreezedUsers, suspendUser, getRegCountries, profile } from "../constant/url_path"
 import axios from 'axios';
-import { setToken, setEmail, getToken} from '../constant/local_storage';
+import { setToken, setEmail, getToken,getRefreshToken, setRefreshToken, clearTokens} from '../constant/local_storage';
+import { base_url } from '../constant/url_path';
 
+
+// export const login_service = async (body) => {
+//     console.log("Login Initiated")
+
+//     const response = await axios.post(login_url, body);
+
+//     if (response.status == 200 || response.status == 201) {
+
+
+//                 //Assuming the token is in response.data.token
+//                 if (response.data["responseBody"]) {
+
+//                     setToken(response.data["responseBody"].accessToken);
+        
+//                     // Store the email in local storage
+//                     if (body.email) {
+//                         setEmail(body.email);
+//                     }
+//                 } else {
+//                     console.warn('Token not found in response');
+//                 }
+//                 console.log(response.data["responseBody"].accessToken);
+
+//         return response;
+
+//     } else {
+
+//         // updateErrorText(response.data["responseMessage"])
+//         console.log("Login failed", response.data)
+  
+//     }
+
+//     return response;
+// };
 
 
 export const login_service = async (body) => {
-    console.log("Login Initiated")
+    console.log("Login Initiated");
 
-    const response = await axios.post(login_url, body);
+    try {
+        const response = await axios.post(login_url, body);
 
-    if (response.status == 200 || response.status == 201) {
+        if (response.status === 200 || response.status === 201) {
+            const responseBody = response.data.responseBody;
+            
+            if (responseBody) {
+                const { accessToken, refreshToken } = responseBody;
+                
+                // Store tokens securely
+                setToken(accessToken);
+                setRefreshToken(refreshToken);
 
-
-                //Assuming the token is in response.data.token
-                if (response.data["responseBody"]) {
-
-                    setToken(response.data["responseBody"].accessToken);
-        
-                    // Store the email in local storage
-                    if (body.email) {
-                        setEmail(body.email);
-                    }
-                } else {
-                    console.warn('Token not found in response');
+                // Store email in local storage for persistence
+                if (body.email) {
+                    setEmail(body.email);
                 }
-                console.log(response.data["responseBody"].accessToken);
 
-        return response;
+                console.log("Access Token:", accessToken);
+                console.log("Refresh Token:", refreshToken);
+            } else {
+                console.warn("Tokens not found in response");
+            }
 
-    } else {
-
-        // updateErrorText(response.data["responseMessage"])
-        console.log("Login failed", response.data)
-  
+            return response;
+        } else {
+            console.log("Login failed", response.data);
+        }
+    } catch (error) {
+        console.error("Login error:", error);
     }
 
-    return response;
+    return null;
 };
+
+
+export const refreshToken_service = async () => {
+    try {
+        const refreshToken = getRefreshToken();
+        if (!refreshToken) return null;
+
+        const response = await axios.post("https://your-api.com/auth/refresh", {
+            refreshToken,
+        });
+
+        if (response.status === 200) {
+            const { accessToken, refreshToken: newRefreshToken } = response.data;
+            setToken(accessToken);
+            setRefreshToken(newRefreshToken); // Store the new refresh token
+            return accessToken;
+        } else {
+            console.log("Refresh token failed", response.data);
+            clearTokens();
+            return null;
+        }
+    } catch (error) {
+        console.error("Token refresh error:", error);
+        clearTokens();
+        return null;
+    }
+};
+
+
 
 // Modify other service functions to include the token in the request header
  export const authAxios = axios.create({
-
     headers: {
         Authorization: `Bearer ${getToken()}`
     }
 });
 
+const axiosInstance = axios.create({
+    baseURL: base_url
+});
 
-// export const getUserDetailsService = async (phone) => {
+// Request interceptor - Attach token to every request
+axiosInstance.interceptors.request.use(
+    (config) => {
+        const token = getToken();
+        if (token) {
+            config.headers["Authorization"] = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => Promise.reject(error)
+);
 
-//     const response = await axios.get(`${getUserDetails}/${phone}`);
+// Response interceptor - Refresh token on 401 error
+axiosInstance.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+        const originalRequest = error.config;
 
+        if (error.response.status === 401 && !originalRequest._retry) {
+            originalRequest._retry = true;
+            const newAccessToken = await refreshToken_service();
 
-//     console.log(response);
-    
-//     return response;
-// };
+            if (newAccessToken) {
+                axios.defaults.headers.common["Authorization"] = `Bearer ${newAccessToken}`;
+                return axiosInstance(originalRequest);
+            } else {
+                console.log("Session expired, logging out.");
+                clearTokens();
+                window.location.href = "/login"; // Redirect to login
+            }
+        }
+        return Promise.reject(error);
+    }
+);
 
-// export const getSuspendedUsersService = async () => {
-
-//     console.log("Player Initiated")
-
-//     const response = await axios.get(getSuspendedUsers);
-
-//     console.log(response);
-    
-//     return response;
-// };
-
-
-// export const suspendUserService = async (body) => {
-
-//     const response = await axios.post(suspendUser, body);
-
-//     console.log(response);
-    
-
-//     return response;
-// };
-
-// export const getRegCountriesService = async ()=>{
-
-//     const response = await axios.get(getRegCountries)
-
-//     console.log(response);
-
-
-//     return response
-    
-// }
-
-// export const getprofileService = async (email) => {
-
-//     const response = await axios.get(`${profile}/${email}`);
+export default axiosInstance;
 
 
-//     console.log(response);
-    
-//     return response;
-// };
-
-
-
-// export const TransactionSummaryService = async () => {
-
-//     const response = await axios.get(transactionSummary);
-
-
-//     console.log(response);
-    
-//     return response;
-// };

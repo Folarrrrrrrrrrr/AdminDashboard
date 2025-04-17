@@ -1,7 +1,7 @@
 #All_Users_mainDiv{
     width: 100%;
     min-height: 100vh;
-    background-color: #F9F9F9;
+    /* background-color: #F9F9F9; */
 }
 #All_Users_wrapperDiv{
    padding: 0 7.5rem;

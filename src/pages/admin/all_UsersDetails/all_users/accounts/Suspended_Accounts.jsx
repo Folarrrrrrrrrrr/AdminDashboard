@@ -68,11 +68,11 @@ const Suspended_Accounts = () => {
                 </div>
 
 
-                <div id={Style.All_Users_toggleDiv}>
+                {/* <div id={Style.All_Users_toggleDiv}>
                     <button onClick={() => transactionToggle(0)} className={toggleIndex == 0 ? Style.toggleDiv_buttonActive : Style.All_Users_listDiv_button}>All</button>
                     <button onClick={() => transactionToggle(1)} className={toggleIndex == 1 ? Style.toggleDiv_buttonActive : Style.All_Users_listDiv_button}>Subscribed</button>
                     <button onClick={() => transactionToggle(2)} className={toggleIndex == 2 ? Style.toggleDiv_buttonActive : Style.All_Users_listDiv_button}>Unsubscribed</button>
-                </div>
+                </div> */}
 
 
                 <div id={Style.All_Users_Card}>

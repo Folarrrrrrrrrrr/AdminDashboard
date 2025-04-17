@@ -86,18 +86,18 @@ const Game_Users = () => {
     ]
 
     return (
-        <div id={Style.All_Users_mainDiv}>
+        <div id = {Style.All_Users_mainDiv}>
             <Header
                 headerText={"Game Users"}
                 headerInfo={"Here’s an information on all Users"}
             />
 
-            <div id={Style.All_Users_wrapperDiv}>
-
+            <div id = {Style.All_Users_wrapperDiv}>
                 <AllUsers_com arr={all_Users_arr} />
             </div>
+
         </div>
     )
 }
 
-export default Game_Users
+export default Game_Users;

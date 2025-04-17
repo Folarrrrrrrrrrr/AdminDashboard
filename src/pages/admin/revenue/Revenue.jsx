@@ -1,38 +1,26 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import Style from './Revenue.module.css'
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 import Header from '../../../components/header/Header'
 import Total_Card from '../../../components/total_Card/Total_Card'
 import smiley from '../../../assets/svg/gray_smiley.svg'
 import arrow_down from '../../../assets/svg/arrow_down-dark.svg'
+import logo from '../../../assets/images/S_icon.png'
 import activity from '../../../assets/svg/Activity.svg'
 import users from '../../../assets/svg/three_users.svg'
+import { useDispatch, useSelector } from "react-redux";
+import { motion } from "framer-motion";
+import { fetchRevenue } from "../api_detaills/GlobalStates/Revenue";
+import RevenueProgressBar from '../../../components/RevenueProgress/RevenueProgress';
 
 
 const Revenue = () => {
-
+    const dispatch= useDispatch();
+    const [loading, setLoading] = useState(true);
+    
     const customTickFormatter = (tick) => {
         return `${tick}k`;
-    }
-
-    const total_Card2 = [
-        {
-            image1: users,
-            text: "All Users",
-            divText: "View all",
-            price: "2m",
-            view_div: false
-        },
-        {
-            image1: activity,
-            text: "Total Bet Placed",
-            divText: "View all",
-            price: "$25,052,985",
-            to: `/totalBetPlaced/${0}`
-
-        }
-    ]
-
+    }    
 
     const data = [
         {
@@ -110,8 +98,71 @@ const Revenue = () => {
         //     amt: 2100,
         //   },
 
-    ];
+    ]; 
+
+    
+    useEffect(() => {
+        dispatch(fetchRevenue());
+    }, [dispatch]);
+    
+    const { Revenue, RevenueLoading, RevenueError } = useSelector((state) => state.RevenueReducer);
+    
+    
+
+    const total_Card2 = [
+        {
+            image1: users,
+            text: "All Users",
+            divText: "View all",
+            price: Revenue.totalUsers,
+            view_div: false
+        },
+        {
+            image1: activity,
+            text: "Total Bet Placed",
+            divText: "View all",
+            price: `#${Revenue.totalBetsPlaced}`,
+            to: `/totalBetPlaced/${0}`
+
+        }
+    ]
+
+
+    useEffect(() => {
+        setTimeout(
+          () =>
+            Revenue ? setLoading(false) : setLoading(true),
+          6000
+        );
+      }, []);
+    
     return (
+        <>
+        {loading ? (
+            <div className={Style.loadingContainer}>
+            <motion.img
+                src={logo}
+                alt="Loading Object"
+                className="speeding-object"
+                initial={{
+                // x: "-100vw",
+                scale: 0.5,
+                }} // Starts small off-screen
+                animate={{
+                // x: ["-100vw", "50vw", "100vw"], // Moves from left -> center -> right
+                scale: [0.5, 1.2, 0.5], // Scales up in center, back down on exit
+                }}
+                transition={{
+                times: [0, 0.5, 1],
+                duration: 2,
+                ease: "easeInOut",
+                repeat: Infinity,
+                repeatDelay: 0.5,
+                }}
+            />
+            </div>
+        ) : null}
+
         <div id={Style.Revenue_mainDiv}>
 
             <Header
@@ -124,21 +175,23 @@ const Revenue = () => {
                     <div id={Style.Revenue_weeklyReport_Div}>
                         <div id={Style.Total_Card_mapDiv}>
                             {
-                                total_Card2.map((object) => {
+                                total_Card2.map((object,i) => {
                                     return (
-                                        <Total_Card
-                                            image1={object.image1}
-                                            text={object.text}
-                                            divText={object.divText}
-                                            price={object.price}
-                                            view_div={object.view_div}
-                                            to = {object.to}
-                                        />
+                                        <div key={i}>
+                                            <Total_Card
+                                                image1={object.image1}
+                                                text={object.text}
+                                                divText={object.divText}
+                                                price={object.price}
+                                                view_div={object.view_div}
+                                                to = {object.to}
+                                            />
+                                        </div>
                                     )
                                 })
                             }
                         </div>
-                        {/* <img src={graph} alt="" /> */}
+                        {/* <img src={graph} alt="" /> */}  
 
                         <div id={Style.AreaChartDiv}>
                             <div id={Style.AreaChart_TextDiv}>
@@ -165,35 +218,26 @@ const Revenue = () => {
                                     <Area type="normal" dataKey="uv" dot={true} stroke="#003E79" fill="#003e79cc" />
                                 </AreaChart>
                             </ResponsiveContainer>
-                        </div>
+                        </div>      
                     </div>
 
                     <div id={Style.Revenue_earning_wrapperDiv}>
                         <div id={Style.Revenue_total_EarningDiv}>
                             <div className={Style.Revenue_earningDiv}>
-
-                                <p className={Style.earningText}>Daily Revenue</p>
-                                <p className={Style.priceText}>$3,000</p>
-
-                                <div id={Style.Revenue_progressDiv}>
-                                    <div id={Style.Revenue_progressBar}></div>
-                                    <img src={smiley} alt="" />
-                                </div>
-                                <p className={Style.Revenue_infoText}>70% more earning than last month, keep
-                                    watching to find out more</p>
+                                <RevenueProgressBar 
+                                    currentRevenue={Revenue.dailyRevenue} 
+                                    expectedRevenue={1000} 
+                                    comparisonText="keep watching to find out more" 
+                                />
                             </div>
 
                             <div className={Style.Revenue_earningDiv}>
 
-                                <p className={Style.earningText}>Earnings this month</p>
-                                <p className={Style.priceText}>$23,000</p>
-
-                                <div id={Style.Revenue_progressDiv}>
-                                    <div id={Style.Revenue_progressBar_two}></div>
-                                    <p id={Style.Revenue_percentText}>45%</p>
-                                </div>
-                                <p className={Style.Revenue_infoText}>70% more earning than last month, keep
-                                    watching to find out more</p>
+                                <RevenueProgressBar 
+                                    currentRevenue={Revenue.monthlyEarnings} 
+                                    expectedRevenue= {100000}  
+                                    comparisonText="keep watching to find out more" 
+                                />
                             </div>
 
                         </div>
@@ -218,6 +262,7 @@ const Revenue = () => {
                 </div>
             </div>
         </div>
+        </>
     )
 }
 

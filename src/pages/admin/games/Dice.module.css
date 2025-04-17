@@ -1,3 +1,22 @@
+/*  loading-container */
+.loadingContainer {
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(17, 10, 10, 0.397); /* Dark background */
+  }
+  
+  .speeding-object {
+    width: 100px; /* Adjust based on your image */
+    height: auto;
+  }
+  /*  loading-container ends here*/ 
 #DiceGame_mainDiv {
     width: 100%;
     min-height: 100vh;
@@ -5,8 +24,10 @@
     margin-top: 70px;
 }
 #DiceGame_wrapperDiv {
-    padding: 2.5rem 7.5rem 10rem 7.5rem;
-    margin-top: 40px;
+    padding-left:  7.5rem; 
+    padding-right: 10.5rem;
+    margin-top: 100px;
+    margin-bottom: 10px;
 }
 .PlaceBet_headerText {
     color: #1A1A1A;
@@ -34,7 +55,7 @@
     line-height: 38px;
     font-weight: 400;
     position: relative;
-    top: -160px;
+    /* top: -160px; */
     left: 120px;
     /* margin-top: -0px; */
     /* margin-left: 110px; */
@@ -296,62 +317,86 @@
 }
 
 
-@media (max-width: 480px) {
-    #DiceGame_mainDiv{
-        display: grid; 
-        height: auto; 
-        border: 1px solid red;  
-    } 
-    #DiceGame_wrapperDiv{
-        display: grid;
-        width: 100vw;
-        justify-self: center;
-        margin-top: 30px;
+/* updated UI styles */
+.gridContainer {
+    position: relative;
+    /* top: -160px; */
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding-left: 6.5rem;
+    padding-right: 6.5rem;
+  }
+  
+  @media (min-width: 768px) {
+    .gridContainer {
+      grid-template-columns: repeat(2, 1fr);
     }
-    .PlaceBet_headerText{
-        position: relative;
-        /* top:-500px; */
-        right: 100px;
-    }
-    #DiceGame_Card_mapDiv{
-        display: grid;
-        width: 100vw;
-        position: relative;
-        right: 121px;
-    }
-    #DiceGame_cardGraph_wrapper{
-        display: grid;
-        width: 100vw;
-        /* border: 1px solid black; */
-        overflow:  scroll;
-        position: relative;
-        left: -120px;
-        /* padding: 15px; */
-        /* top:30%; */
-    }
-    #DiceGame_Card_wrapper{
-        width: 100vw;
-        margin-bottom: 20px;
-    }
-    #Revenue_total_EarningDiv{
-        width: 100vw;
-        overflow: scroll;
-        margin-bottom: 20px;
-    }
-    /* #BarChart_TextWrapperDiv{
-        border:1px solid black;
-    } */
-    #DiceGame_lastline_graphDiv{
-        width: 100vw;
-        display:  grid;
-        justify-self: center;
-        align-self: center;
-        position: relative;
-        left: -120px;
-        height: 140vh;
-        margin-bottom: -160px;
-    }
-    #AreaChartDiv{
-        width: 100vw;
-    }
-}
+  }
+  
+  .card {
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cardCentered {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .cardTitle {
+    font-size: 1.125rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  
+  .chartContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .revenueAmount {
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+  
+  .increaseText {
+    color: #16a34a;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+  }
+  
+  .userItem {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+  }
+  
+  .userAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  .userName {
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  
+  .flagContainer {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 2rem;
+    margin-top: 0.5rem;
+  }
+  

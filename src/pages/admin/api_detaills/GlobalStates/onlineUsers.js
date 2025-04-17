@@ -20,6 +20,8 @@ export const fetchOnlineUsers = createAsyncThunk(
       // console.log(data);
       const apiBody = data.responeBody;
       return apiBody; // Extract the relevant data
+      console.log(apiBody);
+      
     } catch (error) {
       return rejectWithValue(error.message);
     }

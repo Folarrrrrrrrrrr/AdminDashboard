@@ -16,13 +16,14 @@ import InputField from '../../../../components/input/InputField'
 import download from '../../../../assets/svg/download_img.svg'
 import coin from '../../../../assets/svg/coin.svg'
 import game_pad from '../../../../assets/svg/game_pad.svg'
+import logo from '../../../../assets/images/S_icon.png'
 import Date_Picker from '../../../../components/date_picker/Date_Picker'
 import { PopupContextHook } from '../../../../WhiteHouse_PopupContext'
 import App_Pagination from '../../../../components/app_Pagination/App_Pagination'
 import { getUserDetailsProvider } from '../../api_detaills/provider/user_provider'
-import LoadingScreen from '../../../../components/loader/LoadingSreen'
-
-
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable"; // Import autoTable separately
+import { motion } from "framer-motion";
 
 const Personal_Info = () => {
 
@@ -106,9 +107,9 @@ const Personal_Info = () => {
     const { logSessions, betPlaced, friends } = gameInformation || {};
 
 
- // Check if friends is defined before accessing its properties
- const totalFriends = friends ? friends.friends : 0; // Default to 0 if undefined
- const friendList = friends ? friends.friendList : []; // Default to empty array if undefined
+    // Check if friends is defined before accessing its properties
+    const totalFriends = friends ? friends.friends : 0; // Default to 0 if undefined
+    const friendList = friends ? friends.friendList : []; // Default to empty array if undefined
 
 
 
@@ -141,7 +142,7 @@ const Personal_Info = () => {
     const balance = personalInformation.map(user => user.balance);
 
 // Serialize and encode the friendList
-const friendListString = encodeURIComponent(JSON.stringify(friendList));
+    const friendListString = encodeURIComponent(JSON.stringify(friendList));
 
 
     // Sample data for line chart
@@ -305,314 +306,583 @@ const friendListString = encodeURIComponent(JSON.stringify(friendList));
     useEffect(()=>{
           setTimeout(()=> userDetails? setLoading(false): setLoading(true), 3000)
         }, [])
+        const downloadPDF = (title, transactions) => {
+            const doc = new jsPDF();
+            
+            doc.text(title, 14, 15);
+            
+            const tableColumn = ["S/N", "Ref Number", "Time", "Amount Paid", "Payment Type", "Status"];
+            
+            const tableRows = transactions.map((txn, index) => [
+                index + 1,
+                txn.refNumber,
+                txn.time,
+                txn.amountPaid,
+                txn.paymentMethod || txn.paymentType?.bank,
+                txn.status,
+            ]);
+        
+            autoTable(doc, {
+                head: [tableColumn],
+                body: tableRows,
+                startY: 25,
+            });
+        
+            // Instead of directly saving, generate a Blob URL and trigger the download manually
+            const pdfBlob = doc.output("blob");
+            const pdfURL = URL.createObjectURL(pdfBlob);
+        
+            const link = document.createElement("a");
+            link.href = pdfURL;
+            link.download = `${title}.pdf`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        
+            // Free up memory
+            URL.revokeObjectURL(pdfURL);
+        };
+        
 
+  useEffect(() => {
+    setTimeout(
+      () =>
+        userDetails.withdrawalHistory && userDetails.coinPurchaseHistory ? setLoading(false) : setLoading(true),
+      6000
+    );
+  }, []);
     return (
-     loading ? <LoadingScreen/> : 
-        <div id={Style.Personal_Info_mainDiv}>
-            <Header
-                headerText={"Personal Information"}
-                headerInfo={"Here’s an information on this User"} />
+        <>
+            {loading ? (
+            <div className={Style.loadingContainer}>
+                <motion.img
+                src={logo}
+                alt="Loading Object"
+                className="speeding-object"
+                initial={{
+                    // x: "-100vw",
+                    scale: 0.5,
+                }} // Starts small off-screen
+                animate={{
+                    // x: ["-100vw", "50vw", "100vw"], // Moves from left -> center -> right
+                    scale: [0.5, 1.2, 0.5], // Scales up in center, back down on exit
+                }}
+                transition={{
+                    times: [0, 0.5, 1],
+                    duration: 2,
+                    ease: "easeInOut",
+                    repeat: Infinity,
+                    repeatDelay: 0.5,
+                }}
+                />
+            </div>
+            ) : null}
+            <div id={Style.Personal_Info_mainDiv}>
+                <Header
+                    headerText={"Personal Information"}
+                    headerInfo={"Here’s an information on this User"} 
+                 />
 
-            <div id={Style.Personal_Info_wrapperDiv}>
+                <div id={Style.Personal_Info_wrapperDiv}>
 
-                <p id={Style.Onboarded_Text}>Onboarded By: <span>John Doe</span></p>
+                    <p id={Style.Onboarded_Text}>Onboarded By: <span>John Doe</span></p>
 
-                <div id={Style.balance_buttonDiv}>
+                    <div id={Style.balance_buttonDiv}>
 
-                    <div id={Style.balance_game_HistoryDiv}>
+                        <div id={Style.balance_game_HistoryDiv}>
 
-                        <div id={Style.Coin_BalanceDiv}>
+                            <div id={Style.Coin_BalanceDiv}>
 
-                            <div id={Style.coinDiv}>
+                                <div id={Style.coinDiv}>
 
-                                <img src={coin} alt="" />
-                            </div>
-                            <div>
-                                <p>{balance}</p>
-                                <p>Coin Balance</p>
-                            </div>
-                        </div>
-
-                        <div id={Style.dropDiv}>
-
-                            <div id={Style.dropdown} >Click to See game history</div>
-                            <Link to={"/gameHistory"}>
-
-
-                                <div id={Style.Game_historyDiv}>
-                                    <div id={Style.padDiv}>
-                                        <img src={game_pad} alt="" />
-                                    </div>
-                                    <div>
-                                        <p>3K</p>
-                                        <p>Game History</p>
-                                    </div>
+                                    <img src={coin} alt="" />
                                 </div>
-                            </Link>
+                                <div>
+                                    <p>{balance}</p>
+                                    <p>Coin Balance</p>
+                                </div>
+                            </div>
 
+                            <div id={Style.dropDiv}>
+
+                                <div id={Style.dropdown} >Click to See game history</div>
+                                <Link to={"/gameHistory"}>
+
+
+                                    <div id={Style.Game_historyDiv}>
+                                        <div id={Style.padDiv}>
+                                            <img src={game_pad} alt="" />
+                                        </div>
+                                        <div>
+                                            <p>3K</p>
+                                            <p>Game History</p>
+                                        </div>
+                                    </div>
+                                </Link>
+
+                            </div>
+                        </div>
+
+                        <div id={Style.Personal_Info_buttonDiv}>
+
+                            {/* <button>Freeze Account</button> */}
+
+
+                            <button onClick={suspendUser} style={{ backgroundColor: personalInformation.length > 0 && personalInformation[0].status === "active" ? "#FC9E2F" : "#A8E6A1" }}>
+                                {personalInformation.length > 0 && personalInformation[0].status === "active" ? "Suspend Account" : "Unsuspend Account"}
+                            </button>
+
+
+
+
+
+                            <button>Fund Account</button>
                         </div>
                     </div>
-
-                    <div id={Style.Personal_Info_buttonDiv}>
-
-                        {/* <button>Freeze Account</button> */}
-
-
-                        <button onClick={suspendUser} style={{ backgroundColor: personalInformation.length > 0 && personalInformation[0].status === "active" ? "#FC9E2F" : "#A8E6A1" }}>
-                            {personalInformation.length > 0 && personalInformation[0].status === "active" ? "Suspend Account" : "Unsuspend Account"}
-                        </button>
-
-
-
-
-
-                        <button>Fund Account</button>
-                    </div>
-                </div>
-                {
-                    window.innerWidth < 480 ? <> <br /><br /> <br /> </>: null
-                }
-
-                <div >
-                    <p className={Style.Personal_Info_headerText}>Personal Information</p>
-                    <div id={Style.Personal_Info_tableDiv}>
-
-                        <table>
-
-                            <thead>
-                                <tr id={Style.headerTable}>
-                                    <th>S/N</th>
-                                    <th>User ID</th>
-                                    <th>Username</th>
-                                    <th>Phone</th>
-                                    <th>Country</th>
-                                    <th>Bank Detail</th>
-                                    <th>Status</th>
-                                    <th>Subscription</th>
-
-                                </tr>
-                            </thead>
-
-                            <tbody>
-
-                                {
-                                    personalInformation.map((obj, index) => {
-
-                                        let subscribedColor = obj.subscription_type === "blue" ? "#0B438D"
-                                            : obj.subscription_type === "gold" ? "#D6AB1B" : obj.subscription_type === "black" ? "black" : ""
-
-                                        let statusColor = obj.status === "active" ? "#31C364"
-                                            : obj.status === "suspended" ? "red" : ""
-
-
-                                        let statusBG = obj.status === "active" ? "#31c36433"
-                                            : obj.status === "suspended" ? "#ff000033" : ""
-
-                                        return (
-
-                                            <tr id={Style.Personal_Info_tr} key={index}>
-                                                <td>1</td>
-                                                <td>SA 123476689</td>
-                                                <td>{obj.username}</td>
-                                                <td>+{obj.phone}</td>
-                                                <td>{obj.country}</td>
-                                                <td>
-                                                    <div id={Style.BankDetails_Div}>
-                                                        <div>
-                                                            <p>Bank</p>
-                                                            <p className={Style.BankDetails_BoldText}>{obj.bankDetails?.bank_name}</p>
-                                                        </div>
-                                                        <div>
-                                                            <p>Account Number</p>
-                                                            <p className={Style.BankDetails_BoldText}>{obj.bankDetails?.account_number}</p>
-                                                        </div><div>
-                                                            <p>Account Name</p>
-                                                            <p className={Style.BankDetails_BoldText}>{obj.bankDetails?.account_name}</p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div id={Style.statusText} style={{ backgroundColor: statusBG, color: statusColor }}>{obj.status}</div>
-                                                </td>
-                                                <td>
-                                                    <div id={Style.Subscription} style={{ backgroundColor: subscribedColor }}>{obj.subscription_type}</div>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-
-
-
-                                }
-                            </tbody>
-
-                        </table>
-                    </div>
-                </div>
-
-                <p className={Style.Personal_Info_headerText}>Game Information</p>
-                <div id={Style.Personal_Info_Card_wrapper}>
-
                     {
-                        users_stats_card.map((obj, index) => {
-
-                            return (
-                                <Stats_Card
-                                    key={index}
-                                    figure={obj.figure}
-                                    img={obj.img}
-                                    text={obj.text}
-                                    to={obj.to} />
-                            )
-                        })
+                        window.innerWidth < 480 ? <> <br /><br /> <br /> </>: null
                     }
-                </div>
 
-                <div id={Style.Personal_Info_graphReport_Div}>
+                    <div >
+                        <p className={Style.Personal_Info_headerText}>Personal Information</p>
+                        <div id={Style.Personal_Info_tableDiv}>
 
-                    <div id={Style.Dashboard_lineChart_Two}>
-                        <p id={Style.Dashboard_RevenueText}>Revenue</p>
-                        <ResponsiveContainer width="100%" height="70%">
-                            <BarChart width={150} height={40} data={line_data} margin={{
-                                top: 5,
-                                right: 30,
-                                left: -20,
-                                bottom: 10,
-                            }}>
+                            <table>
+
+                                <thead>
+                                    <tr id={Style.headerTable}>
+                                        <th>S/N</th>
+                                        <th>User ID</th>
+                                        <th>Username</th>
+                                        <th>Phone</th>
+                                        <th>Country</th>
+                                        <th>Bank Detail</th>
+                                        <th>Status</th>
+                                        <th>Subscription</th>
+
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    {
+                                        personalInformation.map((obj, index) => {
+
+                                            let subscribedColor = obj.subscription_type === "blue" ? "#0B438D"
+                                                : obj.subscription_type === "gold" ? "#D6AB1B" : obj.subscription_type === "black" ? "black" : ""
+
+                                            let statusColor = obj.status === "active" ? "#31C364"
+                                                : obj.status === "suspended" ? "red" : ""
 
 
-                                <XAxis dataKey="name"
-                                    axisLine={false} tickLine={false} fontSize={"0.8rem"}
-                                />
-                                <YAxis
-                                    axisLine={false} tickLine={false} fontSize={"0.7rem"}
-                                />
-                                {/* <Legend/> */}
-                                <Tooltip />
-                                <Bar dataKey="pv" fill="#113353" />
-                            </BarChart>
-                        </ResponsiveContainer>
+                                            let statusBG = obj.status === "active" ? "#31c36433"
+                                                : obj.status === "suspended" ? "#ff000033" : ""
+
+                                            return (
+
+                                                <tr id={Style.Personal_Info_tr} key={index}>
+                                                    <td>1</td>
+                                                    <td>SA 123476689</td>
+                                                    <td>{obj.username}</td>
+                                                    <td>+{obj.phone}</td>
+                                                    <td>{obj.country}</td>
+                                                    <td>
+                                                        <div id={Style.BankDetails_Div}>
+                                                            <div>
+                                                                <p>Bank</p>
+                                                                <p className={Style.BankDetails_BoldText}>{obj.bankDetails?.bank_name}</p>
+                                                            </div>
+                                                            <div>
+                                                                <p>Account Number</p>
+                                                                <p className={Style.BankDetails_BoldText}>{obj.bankDetails?.account_number}</p>
+                                                            </div><div>
+                                                                <p>Account Name</p>
+                                                                <p className={Style.BankDetails_BoldText}>{obj.bankDetails?.account_name}</p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div id={Style.statusText} style={{ backgroundColor: statusBG, color: statusColor }}>{obj.status}</div>
+                                                    </td>
+                                                    <td>
+                                                        <div id={Style.Subscription} style={{ backgroundColor: subscribedColor }}>{obj.subscription_type}</div>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+
+
+
+                                    }
+                                </tbody>
+
+                            </table>
+                        </div>
                     </div>
 
-                    <div id={Style.Personal_Info_Report_mainDiv}>
-                        <div id={Style.Personal_Info_ReportTextDiv}>
-                            <p id={Style.ReportHeader}>Complaints</p>
-                            <p id={Style.dateText}>3rd of October, 2024 <img src={arrow_down} alt="" /></p>
-                        </div>
+                    <p className={Style.Personal_Info_headerText}>Game Information</p>
+                    <div id={Style.Personal_Info_Card_wrapper}>
 
                         {
-                            arr.length == 0 ?
-                                <div id={Style.no_complaintDiv}>
-                                    <img src={no_complaint} alt="" />
-                                    <p>No Recent Complaint</p>
-                                </div> :
+                            users_stats_card.map((obj, index) => {
 
-                                <div id={Style.Personal_Info_ReportWrapper}>
-                                    <div className={Style.Personal_Info_ReportDiv}>
-                                        <p>1</p>
-                                        <p>1/3/2024</p>
-                                        <div id={Style.TextDiv}>
-                                            <p className={Style.Report_Header2}>Lorem ipsum dolo</p>
-                                            <p className={Style.ReportText}>Lorem ipsum dolor sit amet consectetur. Odio ornare id enim vulputate...</p>
+                                return (
+                                    <Stats_Card
+                                        key={index}
+                                        figure={obj.figure}
+                                        img={obj.img}
+                                        text={obj.text}
+                                        to={obj.to} />
+                                )
+                            })
+                        }
+                    </div>
 
-                                        </div>
-                                        <Button
-                                            text={"View Details"} />
-                                    </div>
-                                    <div className={Style.Personal_Info_ReportDiv}>
-                                        <p>1</p>
-                                        <p>1/3/2024</p>
-                                        <div id={Style.TextDiv}>
-                                            <p className={Style.Report_Header2}>Lorem ipsum dolo</p>
-                                            <p className={Style.ReportText}>Lorem ipsum dolor sit amet consectetur. Odio ornare id enim vulputate...</p>
+                    <div id={Style.Personal_Info_graphReport_Div}>
 
-                                        </div>
-                                        <Button
-                                            text={"View Details"} />
-                                    </div>
-                                    <div className={Style.Personal_Info_ReportDiv}>
-                                        <p>1</p>
-                                        <p>1/3/2024</p>
-                                        <div id={Style.TextDiv}>
-                                            <p className={Style.Report_Header2}>Lorem ipsum dolo</p>
-                                            <p className={Style.ReportText}>Lorem ipsum dolor sit amet consectetur. Odio ornare id enim vulputate...</p>
+                        <div id={Style.Dashboard_lineChart_Two}>
+                            <p id={Style.Dashboard_RevenueText}>Revenue</p>
+                            <ResponsiveContainer width="100%" height="70%">
+                                <BarChart width={150} height={40} data={line_data} margin={{
+                                    top: 5,
+                                    right: 30,
+                                    left: -20,
+                                    bottom: 10,
+                                }}>
 
-                                        </div>
-                                        <Link to={'/complainDetails'}>
+
+                                    <XAxis dataKey="name"
+                                        axisLine={false} tickLine={false} fontSize={"0.8rem"}
+                                    />
+                                    <YAxis
+                                        axisLine={false} tickLine={false} fontSize={"0.7rem"}
+                                    />
+                                    {/* <Legend/> */}
+                                    <Tooltip />
+                                    <Bar dataKey="pv" fill="#113353" />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </div>
+
+                        <div id={Style.Personal_Info_Report_mainDiv}>
+                            <div id={Style.Personal_Info_ReportTextDiv}>
+                                <p id={Style.ReportHeader}>Complaints</p>
+                                <p id={Style.dateText}>3rd of October, 2024 <img src={arrow_down} alt="" /></p>
+                            </div>
+
+                            {
+                                arr.length == 0 ?
+                                    <div id={Style.no_complaintDiv}>
+                                        <img src={no_complaint} alt="" />
+                                        <p>No Recent Complaint</p>
+                                    </div> :
+
+                                    <div id={Style.Personal_Info_ReportWrapper}>
+                                        <div className={Style.Personal_Info_ReportDiv}>
+                                            <p>1</p>
+                                            <p>1/3/2024</p>
+                                            <div id={Style.TextDiv}>
+                                                <p className={Style.Report_Header2}>Lorem ipsum dolo</p>
+                                                <p className={Style.ReportText}>Lorem ipsum dolor sit amet consectetur. Odio ornare id enim vulputate...</p>
+
+                                            </div>
                                             <Button
                                                 text={"View Details"} />
-                                        </Link>
+                                        </div>
+                                        <div className={Style.Personal_Info_ReportDiv}>
+                                            <p>1</p>
+                                            <p>1/3/2024</p>
+                                            <div id={Style.TextDiv}>
+                                                <p className={Style.Report_Header2}>Lorem ipsum dolo</p>
+                                                <p className={Style.ReportText}>Lorem ipsum dolor sit amet consectetur. Odio ornare id enim vulputate...</p>
+
+                                            </div>
+                                            <Button
+                                                text={"View Details"} />
+                                        </div>
+                                        <div className={Style.Personal_Info_ReportDiv}>
+                                            <p>1</p>
+                                            <p>1/3/2024</p>
+                                            <div id={Style.TextDiv}>
+                                                <p className={Style.Report_Header2}>Lorem ipsum dolo</p>
+                                                <p className={Style.ReportText}>Lorem ipsum dolor sit amet consectetur. Odio ornare id enim vulputate...</p>
+
+                                            </div>
+                                            <Link to={'/complainDetails'}>
+                                                <Button
+                                                    text={"View Details"} />
+                                            </Link>
+                                        </div>
                                     </div>
-                                </div>
-                        }
-                    </div>
-                </div>
-
-                <div id={Style.withdrawalHistoryPursvhase_Div}>
-                    <p className={Style.Personal_Info_headerText}>Coin Purchase History</p>
-
-                    <div className={Style.date_inputDiv}>
-
-                        <span>{selectedDate.toDateString()} <img src={arrow_down} onClick={toggleCalendar} alt="" /></span>
-
-                        {
-                            isCalendarOpen && (
-
-                                <div id={Style.calendar_popup}>
-                                    <Date_Picker onDateChange={handleDateChange} />
-                                </div>
-                            )
-                        }
-
-
-                        <div className={Style.searchDiv}>
-                            <img src={search} alt="" />
-                            <InputField />
+                            }
                         </div>
-                        <img className={Style.download_img} src={download} alt="" />
                     </div>
-                    <div id={Style.Personal_Info_tableDiv}>
+                                
+                    <div id={Style.withdrawalHistoryPursvhase_Div}>
+                        {/* Coin purchase history starts here  */}
+                        <p className={Style.Personal_Info_headerText}>Coin Purchase History</p>
 
-                        <table>
+                        <div className={Style.date_inputDiv}>
 
-                            <thead>
+                            <span>{selectedDate.toDateString()} <img src={arrow_down} onClick={toggleCalendar} alt="" /></span>
 
-                                <tr id={Style.headerTable}>
-                                    <th>S/N</th>
-                                    <th>Ref Number</th>
-                                    <th>Time</th>
-                                    <th>Country</th>
-                                    <th>Amount Paid</th>
-                                    <th>Coin Received</th>
-                                    <th>Payment Type</th>
-                                    <th>Status</th>
-                                </tr>
+                            {
+                                isCalendarOpen && (
 
-                            </thead>
+                                    <div id={Style.calendar_popup}>
+                                        <Date_Picker onDateChange={handleDateChange} />
+                                    </div>
+                                )
+                            }
 
-                            <tbody>
 
-                                {
-                                    coinPurchaseHistory.map((obj, index) => {
+                            <div className={Style.searchDiv}>
+                                <img src={search} alt="" />
+                                <InputField />
+                            </div>
+                            
+                            <img className={Style.download_img} src={download} alt="" onClick={() => downloadPDF("Coin Purchase History", userDetails.coinPurchaseHistory)} />
+                            </div>
+                        <div id={Style.Personal_Info_tableDiv}>
 
-                                        const serialNumber = indexOfFirstPost + index + 1; // Calculate the correct serial number
+                            <table>
 
-                                        let statusColor = obj.status === "success" ? "#31C364" : obj.status === "failed" ? "red" : obj.status === "pending" ? "#FC9E2F" : obj.status === "reversed" ? "#939393" : ""
-                                        let statusBG = obj.status === "success" ? "#31c36433" : obj.status === "failed" ? "#ff000033" : obj.status === "pending" ? "#fc9e2f33" : obj.status === "reversed" ? "#93939333" : ""
+                                <thead>
 
-                                        return (
+                                    <tr id={Style.headerTable}>
+                                        <th>S/N</th>
+                                        <th>Ref Number</th>
+                                        <th>Time</th>
+                                        <th>Country</th>
+                                        <th>Amount Paid</th>
+                                        <th>Coin Received</th>
+                                        <th>Payment Type</th>
+                                        <th>Status</th>
+                                    </tr>
 
-                                            <tr key={index}>
-                                                <td>{serialNumber}</td>
-                                                <td>{obj.refNumber}</td>
-                                                <td>{obj.time}</td>
-                                                <td>{obj.country}</td>
-                                                <td>{obj.amountPaid}</td>
-                                                <td>{obj.coinReceived}</td>
-                                                <td>
-                                                    {
-                                                        obj.bank &&
+                                </thead>
 
+                                <tbody>
+
+                                    {
+                                        coinPurchaseHistory.map((obj, index) => {
+
+                                            const serialNumber = indexOfFirstPost + index + 1; // Calculate the correct serial number
+
+                                            let statusColor = obj.status === "success" ? "#31C364" : obj.status === "failed" ? "red" : obj.status === "pending" ? "#FC9E2F" : obj.status === "reversed" ? "#939393" : ""
+                                            let statusBG = obj.status === "success" ? "#31c36433" : obj.status === "failed" ? "#ff000033" : obj.status === "pending" ? "#fc9e2f33" : obj.status === "reversed" ? "#93939333" : ""
+
+                                            return (
+
+                                                <tr key={index}>
+                                                    <td>{serialNumber}</td>
+                                                    <td>{obj.refNumber}</td>
+                                                    <td>{obj.time}</td>
+                                                    <td>{obj.country}</td>
+                                                    <td>{obj.amountPaid}</td>
+                                                    <td>{obj.coinReceived}</td>
+                                                    <td>
+                                                        {
+                                                            obj.bank &&
+
+                                                            <div id={Style.BankDetails_Div}>
+                                                                <div>
+                                                                    <p>Bank</p>
+                                                                    <p className={Style.BankDetails_BoldText}>{obj.paymentType.bank}</p>
+                                                                </div>
+                                                                <div>
+                                                                    <p>Account Number</p>
+                                                                    <p className={Style.BankDetails_BoldText}>{obj.paymentType.accNo}</p>
+                                                                </div><div>
+                                                                    <p>Account Name</p>
+                                                                    <p className={Style.BankDetails_BoldText}>{obj.paymentType.accName}</p>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        <p className={Style.paymentText}>{obj.paymentMethod}</p>
+                                                    </td>
+                                                    <td>
+                                                        <div id={Style.statusText} style={{ backgroundColor: statusBG, color: statusColor }}>{obj.status}</div>
+                                                    </td>
+
+                                                </tr>
+                                            )
+                                        })
+                                    }
+
+                                </tbody>
+                            </table>
+
+                            {
+
+                                coinPurchaseHistory.length == 0 ?
+
+                                    <div className={Style.no_queryDiv}>
+
+                                        <p>No Recent Coin Purchase</p>
+                                    </div> : ""
+                            }
+
+                        </div>
+
+                        <App_Pagination
+                            postsPerPage={postsPerPage}
+                            totalPosts={userDetails.coinPurchaseHistory.length}
+                            paginate={paginate}
+                            currentPage={currentPage}
+                        />
+                        {/* Coin purchase history ends here  */}
+                        
+                        
+                        {/* Withdrawal History starts here  */}
+                        <p className={Style.Personal_Info_headerText}>Withdrawal History</p>
+
+                        <div className={Style.date_inputDiv}>
+
+                            <span>{selectedDate.toDateString()} <img src={arrow_down} onClick={toggleCalendar} alt="" /></span>
+
+                            {
+                                isCalendarOpen && (
+
+                                    <div id={Style.calendar_popup}>
+                                        <Date_Picker onDateChange={handleDateChange} />
+                                    </div>
+                                )
+                            }
+
+                            <div className={Style.searchDiv}>
+                                <img src={search} alt="" />
+                                <InputField />
+                            </div>
+                            <img className={Style.download_img} src={download} alt="" onClick={() => downloadPDF("Withdrawal History", userDetails.withdrawalHistory)} />
+                        </div>
+
+                        <div id={Style.Personal_Info_tableDiv}>
+
+                            <table>
+
+                                <thead>
+                                    <tr id={Style.headerTable}>
+                                        <th>S/N</th>
+                                        <th>Ref Number</th>
+                                        <th>Time</th>
+                                        <th>Country</th>
+                                        <th>Coin Converted</th>
+                                        <th>Amount Received</th>
+                                        <th>Bank Details</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    {
+                                        withdrawalHistory.map((obj, index) => {
+
+                                            const serialNumber = indexOfFirstPost + index + 1; // Calculate the correct serial number
+
+                                            let statusColor = obj.status === "success" ? "#31C364" : obj.status === "failed" ? "red" : obj.status === "pending" ? "#FC9E2F" : obj.status === "reversed" ? "#939393" : ""
+                                            let statusBG = obj.status === "success" ? "#31c36433" : obj.status === "failed" ? "#ff000033" : obj.status === "pending" ? "#fc9e2f33" : obj.status === "reversed" ? "#93939333" : ""
+
+
+                                            return (
+
+                                                <tr key={index}>
+
+                                                    <td>{serialNumber}</td>
+                                                    <td>{obj.refNumber}</td>
+                                                    <td>{obj.time}</td>
+                                                    <td>{obj.country}</td>
+                                                    <td>{obj.coinConverted}</td>
+                                                    <td>{obj.amountReceived}</td>
+                                                    <td>
+                                                        <div id={Style.BankDetails_Div}>
+                                                            <div>
+                                                                <p>Bank</p>
+                                                                <p className={Style.BankDetails_BoldText}>{obj.bankDetails.bank_name}</p>
+                                                            </div>
+                                                            <div>
+                                                                <p>Account Number</p>
+                                                                <p className={Style.BankDetails_BoldText}>{obj.bankDetails.account_number}</p>
+                                                            </div><div>
+                                                                <p>Account Name</p>
+                                                                <p className={Style.BankDetails_BoldText}>{obj.bankDetails.account_name}</p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div id={Style.statusText} style={{ backgroundColor: statusBG, color: statusColor }}>{obj.status}</div>
+                                                    </td>
+
+                                                </tr>
+                                            )
+                                        })
+                                    }
+
+
+                                </tbody>
+                            </table>
+
+                            {
+
+                                userDetails.withdrawalHistory.length == 0 ?
+
+                                    <div className={Style.no_queryDiv}>
+
+                                        <p>No Recent Withdrawal</p>
+                                    </div> : ""
+                            }
+                        </div>
+
+                        <App_Pagination
+                            postsPerPage={postsPerPage}
+                            totalPosts={userDetails.withdrawalHistory.length}
+                            paginate={paginate}
+                            currentPage={currentPage}
+                        />
+                        {/* Withdrawal History ends here */}
+
+                        {/* Subscription History starts here */}
+
+                        <p className={Style.Personal_Info_headerText}>Subscription History</p>
+
+                        <div className={Style.date_inputDiv}>
+                            <p>3rd October, 2024 <img src={arrow_down} alt="" /></p>
+                            <div className={Style.searchDiv}>
+                                <img src={search} alt="" />
+                                <InputField />
+                            </div>
+                            <img className={Style.download_img} src={download} alt="" />
+                        </div>
+                                               
+                        <div id={Style.Personal_Info_tableDiv}>
+                            <table>
+                                <thead>
+                                    <tr id={Style.headerTable}>
+                                        <th>S/N</th>
+                                        <th>Date</th>
+                                        <th>Ref Number</th>
+                                        <th>Subscription Type</th>
+                                        <th>Amount Paid</th>
+                                        <th>Payment Type</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {
+                                        transaction.map((obj, index) => {
+
+                                            return (
+
+                                                <tr key={index}>
+                                                    <td>{index + 1}</td>
+                                                    <td>{obj.refNumber}</td>
+                                                    <td>{obj.time}</td>
+                                                    <td>{obj.subType}</td>
+                                                    <td>{obj.amountPaid}</td>
+
+                                                    <td>
                                                         <div id={Style.BankDetails_Div}>
                                                             <div>
                                                                 <p>Bank</p>
@@ -626,215 +896,26 @@ const friendListString = encodeURIComponent(JSON.stringify(friendList));
                                                                 <p className={Style.BankDetails_BoldText}>{obj.paymentType.accName}</p>
                                                             </div>
                                                         </div>
-                                                    }
-                                                    <p className={Style.paymentText}>{obj.paymentMethod}</p>
-                                                </td>
-                                                <td>
-                                                    <div id={Style.statusText} style={{ backgroundColor: statusBG, color: statusColor }}>{obj.status}</div>
-                                                </td>
+                                                    </td>
+                                                    <td>
+                                                        <div id={Style.statusText}>{obj.status}</div>
+                                                    </td>
 
-                                            </tr>
-                                        )
-                                    })
-                                }
+                                                </tr>
+                                            )
+                                        })
+                                    }
 
-                            </tbody>
-                        </table>
 
-                        {
-
-                            coinPurchaseHistory.length == 0 ?
-
-                                <div className={Style.no_queryDiv}>
-
-                                    <p>No Recent Coin Purchase</p>
-                                </div> : ""
-                        }
-
-                    </div>
-
-                    <App_Pagination
-                        postsPerPage={postsPerPage}
-                        totalPosts={userDetails.coinPurchaseHistory.length}
-                        paginate={paginate}
-                        currentPage={currentPage}
-                    />
-
-                    <p className={Style.Personal_Info_headerText}>Withdrawal History</p>
-
-                    <div className={Style.date_inputDiv}>
-
-                        <span>{selectedDate.toDateString()} <img src={arrow_down} onClick={toggleCalendar} alt="" /></span>
-
-                        {
-                            isCalendarOpen && (
-
-                                <div id={Style.calendar_popup}>
-                                    <Date_Picker onDateChange={handleDateChange} />
-                                </div>
-                            )
-                        }
-
-                        <div className={Style.searchDiv}>
-                            <img src={search} alt="" />
-                            <InputField />
+                                </tbody>
+                            </table>
                         </div>
-                        <img className={Style.download_img} src={download} alt="" />
-                    </div>
-
-                    <div id={Style.Personal_Info_tableDiv}>
-
-                        <table>
-
-                            <thead>
-                                <tr id={Style.headerTable}>
-                                    <th>S/N</th>
-                                    <th>Ref Number</th>
-                                    <th>Time</th>
-                                    <th>Country</th>
-                                    <th>Coin Converted</th>
-                                    <th>Amount Received</th>
-                                    <th>Bank Details</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-
-                                {
-                                    withdrawalHistory.map((obj, index) => {
-
-                                        const serialNumber = indexOfFirstPost + index + 1; // Calculate the correct serial number
-
-                                        let statusColor = obj.status === "success" ? "#31C364" : obj.status === "failed" ? "red" : obj.status === "pending" ? "#FC9E2F" : obj.status === "reversed" ? "#939393" : ""
-                                        let statusBG = obj.status === "success" ? "#31c36433" : obj.status === "failed" ? "#ff000033" : obj.status === "pending" ? "#fc9e2f33" : obj.status === "reversed" ? "#93939333" : ""
-
-
-                                        return (
-
-                                            <tr key={index}>
-
-                                                <td>{serialNumber}</td>
-                                                <td>{obj.refNumber}</td>
-                                                <td>{obj.time}</td>
-                                                <td>{obj.country}</td>
-                                                <td>{obj.coinConverted}</td>
-                                                <td>{obj.amountReceived}</td>
-                                                <td>
-                                                    <div id={Style.BankDetails_Div}>
-                                                        <div>
-                                                            <p>Bank</p>
-                                                            <p className={Style.BankDetails_BoldText}>{obj.bankDetails.bank_name}</p>
-                                                        </div>
-                                                        <div>
-                                                            <p>Account Number</p>
-                                                            <p className={Style.BankDetails_BoldText}>{obj.bankDetails.account_number}</p>
-                                                        </div><div>
-                                                            <p>Account Name</p>
-                                                            <p className={Style.BankDetails_BoldText}>{obj.bankDetails.account_name}</p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div id={Style.statusText} style={{ backgroundColor: statusBG, color: statusColor }}>{obj.status}</div>
-                                                </td>
-
-                                            </tr>
-                                        )
-                                    })
-                                }
-
-
-                            </tbody>
-                        </table>
-
-                        {
-
-                            userDetails.withdrawalHistory.length == 0 ?
-
-                                <div className={Style.no_queryDiv}>
-
-                                    <p>No Recent Withdrawal</p>
-                                </div> : ""
-                        }
-                    </div>
-
-                    <App_Pagination
-                        postsPerPage={postsPerPage}
-                        totalPosts={userDetails.withdrawalHistory.length}
-                        paginate={paginate}
-                        currentPage={currentPage}
-                    />
-
-                    <p className={Style.Personal_Info_headerText}>Subscription History</p>
-
-                    <div className={Style.date_inputDiv}>
-                        <p>3rd October, 2024 <img src={arrow_down} alt="" /></p>
-                        <div className={Style.searchDiv}>
-                            <img src={search} alt="" />
-                            <InputField />
-                        </div>
-                        <img className={Style.download_img} src={download} alt="" />
-                    </div>
-
-                    <div id={Style.Personal_Info_tableDiv}>
-                        <table>
-                            <thead>
-                                <tr id={Style.headerTable}>
-                                    <th>S/N</th>
-                                    <th>Date</th>
-                                    <th>Ref Number</th>
-                                    <th>Subscription Type</th>
-                                    <th>Amount Paid</th>
-                                    <th>Payment Type</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                {
-                                    transaction.map((obj, index) => {
-
-                                        return (
-
-                                            <tr key={index}>
-                                                <td>{index + 1}</td>
-                                                <td>{obj.refNumber}</td>
-                                                <td>{obj.time}</td>
-                                                <td>{obj.subType}</td>
-                                                <td>{obj.amountPaid}</td>
-
-                                                <td>
-                                                    <div id={Style.BankDetails_Div}>
-                                                        <div>
-                                                            <p>Bank</p>
-                                                            <p className={Style.BankDetails_BoldText}>{obj.paymentType.bank}</p>
-                                                        </div>
-                                                        <div>
-                                                            <p>Account Number</p>
-                                                            <p className={Style.BankDetails_BoldText}>{obj.paymentType.accNo}</p>
-                                                        </div><div>
-                                                            <p>Account Name</p>
-                                                            <p className={Style.BankDetails_BoldText}>{obj.paymentType.accName}</p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div id={Style.statusText}>{obj.status}</div>
-                                                </td>
-
-                                            </tr>
-                                        )
-                                    })
-                                }
-
-
-                            </tbody>
-                        </table>
+                        
+                        {/* Subscription History ends here */}
                     </div>
                 </div>
-            </div>
-        </div>
+            </div>        
+        </>
     )
 }
 

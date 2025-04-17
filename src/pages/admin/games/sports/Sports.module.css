@@ -1,3 +1,24 @@
+/*  loading-container */
+.loadingContainer {
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(17, 10, 10, 0.397); /* Dark background */
+  }
+  
+  .speeding-object {
+    z-index: 99999;
+    width: 100px; /* Adjust based on your image */
+    height: auto;
+  }
+  /*  loading-container ends here*/ 
+
 #DiceGame_mainDiv {
     width: 100%;
     min-height: 100vh;
@@ -80,7 +101,35 @@
     /* margin-right: 50px; */
 
 }
-#doughnutChart{
+.gridContainer {
+    position: relative;
+    /* top: -160px; */
+    display: flex;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    /* padding-left: 4.5rem;
+    padding-right: 4.5rem; */
+  }
+  .card {
+    -ms-overflow-style: none;  /* Hides scrollbar in IE and Edge */
+    scrollbar-width: none;  /* Hides scrollbar in Firefox */
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card::-webkit-scrollbar {
+    display: none; /* Hides scrollbar in WebKit browsers */
+  }
+
+  .onlineUserRow{
+    transition: transform 0.3s ease-in-out;
+  }
+  .onlineUserRow:hover{
+    transform: scale(1.5)  ;
+  }
+  
+  
+  #doughnutChart{
     /* border: 2px solid black; */
     width: 35vw ;
     max-height: 38vh;
@@ -88,6 +137,62 @@
     /* top: 40px; */
     left: 45px;
 }
+  .cardCentered {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  .cardTitle {
+    font-size: 1.125rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    /* border: solid; */
+  }
+  .userItem {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 5px;
+  }
+  #scaler{
+    transition: transform 0.3s;
+
+  }
+  #scaler:hover {
+    transform: scale(1.5);
+  }
+  .viewAllBtn{
+    width: 85%;
+    height: 40px;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+  }
+  .viewAllBtn:hover{
+    background-color: blue;
+    color: white;
+  }
+
+  
+  .userAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+    .userName {
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  .flagContainer {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 2rem;
+    margin-top: 0.5rem;
+  }
+
 .Revenue_earningDiv {
     width: 100%;
     height: 15.37rem;

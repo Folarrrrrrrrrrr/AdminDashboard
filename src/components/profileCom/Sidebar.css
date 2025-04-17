@@ -1,0 +1,167 @@
+.sidebar {
+    width: 280px;
+    background: white;
+    border: 1px solid #ddd;
+    padding: 20px;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  }
+  
+  .profile-section {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  #querydetailsBtn{
+    border: none;
+    border-radius: 15px;
+    color: black;
+    font-size:x-large;
+    position: relative;
+    top: -10px;
+    left: 82%;
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+  }
+  
+  #querydetailsBtn:hover{
+    /* border: solid black; */
+    background-color: #007bff6b;
+    cursor: pointer;
+    font-size:xx-large;
+  }
+  .profile-pic {
+    width: 60px;
+    height: 60px;
+    background: #ddd;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+  }
+  
+  .user-name {
+    font-weight: bold;
+  }
+  
+  .user-email {
+    font-size: 12px;
+    color: #007bff83;
+  }
+  
+  .user-id {
+    font-size: 12px;
+    color: gray;
+  }
+  
+  .sign-out {
+    font-size: 12px;
+    color: red;
+    border: none;
+    background: none;
+    margin-top: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    position: relative;
+    left: 40%;
+  }  
+  
+  .sign-out:hover {
+    background-color: ;
+  }
+  .status {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+  #selects{
+    width: 70%;
+    border: none;
+    height: 40px;
+  }
+  
+  .green-dot {
+    width: 8px;
+    height: 8px;
+    background: green;
+    border-radius: 50%;
+    margin-right: 15px;
+    display: inline-block;
+  }
+  
+  .dropdown-icon {
+    color: gray;
+  }
+  
+  .progress {
+    margin-bottom: 20px;
+  }
+  
+  .progress-label {
+    font-size: 12px;
+    margin-bottom: 5px;
+  }
+  
+  .progress-bar {
+    background: #eee;
+    border-radius: 10px;
+    height: 8px;
+    overflow: hidden;
+  }
+  
+  .progress-fill {
+    background: #007bff;
+    height: 100%;
+  }
+  
+  .setup-btn {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  
+  .section {
+    margin-bottom: 20px;
+  }
+  
+  .section-title {
+    text-transform: uppercase;
+    font-size: 12px;
+    color: gray;
+    margin-bottom: 8px;
+  }
+  
+  .section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .section li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  
+  .footer {
+    margin-top: auto;
+    font-size: 12px;
+    color: gray;
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+  }
+  

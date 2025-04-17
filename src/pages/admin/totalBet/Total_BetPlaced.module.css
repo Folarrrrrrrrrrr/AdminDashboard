@@ -1,3 +1,23 @@
+/*  loading-container */
+.loadingContainer {
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(17, 10, 10, 0.397); /* Dark background */
+  }
+  
+  .speeding-object {
+    width: 100px; /* Adjust based on your image */
+    height: auto;
+  }
+  /*  loading-container ends here*/ 
+
 #Total_BetPlaced_mainDiv{
     width: 100%;
     min-height: 100vh;

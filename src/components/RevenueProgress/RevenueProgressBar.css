@@ -1,0 +1,57 @@
+.revenue-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 220px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .revenue-title {
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 5px;
+  }
+  
+  .revenue-amount {
+    font-weight: bold;
+    font-size: 20px;
+    color: #333;
+  }
+  
+  .progress-bar-background {
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    height: 14px;
+    margin: 10px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .progress-bar-fill {
+    background-color: #003366;
+    height: 100%;
+    transition: width 0.5s ease-in-out;
+    border-radius: 10px 0 0 10px;
+  }
+  
+  .revenue-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+  }
+  
+  .revenue-icon span {
+    background-color: #f0f0f0;
+    border-radius: 50%;
+    padding: 8px;
+    font-size: 18px;
+  }
+  
+  .revenue-comparison {
+    font-size: 12px;
+    color: #666;
+  }
+  

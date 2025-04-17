@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import "./LoadingScreen.css";
-import logo from '../../assets/images/THSLogo.png'
+import logo from '../../assets/images/S_icon.png'
 
 const LoadingScreen = () => {
   return (

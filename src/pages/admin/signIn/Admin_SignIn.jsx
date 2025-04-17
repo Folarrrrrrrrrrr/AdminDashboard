@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Style from './Admin_SignIn.module.css'
 import Input from "../../../components/SignUp_input/Input"
 import Button from '../../../components/button/Button'
@@ -10,12 +10,22 @@ import WH_logo from '../../../assets/images/WH_logo.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { login_provider } from '../api_detaills/provider/auth_provider'
 import { PopupContextHook } from '../../../WhiteHouse_PopupContext'
-
-
+import { login } from '../api_detaills/GlobalStates/authSlice'
+import { useDispatch, useSelector } from 'react-redux'
 const Admin_SignIn = () => {
 
+  
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { updateLoadingPopup, updateErrorText, updateErrorPopup, updateSignInSuccess } = PopupContextHook();
+  const { updateLoadingPopup, updateErrorText, updateErrorPopup,} = PopupContextHook();
+  const user = useSelector((state) => state.auth.user);
+  console.log(user);
+  
+  useEffect(() => {
+    if (user) {
+      navigate("/dashboard"); // Prevent login if already authenticated
+    }
+  }, [user, navigate]);
 
 
   const [signIn, setSignIn] = useState({
@@ -46,11 +56,16 @@ const Admin_SignIn = () => {
   const LoginSubmit = async () => {
 
     //The request Body
-
+    
     let body = signIn;
+    dispatch(login(signIn))
 
-    //This initiates the provider that handles the login API.
-    login_provider(body, updateSignInSuccess, navigate, updateLoadingPopup, updateErrorText, updateErrorPopup );
+
+    // Set a 6-second timeout before calling the login provider
+    // setTimeout(() => {
+      //This initiates the provider that handles the login API.
+      login_provider(body, navigate, updateLoadingPopup, updateErrorText, updateErrorPopup );
+  // }, 1000); // 6000ms = 6 seconds
 
   }
 
