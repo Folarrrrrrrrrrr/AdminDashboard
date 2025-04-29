@@ -54,10 +54,15 @@ const Reports = () => {
 
   const QueryList = QuerySummaryData.allQueries;
   // console.log(QuerySummaryData.allQueries);
-  const queryingUserDetails = queryDetailsData.userDetails[0];
-  const queryCustomerCareRepDetails =
-    queryDetailsData.customerCareAgentDetails[0];
-  const userQueryList = queryDetailsData.queries[0];
+  const queryingUserDetails = queryDetailsData?.userDetails?.[0] ?? null;
+const queryCustomerCareRepDetails = queryDetailsData?.customerCareAgentDetails?.[0] ?? null;
+const userQueryList = queryDetailsData?.queries?.[0] ?? null;
+
+
+  // const queryingUserDetails = queryDetailsData.userDetails[0];
+  // const queryCustomerCareRepDetails =
+  //   queryDetailsData.customerCareAgentDetails[0];
+  // const userQueryList = queryDetailsData.queries[0];
 
   console.log(queryingUserDetails);
   // console.log(queryCustomerCareRepDetails);
@@ -254,7 +259,7 @@ const Reports = () => {
 
   useEffect(() => {
     setTimeout(
-      () => (QuerySummaryData ? setLoading(false) : setLoading(true)),
+      () => (QuerySummaryData && queryingUserDetails? setLoading(false) : setLoading(true)),
       3000
     );
   }, []);

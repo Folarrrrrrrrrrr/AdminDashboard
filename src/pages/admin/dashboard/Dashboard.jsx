@@ -28,13 +28,14 @@ import { fetchDiceBetList } from "../api_detaills/GlobalStates/DiceBetsList";
 import { motion } from "framer-motion";
 import physicalMap from "../../../assets/images/physicalMap.jpg";
 import LoadingScreen from "../../../components/loader/LoadingSreen";
-import logo from "../../../assets/images/S_icon.png"
+import logo from "../../../assets/images/S_icon.png";
 import {
   APIProvider,
   Map,
   AdvancedMarker,
   InfoWindow,
 } from "@vis.gl/react-google-maps";
+import { fetchRevenue } from "../api_detaills/GlobalStates/Revenue";
 
 const Dashboard = () => {
   const { updateErrorText, updateErrorPopup } = PopupContextHook();
@@ -485,11 +486,26 @@ const Dashboard = () => {
     animate: { opacity: 1, y: 0, transition: { duration: 2.5 } },
     exit: { opacity: 0, y: -50, transition: { duration: 0.3 } },
   };
-  
+  useEffect(() => {
+    dispatch(fetchRevenue());
+  }, [dispatch]);
+  const { Revenue, RevenueLoading, RevenueError } = useSelector(
+    (state) => state.RevenueReducer
+  );
+  const yearly = Revenue.yearlyRevenue;
+
   useEffect(() => {
     setTimeout(
       () =>
-        DiceBetsdata && footballBetsList ? setLoading(false) : setLoading(true),
+        // DiceBetsdata &&
+        // totalFootSoldiers &&
+        // totalCountries &&
+        // totalUsers &&
+        // totalBetPlaced &&
+        footballBetsList &&
+        Revenue
+          ? setLoading(false)
+          : setLoading(true),
       6000
     );
   }, []);
@@ -536,11 +552,15 @@ const Dashboard = () => {
                   <div
                     className={Style.statCards}
                     id={
-                      i === 0 ? Style.isPurple :
-                      i === 1 ? Style.isGreen:
-                      i === 2 ? Style.isRed:
-                      i === 3 ? Style.isBlack:
-                      null
+                      i === 0
+                        ? Style.isPurple
+                        : i === 1
+                        ? Style.isGreen
+                        : i === 2
+                        ? Style.isRed
+                        : i === 3
+                        ? Style.isBlack
+                        : null
                     }
                   >
                     {" "}
@@ -663,13 +683,14 @@ const Dashboard = () => {
                 <Link to={"/revenue"}>
                   <p id={Style.Graph_BoxText}>See More</p>
                 </Link>
+                
               </div>
 
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                   width={150}
                   height={40}
-                  data={line_data}
+                  data={yearly}
                   margin={{
                     top: 20,
                     right: 30,
@@ -690,7 +711,7 @@ const Dashboard = () => {
                   />
                   <Tooltip />
                   <Bar
-                    dataKey="pv"
+                    dataKey="total"
                     fill="#4d4a4a"
                     isAnimationActive={true} // Enable animation
                     animationDuration={7500} // Duration of animation (1.5s)

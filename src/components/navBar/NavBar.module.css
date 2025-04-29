@@ -24,14 +24,14 @@
   box-shadow: 1px 3px 9px 0px rgba(128, 128, 128, 0.226) ;
   padding-right: 10px;
   padding-left: 10px;
-  width:85%;
+  width:95%;
   height: 50px;
   align-self: center;
   /* margin-left: 100px; */
   justify-content:space-around;
 }
 #NavBar_profile{
-  width: 20%;
+  width: 15%;
   color: black;
   justify-content: space-evenly;
 }
@@ -43,9 +43,6 @@
   justify-content:space-around;
 }
 
-#NavBar_textDiv{
-  display:none;
-}
 Nav_Bar_Wrapper p {
   height: 0;
 }
@@ -54,7 +51,7 @@ Nav_Bar_Wrapper p {
   display: flex;
   column-gap: 1.5rem;
   align-items: center;
-  margin-right: 23px;
+  margin-right: 5px;
 }
 
 .game {

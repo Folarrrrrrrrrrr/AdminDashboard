@@ -106,7 +106,10 @@ const Revenue = () => {
     }, [dispatch]);
     
     const { Revenue, RevenueLoading, RevenueError } = useSelector((state) => state.RevenueReducer);
-    
+    const weekly = Revenue.weeklyRevenue
+    const monthly = Revenue.monthlyRevenue
+    const yearly = Revenue.yearlyRevenue
+    console.log(Revenue.yearlyRevenue);
     
 
     const total_Card2 = [
@@ -202,7 +205,7 @@ const Revenue = () => {
                                 <AreaChart
                                     width={500}
                                     height={300}
-                                    data={data}
+                                    data={weekly}
                                     margin={{
                                         top: 0,
                                         right: 0,
@@ -213,9 +216,9 @@ const Revenue = () => {
                                 >
                                     {/* <CartesianGrid strokeDasharray="3 3" /> */}
                                     <XAxis dataKey="name" axisLine={false} tickLine={false} />
-                                    <YAxis axisLine={false} tickLine={false} tickFormatter={customTickFormatter} />
+                                    <YAxis axisLine={false} tickLine={true} tickFormatter={customTickFormatter} />
                                     <Tooltip />
-                                    <Area type="normal" dataKey="uv" dot={true} stroke="#003E79" fill="#003e79cc" />
+                                    <Area type="normal" dataKey="total" dot={true} stroke="#003E79" fill="#003e79cc" />
                                 </AreaChart>
                             </ResponsiveContainer>
                         </div>      
@@ -245,14 +248,14 @@ const Revenue = () => {
                         <div id={Style.Dashboard_lineChart}>
                             <p id={Style.Dashboard_RevenueText}>Revenue</p>
                             <ResponsiveContainer width="100%" height="100%">
-                                <LineChart width={300} height={100} data={data} margin={{
+                                <LineChart width={300} height={100} data={monthly} margin={{
                                     top: 5,
                                     // right: 30,
                                     left: -20,
                                     bottom: 10,
                                 }} >
                                     <CartesianGrid strokeDasharray="3 4 " vertical={false}></CartesianGrid>
-                                    <Line type="monotone" dot={false} dataKey="pv" stroke="#113353" backgr strokeWidth={4} />
+                                    <Line type="monotone" dot={false} dataKey="total" stroke="#113353" backgr strokeWidth={4} />
                                     <XAxis dataKey="month" fontSize={"0.8rem"}></XAxis>
                                     <YAxis dataKey="uv" fontSize={"0.7rem"}></YAxis>
                                 </LineChart>

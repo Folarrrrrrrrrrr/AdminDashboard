@@ -13,6 +13,9 @@
   .profile-section {
     text-align: center;
     margin-bottom: 20px;
+    background: linear-gradient(to top, #f2f5f9 0%,#eff1f3 50%, #ffffff 100%);
+    padding-bottom: 20px;
+    width: 100%;
   }
   #querydetailsBtn{
     border: none;
@@ -29,9 +32,10 @@
   
   #querydetailsBtn:hover{
     /* border: solid black; */
-    background-color: #007bff6b;
+    background-color: #0367d1;
     cursor: pointer;
     font-size:xx-large;
+    color: white;
   }
   .profile-pic {
     width: 60px;
@@ -67,11 +71,52 @@
     gap: 5px;
     position: relative;
     left: 40%;
-  }  
-  
-  .sign-out:hover {
-    background-color: ;
+  }   
+  @keyframes scaleIn {
+    0% {
+      transform: scale(0.5); /* Start smaller */
+      opacity: 0; /* Fully transparent */
+    }
+    100% {
+      transform: scale(1); /* Normal size */
+      opacity: 1; /* Fully visible */
+    }
   }
+.confirmSignOutDiv{
+    animation: scaleIn 0.5s ease-in-out;
+    align-items: center;
+    justify-items: center;
+    height: 70px;
+    width: 100%;
+    position: relative;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0px 5px 15px rgba(13, 39, 80, 0.16);
+  }
+  
+  .signOutModalBtns{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+  }
+ 
+  .signedOutBtn:hover {    
+    padding: 5px 10px;
+    background-color: #eb2525;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .cancealSignedOutBtn:hover {    
+    padding: 5px 10px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
   .status {
     display: flex;
     align-items: center;
@@ -119,13 +164,12 @@
   }
   
   .setup-btn {
-    margin-top: 10px;
-    padding: 5px 10px;
-    background: #007bff;
+    padding: 10px 16px;
+    background-color: #2563eb;
     color: white;
     border: none;
-    border-radius: 3px;
-    font-size: 12px;
+    border-radius: 6px;
+    margin-top: 10px;
     cursor: pointer;
   }
   
@@ -153,6 +197,46 @@
     font-size: 14px;
     margin-bottom: 10px;
     cursor: pointer;
+  }
+  .tooltip-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* .tooltip-button {
+  } */
+  .tooltip-button:hover {    
+    padding: 5px 10px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .tooltip-text {
+    visibility: hidden;
+    opacity: 0;
+    /* width: max-content; */
+    background-color: #ffffff;
+    color: #000;
+    text-align: center;
+    border-radius: 4px;
+    padding: 6px 10px;
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: opacity 0.3s;
+    /* white-space: nowrap; */
+    z-index: 1;
+    text-wrap: wrap;
+  }
+  
+  .tooltip-container:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+    
   }
   
   .footer {

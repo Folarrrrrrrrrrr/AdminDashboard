@@ -27,7 +27,7 @@ export const fetchAllStaffs = createAsyncThunk(
             }
 
             const AllStaffsData = await response.json();
-            console.log(AllStaffsData);
+            console.log(AllStaffsData.responseBody);
             
             return AllStaffsData.responseBody.staffs; // Extract the relevant data
         } catch (error) {

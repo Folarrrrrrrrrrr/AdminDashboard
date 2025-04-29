@@ -203,23 +203,26 @@ const NavBar = () => {
               {/* <div id={Style.NavBar_line}></div> */}
               <img src={mail} alt="" />
 
-              <NavLink
+              {/* <NavLink
                 to={"/profile"}
                 onClick={() => handleNavClick("profile")}
-              >
-                <div id={Style.profile_img}>
-                  {activeNav === "profile" ? (
-                    <img src={person} alt="" />
-                  ) : (
-                    <img src={user} alt="" />
-                  )}
-                </div>
-              </NavLink>
+              > */}
+                
+              {/* </NavLink> */}
 
-              <div style={{display:"grid"}}>
-                <p onClick={()=>setShowLogOutBtn(!showLogOutBtn)} style={{display:"flex"}}>
-                  Profile <img src={arrowDown} alt="" />
-                </p>
+              <div  >
+                <div style={{display:"flex"}} onClick={()=>setShowLogOutBtn(!showLogOutBtn)}>
+                  <div id={Style.profile_img} >
+                      {activeNav === "profile" ? (
+                        <img src={person} alt="" />
+                      ) : (
+                        <img src={user} alt="" />
+                      )}
+                  </div>
+                  <p>
+                    adebanke@tekkhav....
+                  </p>
+                </div>
                 {showLogOutBtn&&
                   ( 
                     <div id={Style.editProfileBanner}>

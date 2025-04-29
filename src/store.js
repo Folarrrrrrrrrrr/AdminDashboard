@@ -21,6 +21,7 @@ import FootballBetDetails from "./pages/admin/api_detaills/GlobalStates/Football
 import ResolveQuery from "./pages/admin/api_detaills/GlobalStates/ResolveQuery";
 import authReducer from "./pages/admin/api_detaills/GlobalStates/authSlice";
 import RevenueReducer from "./pages/admin/api_detaills/GlobalStates/Revenue"
+import adminProfileReducer from "./pages/admin/api_detaills/GlobalStates/UpdateAdmin"
 
 
 
@@ -48,6 +49,7 @@ const store = configureStore({
     ResolveQueryReducer : ResolveQuery,
     auth : authReducer,
     RevenueReducer : RevenueReducer,
+    adminProfileReducer : adminProfileReducer,
     // TopPerformingCCList : TopPerformingCC,
     
 

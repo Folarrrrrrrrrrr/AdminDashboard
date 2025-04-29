@@ -24,17 +24,13 @@ export const getAllUsersService = async () => {
 
 export const getUserDetailsService = async (phone) => {
   const response = await authAxios.get(`${getUserDetails}/${phone}`);
-
   // console.log(response);
-
   return response;
 };
 
 export const getSuspendedUsersService = async () => {
   console.log("Player Initiated");
-
   const response = await authAxios.get(getSuspendedUsers);
-
   console.log(response.responseBody);
 
   return response;
@@ -59,7 +55,7 @@ export const getRegCountriesService = async () => {
 export const getprofileService = async (email) => {
   const response = await authAxios.get(`${profile}/${email}`);
 
-  // console.log(response);
+  console.log(response);
 
   return response;
 };
@@ -67,7 +63,7 @@ export const getprofileService = async (email) => {
 export const updateProfile_Service = async (email, body) => {
   const response = await authAxios.put(`${updateProfile}/${email}`, body);
 
-  // console.log(response);
+  console.log(response);
 
   return response;
 };

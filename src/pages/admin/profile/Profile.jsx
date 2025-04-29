@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import Style from './Profile.module.css'
-import profile_img from '../../../assets/images/profile_img.png'
+import profile_img from '../../../assets/images/HumanSix.png'
 import edit from '../../../assets/svg/edit.svg'
 import white_edit from '../../../assets/svg/white_edit.svg'
 import capture_two from '../../../assets/svg/capture_two.svg'
@@ -10,15 +10,18 @@ import { PopupContextHook } from '../../../WhiteHouse_PopupContext'
 import { getEmail } from '../api_detaills/constant/local_storage'
 import { getprofileProvider, updatePicture_Provider, updateProfile_Provider } from '../api_detaills/provider/user_provider'
 import { useParams } from 'react-router-dom';
-
+import { useDispatch, useSelector } from "react-redux";
+import { updateAdminProfile } from "../api_detaills/GlobalStates/UpdateAdmin";
 
 
 
 const Profile = () => {
-
+    const dispatch = useDispatch();
 
     // Hook to manage error text and popup state
     const { updateErrorText, updateErrorPopup, updateLoadingPopup, updateProfilePopup } = PopupContextHook()
+
+
 
 
     // Toggle edit state
@@ -52,7 +55,6 @@ const Profile = () => {
             updateProfile: (data) => {
 
                 setProfile({
-
                     details: data.details
                 })
             },
@@ -128,35 +130,71 @@ const Profile = () => {
 
 
     // Handle form submission
-    const HandleSubmit = (e) => {
+    
+    // const HandleSubmit = (e) => {
+        
+    //     e.preventDefault(e)
 
-        e.preventDefault(e)
-
-        let email = details.email
+    //     let email = details.email
 
 
-        let body = profileUpdate
+    //     let body = profileUpdate
 
-        updateProfile_Provider(email, body, updateErrorPopup, updateErrorText, updateLoadingPopup, updateProfilePopup)
+    //     updateProfile_Provider(email, body, updateErrorPopup, updateErrorText, updateLoadingPopup, updateProfilePopup)
 
-    }
+    // }
 
+    
+  const { adminProfile, adminProfileLoading, adminProfileError } = useSelector((state) => state.adminProfileReducer);
 
     //Conditionally rendering profiles logics based on id
 
 
-  const { id } = useParams<{ id: string }>('');
-  const [dynamicProfile, setDynamicProfile] = useState<any>(null);
+//   const { id } = useParams<{ id: string }>('');
+  const { id } = useParams();
+
+  const [dynamicProfile, setDynamicProfile] = useState(null);
     
-  useEffect(() => {
-    const profileData = profiles.find(p => p.id === parseInt(id || '', 10));
-    setProfile(profileData);
-  }, [id]);
+//   useEffect(() => {
+//     const profileData = profile.find(p => p.id === parseInt(id || '', 10));
+//     setProfile(profileData);
+//   }, [id]);
 
 //   if (!profile) {
 //     return <div>Loading...</div>;
 //   }
 
+
+// Add inside your Profile component
+
+const HandleSubmit = (e) => {
+    e.preventDefault();
+  
+    if (!profileUpdate.fullname || !profileUpdate.phone_number) {
+      updateErrorText("Full name and phone number are required.");
+      updateErrorPopup(true);
+      return;
+    }
+    
+    updateLoadingPopup(true);
+  
+    dispatch(updateAdminProfile({
+      email: details.email, // using the existing profile details
+      fullname: profileUpdate.fullname,
+      phone_number: profileUpdate.phone_number
+    }))
+      .unwrap()
+      .then(() => {
+        updateLoadingPopup(false);
+        updateProfilePopup(true);
+      })
+      .catch((error) => {
+        updateLoadingPopup(false);
+        updateErrorText(error || "Profile update failed");
+        updateErrorPopup(true);
+      });
+  };
+  
     return (
         <div id={Style.Profile_mainDiv}>
 
@@ -220,14 +258,12 @@ const Profile = () => {
 
                     {
                         editState &&
-
                         <div id={Style.imageUpload}>
 
                             <label htmlFor="input_file"><img src={capture_two} alt="" />Change Cover</label>
                             <input type="file" id="input_file" name="imgURL" onChange={handleFile} />
                         </div>
                     }
-
                     {/* Display user information or edit form based on edit state */}
 
                     {
