@@ -1,26 +1,10 @@
 import React, { useState } from "react";
 import Style from "./LeftNav.module.css";
-// import arrowDown from "../../assets/svg/arrow_down.svg";
-// import mail from "../../assets/svg/transparent_mail.svg";
-// import user from "../../assets/svg/transparent_contact.svg";
-// import logo from "../../assets/images/LOGO512.png";
-// import alphaBet_logo from "../../assets/svg/Alpha_Bet_Black_Logo.svg";
-// import mail_two from "../../assets/svg/staff_mail.svg";
-// import person from "../../assets/svg/staff_person.svg";
-// import scrollUp from '../../assets/images/scroll-up.png'
 import { NavLink, useLocation } from "react-router-dom";
-import exit from "../../assets/images/exit.png"
+// import exit from "../../assets/images/exit.png"
 import { useDispatch } from "react-redux";
 import ProfileCom from "../profileCom/ProfileCom";
 import { getEmail } from '../../pages/admin/api_detaills/constant/local_storage'
-import headphone from "../../assets/svg/headphone.svg" 
-import card from "../../assets/svg/card.svg" 
-import pad from "../../assets/svg/pad.svg" 
-import chart from "../../assets/svg/chart.svg" 
-import userTwo from "../../assets/svg/Users.svg" 
-import briefcase from "../../assets/svg/brifecase.svg" 
-import Dice from "../../assets/svg/DiceTwo.svg" 
-import admin from "../../assets/svg/admin.svg" 
 import logout from "../../assets/svg/logout.svg" 
 import EditProfile from "../../assets/svg/EditProfile.svg" 
 
