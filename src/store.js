@@ -22,6 +22,9 @@ import ResolveQuery from "./pages/admin/api_detaills/GlobalStates/ResolveQuery";
 import authReducer from "./pages/admin/api_detaills/GlobalStates/authSlice";
 import RevenueReducer from "./pages/admin/api_detaills/GlobalStates/Revenue"
 import adminProfileReducer from "./pages/admin/api_detaills/GlobalStates/UpdateAdmin"
+import AllUsersReducer from "./pages/admin/api_detaills/GlobalStates/AllUsers"
+import CountriesReducer from "./pages/admin/api_detaills/GlobalStates/Countries"
+import TransactionReducer from "./pages/admin/api_detaills/GlobalStates/Transactions"
 
 
 
@@ -44,12 +47,17 @@ const store = configureStore({
     CCPerformanceWeekly : CCPerformanceReducer,
     Queries : QueriesReducer,
     AllStaffsList : AllStaffsReducer,
+    AllUsers : AllUsersReducer,
     userQueryDetailsReducer : QueryDetails,
     FootballBetDetailsReducer : FootballBetDetails,
     ResolveQueryReducer : ResolveQuery,
     auth : authReducer,
     RevenueReducer : RevenueReducer,
     adminProfileReducer : adminProfileReducer,
+    CountriesReducer : CountriesReducer,
+    TransactionReducer : TransactionReducer,
+    StaffsProfile : StaffsProfileReducer,
+    
     // TopPerformingCCList : TopPerformingCC,
     
 

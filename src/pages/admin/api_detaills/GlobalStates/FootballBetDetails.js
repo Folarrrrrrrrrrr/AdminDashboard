@@ -6,12 +6,9 @@ export const fetchFootballBetDetails = createAsyncThunk(
         try {
             const token = localStorage.getItem("token");
             // const response = await fetch(`https://stay-cut-api.onrender.com/api/v1/admin/query/get-query-details/${ticket_id}`, {
-                console.log(token);
-                // `https://stake-cut-api.onrender.com/api/v1/admin/games/sports/football/game-summary/${ticket_id}`
-                // 'stake-cut-api.onrender.com/api/v1/admin/games/sports/football/game-summary/9L3BGHCDJN'
-                // `https://stake-cut-api.onrender.com/api/v1/admin/query/get-query-details?ticket_id=${ticket_id}
-
-            const response = await fetch(`https://stake-cut-api.onrender.com/api/v1/admin/games/sports/football/game-summary/${ticket_id}`, {
+                // console.log(token);
+            const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+            const response = await fetch(`${API_BASE_URL}/games/sports/football/game-summary/${ticket_id}`, {
                 method: "GET",
                 headers: {
                     // "Content-Type": "application/json",

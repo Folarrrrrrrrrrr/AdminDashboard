@@ -2,12 +2,13 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchFootSolidersProfile = createAsyncThunk(
   "FootSolidersProfile/fetch",
-  async (_, { rejectWithValue }) => {
+  async ({ page = 1, limit = 10 }, { rejectWithValue }) => {
     try {
       const accessToken = localStorage.getItem("token");
-      console.log(accessToken);
+      // console.log(accessToken);
       
-      const response = await fetch('https://stake-cut-api.onrender.com/api/v1/admin/footsoldier/footsoldier-profile', {
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+      const response = await fetch(`${API_BASE_URL}/footsoldier/footsoldier-profile?page=${page}&limit=${limit}`, {
         method: "GET",
         headers: {
           // "Content-Type": "application/json",

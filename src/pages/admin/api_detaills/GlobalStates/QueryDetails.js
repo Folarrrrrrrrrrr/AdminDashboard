@@ -7,8 +7,8 @@ export const fetchQueryDetails = createAsyncThunk(
             const token = localStorage.getItem("token");
             // const response = await fetch(`https://stay-cut-api.onrender.com/api/v1/admin/query/get-query-details/${ticket_id}`, {
                 console.log(token);
-                
-            const response = await fetch(`https://stake-cut-api.onrender.com/api/v1/admin/query/get-query-details?ticket_id=${ticket_id}`, {
+            const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+            const response = await fetch(`${API_BASE_URL}/query/get-query-details?ticket_id=${ticket_id}`, {
                 method: "GET",
                 headers: {
                     // "Content-Type": "application/json",

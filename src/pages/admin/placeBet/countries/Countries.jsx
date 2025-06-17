@@ -9,13 +9,20 @@ import { PopupContextHook } from '../../../../WhiteHouse_PopupContext'
 import { getRegCountriesProvider } from '../../api_detaills/provider/user_provider'
 import logo from "../../../../assets/images/S_icon.png"
 import { motion } from "framer-motion";
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCountries } from "../../api_detaills/GlobalStates/Countries";
 
 
 
 
 const Countries = () => {
 
-
+    const dispatch = useDispatch();
+    const [erorPopup, setErrorPopup] = useState(true);
+      useEffect(() => {
+            dispatch(fetchCountries());
+        }, [dispatch]);
     const { updateErrorPopup, updateErrorText } = PopupContextHook()
 
     const [loading, setLoading ]= useState(true);
@@ -25,7 +32,8 @@ const Countries = () => {
     // Effect to fetch all countries when the component mounts
     useEffect(() => {
 
-        getRegCountriesProvider({
+        getRegCountriesProvider(
+        {
             updateCountries: (data) => {
                 // Update the country state with the fetched data
 
@@ -33,13 +41,17 @@ const Countries = () => {
             },
             updateErrorPopup, // Function to update error popup
             updateErrorText // Function to update error text
-        })
-
+        }
+    )
     }, []) // Empty dependency array means this runs once on mount
-
-
-
-
+    
+  
+    
+    const {CountriesData, CountriesDataLoading, CountriesDataError } = useSelector(
+        (state) => state.CountriesReducer
+      );
+//  console.log(CountriesDataError);
+ 
     useEffect(()=>{
         setTimeout(()=> countries ? setLoading(false): setLoading(true), 3000)
       }, [])
@@ -74,10 +86,28 @@ const Countries = () => {
         <div id={Style.Winner_loser_mainDiv}>
 
             <Header
-                headerText={"Total Countries"}
-                headerInfo={"Here’s an information on all Countries"}
+                // headerText={"Total Countries"}
+                // headerInfo={"Here’s an information on all Countries"}
             />
-
+            {
+                erorPopup && CountriesDataError?.includes('401')?
+                <div className={Style.errorContainer} onClick={()=> setErrorPopup(false)}>
+                <button
+                    id={Style.closeErrorBtn}
+                    onClick={() => setErrorPopup(false)}
+                >
+                    &times;
+                </button>
+                <DotLottieReact
+                src="https://lottie.host/75c1ee26-7356-43d6-983b-f0c3e9ad86ad/H1VFgjJyzy.lottie"
+                loop
+                autoplay
+                />
+                <p style={{color:"black"}}>{CountriesDataError}: log in for valid token  </p>
+                </div>
+                : 
+                <></>
+            }
 
             <div id={Style.Winner_loser_wrapperDiv}>
 
@@ -85,8 +115,8 @@ const Countries = () => {
 
                     <img src={search} alt="" />
                     <InputField
-                        placeholder={"Search Countries"} />
-
+                        placeholder={"Search Countries"}
+                    />
                 </div>
 
 

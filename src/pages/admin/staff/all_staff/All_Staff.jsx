@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Style from './All_Staff.module.css'
 import rise from '../../../../assets/svg/rise.svg'
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import person from '../../../../assets/images/Person1.png'
 import Staff_Card from '../../../../components/userStaff_Card/Staff_Card'
 import InputField from '../../../../components/input/InputField'
@@ -19,6 +20,8 @@ import { fetchAllStaffs } from "../../api_detaills/GlobalStates/AllStaffs";
 
 const All_Staff = () => {
     
+    const [erorPopup, setErrorPopup] = useState(true);
+
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchAllStaffs());
@@ -27,7 +30,7 @@ const All_Staff = () => {
     const { AllStaffsData, AllStaffsDataLoading, AllStaffsDataError } = useSelector((state) => state.AllStaffsList);
 
     const staffs = AllStaffsData;    
-    console.log(AllStaffsData);
+    console.log(AllStaffsDataError);
 
 
     const [toggleStatsIndex, setToggleStatsIndex] = useState(0)
@@ -89,8 +92,8 @@ const All_Staff = () => {
         },
         {
             img: users,
-            figure: "New Staff",
-            text: "Add A New Staff",
+            // figure: "New Staff",
+            text: "Add Staff",
             to: ""
         },
         {
@@ -110,13 +113,66 @@ const All_Staff = () => {
 
         <div id={Style.All_Staff_mainDiv}>
 
-            {/* <Header
-                headerText={"All Staffs"}
-                headerInfo={"Here’s an overview of all Staff"}
-            /> */}
+            <Header
+                // headerText={"All Staffs"}
+                // headerInfo={"Here’s an overview of all Staff"}
+            />
+
+            {
+                erorPopup && AllStaffsDataError?.includes('Failed to fetch')?
+                    <div className={Style.errorContainer}>
+                        <button
+                        id={Style.closeErrorBtn}
+                        onClick={() => setErrorPopup(false)}
+                        >
+                        &times;
+                        </button>
+                        <DotLottieReact
+                        src="https://lottie.host/75c1ee26-7356-43d6-983b-f0c3e9ad86ad/H1VFgjJyzy.lottie"
+                        loop
+                        autoplay
+                        />
+                        <p className={Style.errorText}>{AllStaffsDataError?.message}: CORS error or invalid endpoint </p>
+                    </div> 
+                : 
+                erorPopup && AllStaffsDataError?.includes('401')?
+                    <div className={Style.errorContainer}>
+                        <button
+                        id={Style.closeErrorBtn}
+                        onClick={() => setErrorPopup(false)}
+                        >
+                        &times;
+                        </button>
+                        <DotLottieReact
+                        src="https://lottie.host/75c1ee26-7356-43d6-983b-f0c3e9ad86ad/H1VFgjJyzy.lottie"
+                        loop
+                        autoplay
+                        />
+                        <p className={Style.errorText}>{AllStaffsDataError?.message}:  log in for valid token </p>
+                    </div> 
+                : 
+                erorPopup && AllStaffsDataError?.includes('404')?
+                    <div className={Style.errorContainer}>
+                        <button
+                        id={Style.closeErrorBtn}
+                        onClick={() => setErrorPopup(false)}
+                        >
+                        &times;
+                        </button>
+                        <DotLottieReact
+                        src="https://lottie.host/6f960326-5802-4519-8bd7-c84a28ca486a/gbi9gKTA09.lottie"
+                        loop
+                        autoplay
+                        />
+                        <p className={Style.errorText}>{AllStaffsDataError?.message}:  log in for valid token </p>
+                    </div> 
+                : 
+                <></>
+            }
+
             <div id={Style.All_Staff_EntireCard_Wrapper}>
 
-                <p className={Style.All_StaffText}>All Agents</p>
+                {/* <p className={Style.All_StaffText}>All Agents</p> */}
                 <div id={Style.Staff_CardDiv}>
                     {
                         staff_stats_card.map((obj, index) => {
@@ -134,7 +190,8 @@ const All_Staff = () => {
                                     isRed={index == 2 ? "true" : null}
                                     isBlack={index == 3 ? "true" : null}              
                                     colourChange={colourChange}
-                                    onClick={() => toggleStats(index)} />
+                                    onClick={() => toggleStats(index)} 
+                                />
                             )
                         })
                     }

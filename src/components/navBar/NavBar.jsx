@@ -12,6 +12,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import exit from "../../assets/images/exit.png"
 import { useDispatch } from "react-redux";
 import ProfileCom from "../profileCom/ProfileCom";
+import { getEmail } from '../../pages/admin/api_detaills/constant/local_storage'
 
 const NavBar = () => {
   const dispatch = useDispatch();
@@ -37,7 +38,10 @@ const NavBar = () => {
       sethamburger(!hamburger);
     }
   };
-
+  // Retrieve email from local storage
+      const user = getEmail()
+   const jsonUser = JSON.parse(user);
+    const email = jsonUser.email; 
 
   return (
     <div>
@@ -220,13 +224,13 @@ const NavBar = () => {
                       )}
                   </div>
                   <p>
-                    adebanke@tekkhav....
+                    {email}
                   </p>
                 </div>
                 {showLogOutBtn&&
                   ( 
                     <div id={Style.editProfileBanner}>
-                      <div id={Style.profileBox}   style={{position:"absolute", top:"18px",right:"0px"}}> 
+                      <div id={Style.profileBox} > 
                         <ProfileCom/>
                       </div>
                     </div>

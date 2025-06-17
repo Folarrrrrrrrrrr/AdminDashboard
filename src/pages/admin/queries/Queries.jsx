@@ -28,23 +28,33 @@ const Reports = () => {
   
   // const [currentPage, setCurrentPage] = useState(1);
   const [currentPage2, setCurrentPage2] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  // const limit = 5;
   const [postsPerPage] = useState(10);
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
+  
+  const prevPage=() => setCurrentPage((prev) => Math.max(prev - 1, 1))
+  const nextPage=() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+  // const paginate = (pageNumber) => {
+  //   setCurrentPage(pageNumber);
+  // };
   
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchQuerySummary());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchQuerySummary());
+  // }, [dispatch]);
+
+    
+useEffect(() => {
+    dispatch(fetchQuerySummary({ page:currentPage, limit:postsPerPage }));
+  }, [dispatch, currentPage]);
+  console.log();
 
   const { QuerySummaryData, QuerySummaryDataLoading, QuerySummaryDataError } =
     useSelector((state) => state.Queries);
-
   const { queryDetailsData, queryDetailsDataLoading, queryDetailsDataError } = useSelector((state) => state.userQueryDetailsReducer);
-  console.log(queryDetailsData);
+  console.log(QuerySummaryData);
   
   const {
     ResolutionSubmissionLoading,
@@ -52,11 +62,12 @@ const Reports = () => {
     ResolutionSubmissionError,
   } = useSelector((state) => state.ResolveQueryReducer);
 
+
   const QueryList = QuerySummaryData.allQueries;
   // console.log(QuerySummaryData.allQueries);
   const queryingUserDetails = queryDetailsData?.userDetails?.[0] ?? null;
-const queryCustomerCareRepDetails = queryDetailsData?.customerCareAgentDetails?.[0] ?? null;
-const userQueryList = queryDetailsData?.queries?.[0] ?? null;
+  const queryCustomerCareRepDetails = queryDetailsData?.customerCareAgentDetails?.[0] ?? null;
+  const userQueryList = queryDetailsData?.queries?.[0] ?? null;
 
 
   // const queryingUserDetails = queryDetailsData.userDetails[0];
@@ -73,8 +84,6 @@ const userQueryList = queryDetailsData?.queries?.[0] ?? null;
   const [queryModal, setQueryModal] = useState(false);
   const [selectedBet, setSelectedBet] = useState(null);
   const [filteredData, setFilteredData] = useState(QueryList);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage] = useState(5);
   const [searchText, setSearchText] = useState("");
   const [filterValue, setFilterValue] = useState("all");
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
@@ -215,11 +224,14 @@ const userQueryList = queryDetailsData?.queries?.[0] ?? null;
     setFilteredData(filteredRows);
   }, [searchText, filterValue, sortConfig, QueryList]);
 
-  const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-  const paginatedData = filteredData.slice(
-    (currentPage - 1) * rowsPerPage,
-    currentPage * rowsPerPage
-  );
+  
+  const totalPages = Math.ceil(QuerySummaryData.totalQueries / postsPerPage);
+
+
+
+  const paginatedData = filteredData;
+  console.log(paginatedData)
+
 
   const handleSort = (key) => {
     setSortConfig((prev) => ({
@@ -235,8 +247,11 @@ const userQueryList = queryDetailsData?.queries?.[0] ?? null;
     setQueryModal(!queryModal);
     // console.log(id);
   };
+
+
   //handling query resolution and submitting resolution fields form logic
-  const [email, setEmail] = useState("");
+  // const [email, setEmail] = useState(""); we took out email from resolution params
+
   const [message, setMessage] = useState("");
   const [new_status, setnew_status] = useState("");
   const [loading, setLoading] = useState(true);
@@ -340,2003 +355,2058 @@ const userQueryList = queryDetailsData?.queries?.[0] ?? null;
           </div>
 
             {/* Queries Table */}
-          <div id={Style.Reports_Table_WrapperDiv}>
-            <table>
-              <div id={Style.headerTable}>
-                {headers.map((key) => (
-                  <div
-                    id={Style.colums}
-                    key={key}
-                    // onClick={() => handleSort(key)}
-                  >
-                    {key}{" "}
-                    {/* {sortConfig.key === key
-                      ? sortConfig.direction === "asc"
-                        ? "▲"
-                        : "▼"
-                      : ""} */}
-                  </div>
-                ))}
-              </div>
-              {toggleIndex == 100 ? (
-                <tbody>
-                  {paginatedData.map((obj, index) => {
-                    let color = obj.status === "Pending" ? true : false;
+            <div id={Style.Reports_Table_WrapperDiv}>
+              <table>
+                <div id={Style.headerTable}>
+                  {headers.map((key) => (
+                    <div
+                      id={Style.colums}
+                      key={key}
+                      // onClick={() => handleSort(key)}
+                    >
+                      {key}{" "}
+                      {/* {sortConfig.key === key
+                        ? sortConfig.direction === "asc"
+                          ? "▲"
+                          : "▼"
+                        : ""} */}
+                    </div>
+                  ))}
+                </div>
+                {toggleIndex == 100 ? (
+                  <tbody>
+                    {paginatedData.map((obj, index) => {
+                      let color = obj.status === "Pending" ? true : false;
 
-                    return (
-                      <>
-                        <div id={Style.Personal_Info_tr}>
-                          <div> {index + 1}</div>
-                          <div>{obj.date || "20/2/24"}</div>
-                          <div className={Style.tableText}>{obj.queryType}</div>
-                          <div className={Style.tableText}>{obj.category}</div>
-                          <div className={Style.tableText}>{obj.username}</div>
-                          {/* <div className={Style.tableText}>{obj.headline}</div> */}
-                          <div>
-                            <div
-                              className={Style.statusText}
-                              style={{
-                                backgroundColor: color
-                                  ? "#fc9e2f33"
-                                  : "#31c36433",
-                                color: color ? "#FC9E2F" : "#31C364",
-                              }}
-                            >
-                              {obj.status}
+                      return (
+                        <>
+                          <div id={Style.Personal_Info_tr}>
+                            <div> {index + 1}</div>
+                            <div>{obj.date || "20/2/24"}</div>
+                            <div className={Style.tableText}>{obj.query_type_name}</div>
+                            <div className={Style.tableText}>{obj.category}</div>
+                            <div className={Style.tableText}>{obj.username}</div>
+                            {/* <div className={Style.tableText}>{obj.headline}</div> */}
+                            <div>
+                              <div
+                                className={Style.statusText}
+                                style={{
+                                  backgroundColor: color
+                                    ? "#fc9e2f33"
+                                    : "#31c36433",
+                                  color: color ? "#FC9E2F" : "#31C364",
+                                }}
+                              >
+                                {obj.status}
+                              </div>
+                            </div>
+                            <div>
+                              <button
+                                style={{
+                                  backgroundColor: "#0E093C",
+                                  border: "none",
+                                  color: "#FFFFFF",
+                                  fontSize: "0.7rem",
+                                  width: "5.18rem",
+                                  borderRadius: "8px",
+                                  height: "1.37rem",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => {
+                                  HandleViewMoreBtn(obj.ticket_id);
+                                  console.log(obj.ticket_id);
+                                }}
+                              >
+                                see details...
+                              </button>
+                              {queryModal ? (
+                                <>
+                                  <span
+                                    id={Style.modalOverlay}
+                                    onClick={() => {
+                                      resolveScreen
+                                        ? setQueryModal(true)
+                                        : setQueryModal(!queryModal);
+                                    }}
+                                  ></span>
+                                  <div id={Style.queryDetailsContainer}>
+                                    <div id={Style.queryModalBody}>
+                                      <button
+                                        id={Style.querydetailsBtn}
+                                        onClick={() => setQueryModal(!queryModal)}
+                                      >
+                                        &times;
+                                      </button>
+                                      <h2 id={Style.modalHeading}> Query </h2>
+                                      <p id={Style.modalSubHeading}>
+                                        see full details of this query
+                                      </p>
+                                      <div id={Style.profileCard}>
+                                        <img
+                                          id={Style.queryProfileImg}
+                                          src={
+                                            queryingUserDetails.profile_picture
+                                          }
+                                          alt=""
+                                        />
+                                        <div id={Style.detailsBox}>
+                                          <p className={Style.profileData}>
+                                            {queryingUserDetails.username}
+                                          </p>
+                                          {/* <p className={Style.profileData}>
+                                            player sub type
+                                          </p> */}
+                                          <p className={Style.profileData}>
+                                            {queryingUserDetails.phone}
+                                          </p>
+                                          <p className={Style.profileData}>
+                                            {" "}
+                                            {queryingUserDetails.email}{" "}
+                                          </p>
+                                          <p className={Style.profileData}>
+                                            location
+                                          </p>
+                                          <div id={Style.actionsDiv}>
+                                            <div id={Style.userStatus}>
+                                              {
+                                              queryingUserDetails.status==="active"?
+                                              <p
+                                                id={Style.onlineStatus}
+                                              ></p>:
+                                              <p
+                                                id={Style.offlineStatus}
+                                              ></p>
+                                              }
+                                              <p>{queryingUserDetails.status}</p>
+                                            </div>
+                                            <Link
+                                              to={`/userDetails/${queryingUserDetails.phone}`}
+                                            >
+                                              <button id={Style.viewProfileBtn}>
+                                                View User Profile{" "}
+                                              </button>
+                                            </Link>{" "}
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div id={Style.qerydetailsTable}>
+                                      <tr id={Style.TableHeader}>
+                                        <th className={Style.headers}>S/N</th>
+                                        <th className={Style.headers}>
+                                          Ticket className
+                                        </th>
+                                        <th className={Style.headers}>
+                                          Query Type
+                                        </th>
+                                        <th className={Style.headers}>
+                                          {" "}
+                                          Attachments
+                                        </th>
+                                        <th className={Style.headers}>
+                                          {" "}
+                                          Time&Data
+                                        </th>
+                                        <th className={Style.headers}>
+                                          {" "}
+                                          Query Status
+                                        </th>
+                                        <th className={Style.headers}> Action</th>
+                                      </tr>
+
+                                      {/* table body */}
+                                      <tr id={Style.TableRows}>
+                                        <td id={Style.headers}>1</td>
+                                        <td id={Style.headers}>
+                                          {userQueryList.ticket_id}
+                                        </td>
+                                        <td id={Style.headers}>
+                                          {" "}
+                                          {userQueryList.query_type_name}
+                                        </td>
+                                        {/* <td id={Style.headers}>
+                                          {" "}
+                                          {userQueryList.file}
+                                        </td> */}
+                                        <td id={Style.headers}>
+                                          <a href={userQueryList.file} target="_blank" rel="noopener noreferrer">
+                                            <img
+                                              src={userQueryList.file}
+                                              alt="Attachment"
+                                              style={{ width: "80px", height: "auto", borderRadius: "5px" }}
+                                            />
+                                          </a>
+                                        </td>
+                                        <td id={Style.headers}> null </td>
+                                        <td id={Style.headers}>
+                                          {" "}
+                                          {userQueryList.status}
+                                        </td>
+                                        <button
+                                          id={Style.headersBtn}
+                                          onMouseEnter={() =>
+                                            setIsBtnHovered(true)
+                                          }
+                                          onMouseLeave={() =>
+                                            setIsBtnHovered(false)
+                                          }
+                                          onClick={() => {
+                                            setResolveScreen(!resolveScreen);
+                                          }}
+                                        >
+                                          View | Resolve
+                                        </button>
+                                      </tr>
+                                      <div
+                                        id={
+                                          isBtnHovered
+                                            ? Style.btnHoverMessageDiv
+                                            : Style.btnHoverMessageDivHide
+                                        }
+                                      >
+                                        <p>{userQueryList.query}</p>
+                                      </div>
+                                    </div>
+                                    {!prevQueries ? (
+                                      <div id={Style.previousQuery}>
+                                        <div id={Style.TableHeader}>
+                                          <div id={Style.headers}>S/N</div>
+                                          <div id={Style.headers}>Ticket ID</div>
+                                          <div id={Style.headers}>Query Type</div>
+                                          <div id={Style.headers}>
+                                            {" "}
+                                            Attachments
+                                          </div>
+                                          <div id={Style.headers}> Time&Data</div>
+                                          <div id={Style.headers}>
+                                            {" "}
+                                            Query Status
+                                          </div>
+                                          <div id={Style.headers}> Action</div>
+                                        </div>
+                                        <div id={Style.TableRows}>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <button id={Style.headers}>
+                                            View | Resolve
+                                          </button>
+                                        </div>
+                                      </div>
+                                    ) : (
+                                      <div id={Style.noPrevQueryDiv}>
+                                        <p id={Style.noPastQueriesHeader}>
+                                          {" "}
+                                          Past queries from this player
+                                        </p>
+                                        <div id={Style.noQueriesDetails}>
+                                          <img
+                                            id={Style.brokenGhost}
+                                            src={solar_ghost_broken}
+                                            alt=""
+                                          />
+                                        </div>
+                                        <div id={Style.noQueryDetailDiv}>
+                                          <h3>No Previous Query History</h3>
+                                          <p style={{ textWrap: "wrap" }}>
+                                            This is empty because this user has
+                                            not logged any query before
+                                          </p>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+                                </>
+                              ) : (
+                                <></>
+                              )}
+                              {resolveScreen ? (
+                                <div id={Style.resolveScreenContainer}>
+                                  <div id={Style.modal}>
+                                    {/* Header */}
+                                    <div id={Style.modalHeader}>
+                                      <h2>Query Information & Resolution</h2>
+                                      <button
+                                        id={Style.closeBtn}
+                                        onClick={() =>
+                                          setResolveScreen(!resolveScreen)
+                                        }
+                                      >
+                                        &times;
+                                      </button>
+                                    </div>
+
+                                    {/* Issue Type */}
+                                    <button id={Style.issueBtn}>
+                                      Money Issue
+                                    </button>
+
+                                    {/* Complaint Section */}
+                                    <div id={Style.complaintSection}>
+                                      <label>
+                                        Complaint{" "}
+                                        <span id={Style.date}>(09/01/25)</span>
+                                      </label>
+                                      <textarea readOnly id={Style.textarea}>
+                                        I won a game but I’m still yet to receive
+                                        my money
+                                      </textarea>
+                                    </div>
+                                    {/* Resolution Section */}
+                                    <div className={Style.resolutionSection}>
+                                      <label>
+                                        Resolution{" "}
+                                        <span id={Style.date}>(09/01/25)</span>
+                                      </label>
+                                      {/* <input
+                                      type="email"
+                                      id={Style.inputBox}
+                                      value={email}
+                                      onChange={(e) => setEmail(e.target.value)}
+                                      placeholder="example@gmail.com"
+                                    /> */}
+                                      <textarea
+                                        id={Style.textarea}
+                                        placeholder="Type here..."
+                                        value={message}
+                                        onChange={(e) =>
+                                          setMessage(e.target.value)
+                                        }
+                                      ></textarea>
+                                    </div>
+
+                                    {/* Update Status */}
+                                    {/* <div id={Style.statusSection}>
+                                    <span id={Style.status}>Resolved</span>
+                                    <span id={Style.status}>Unresolved</span>
+                                    <span id={Style.status}>Escalated</span>
+                                    <span id={Style.status}>In Motion</span>
+                                  </div> */}
+                                    <div>
+                                      {[
+                                        "resolved",
+                                        "Unresolved",
+                                        "in-progress",
+                                      ].map((option) => (
+                                        <button
+                                          key={option}
+                                          onClick={() => setnew_status(option)}
+                                          style={{
+                                            margin: "10px",
+                                            fontWeight:
+                                              status === option
+                                                ? "bold"
+                                                : "normal",
+                                          }}
+                                        >
+                                          {option}
+                                        </button>
+                                      ))}
+                                    </div>
+
+                                    {/* Send Button */}
+                                    {/* <button id={Style.sendBtn}>
+                                    Send Resolution &gt;&gt;&gt;
+                                  </button> */}
+                                    {/* Submit Button */}
+                                    <button
+                                      onClick={handleSendResolution}
+                                      disabled={ResolutionSubmissionLoading}
+                                    >
+                                      {ResolutionSubmissionLoading
+                                        ? "Sending..."
+                                        : "Send Resolution"}
+                                    </button>
+
+                                    {/* Success or Error Messages */}
+                                    {ResolutionSubmissionSuccess && (
+                                      <p style={{ color: "green" }}>
+                                        {ResolutionSubmissionSuccess}
+                                      </p>
+                                    )}
+                                    {ResolutionSubmissionError && (
+                                      <p style={{ color: "red" }}>
+                                        {ResolutionSubmissionError}
+                                      </p>
+                                    )}
+                                  </div>
+                                </div>
+                              ) : (
+                                // </div>
+                                <></>
+                              )}
                             </div>
                           </div>
-                          <div>
-                            <button
-                              style={{
-                                backgroundColor: "#0E093C",
-                                border: "none",
-                                color: "#FFFFFF",
-                                fontSize: "0.7rem",
-                                width: "5.18rem",
-                                borderRadius: "8px",
-                                height: "1.37rem",
-                                cursor: "pointer",
-                              }}
-                              onClick={() => {
-                                HandleViewMoreBtn(obj.ticket_id);
-                                console.log(obj.ticket_id);
-                              }}
-                            >
-                              see details...
-                            </button>
-                            {queryModal ? (
-                              <>
-                                <span
-                                  id={Style.modalOverlay}
-                                  onClick={() => {
-                                    resolveScreen
-                                      ? setQueryModal(true)
-                                      : setQueryModal(!queryModal);
-                                  }}
-                                ></span>
-                                <div id={Style.queryDetailsContainer}>
-                                  <div id={Style.queryModalBody}>
-                                    <button
-                                      id={Style.querydetailsBtn}
-                                      onClick={() => setQueryModal(!queryModal)}
-                                    >
-                                      &times;
-                                    </button>
-                                    <h2 id={Style.modalHeading}> Query </h2>
-                                    <p id={Style.modalSubHeading}>
-                                      see full details of this query
-                                    </p>
-                                    <div id={Style.profileCard}>
-                                      <img
-                                        id={Style.queryProfileImg}
-                                        src={
-                                          queryingUserDetails.profile_picture
-                                        }
-                                        alt=""
-                                      />
-                                      <div id={Style.detailsBox}>
-                                        <p className={Style.profileData}>
-                                          {queryingUserDetails.username}
-                                        </p>
-                                        <p className={Style.profileData}>
-                                          player sub type
-                                        </p>
-                                        <p className={Style.profileData}>
-                                          {queryingUserDetails.phone}
-                                        </p>
-                                        <p className={Style.profileData}>
-                                          {" "}
-                                          {queryingUserDetails.email}{" "}
-                                        </p>
-                                        <p className={Style.profileData}>
-                                          location
-                                        </p>
-                                        <div id={Style.actionsDiv}>
-                                          <div id={Style.userStatus}>
-                                            <span
-                                              id={Style.onlineStatus}
-                                            ></span>
-                                            <p>{queryingUserDetails.status}</p>
-                                          </div>
-                                          <Link
-                                            to={`/userDetails/${queryingUserDetails.phone}`}
-                                          >
+                        </>
+                      );
+                    })}
+                    <div>
+                      {/* {Array.from({ length: totalPages }, (_, i) => (
+                        <button
+                          key={i}
+                          onClick={() => setCurrentPage(i + 1)}
+                          className={currentPage === i + 1 ? "active" : ""}
+                        >
+                          {i + 1}
+                        </button>
+                      ))} */}
+                    </div>
+                  </tbody>
+                ) : (
+                  ""
+                )}
+                {toggleIndex === 0 ? (
+                  <tbody>
+                    {paginatedData.map((obj, index) => {
+                      let color = obj.status === "Pending" ? true : false;
+
+                      return (
+                        <>
+                          <div id={Style.Personal_Info_tr}>
+                            <div> {index + 1}</div>
+                            <div>{obj.date || "20/2/24"}</div>
+                            <div className={Style.tableText}>{obj.queryType}</div>
+                            <div className={Style.tableText}>{obj.category}</div>
+                            <div className={Style.tableText}>{obj.username}</div>
+                            {/* <div className={Style.tableText}>{obj.headline}</div> */}
+                            <div>
+                              <div
+                                className={Style.statusText}
+                                style={{
+                                  backgroundColor: color
+                                    ? "#fc9e2f33"
+                                    : "#31c36433",
+                                  color: color ? "#FC9E2F" : "#31C364",
+                                }}
+                              >
+                                {obj.status}
+                              </div>
+                            </div>
+                            <div>
+                              <button
+                                style={{
+                                  backgroundColor: "#0E093C",
+                                  border: "none",
+                                  color: "#FFFFFF",
+                                  fontSize: "0.7rem",
+                                  width: "5.18rem",
+                                  borderRadius: "8px",
+                                  height: "1.37rem",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => {
+                                  HandleViewMoreBtn(obj);
+                                }}
+                              >
+                                see details...
+                              </button>
+                              {queryModal ? (
+                                <>
+                                  <span
+                                    id={Style.modalOverlay}
+                                    onClick={() => {
+                                      HandleViewMoreBtn(obj.ticket_id);
+                                    }}
+                                  ></span>
+                                  <div id={Style.queryDetailsContainer}>
+                                    <div id={Style.queryModalBody}>
+                                      <h2 id={Style.modalHeading}> Query </h2>
+                                      <p id={Style.modalSubHeading}>
+                                        see full details of this query
+                                      </p>
+                                      <div id={Style.profileCard}>
+                                        <img
+                                          id={Style.queryProfileImg}
+                                          src={queryImage}
+                                          alt=""
+                                        />
+                                        <div id={Style.detailsBox}>
+                                          <p className={Style.profileData}>
+                                            username
+                                          </p>
+                                          <p className={Style.profileData}>
+                                            player sub type
+                                          </p>
+                                          <p className={Style.profileData}>
+                                            joined StakeCut {}
+                                          </p>
+                                          <p className={Style.profileData}>
+                                            email
+                                          </p>
+                                          <p className={Style.profileData}>
+                                            location
+                                          </p>
+                                          <div id={Style.actionsDiv}>
+                                            <div id={Style.userStatus}>
+                                              <span
+                                                id={Style.onlineStatus}
+                                              ></span>
+                                              <p>online</p>
+                                            </div>
+
                                             <button id={Style.viewProfileBtn}>
+                                              {" "}
                                               View User Profile{" "}
                                             </button>
-                                          </Link>{" "}
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
-                                  </div>
-                                  <div id={Style.qerydetailsTable}>
-                                    <tr id={Style.TableHeader}>
-                                      <th className={Style.headers}>S/N</th>
-                                      <th className={Style.headers}>
-                                        Ticket className
-                                      </th>
-                                      <th className={Style.headers}>
-                                        Query Type
-                                      </th>
-                                      <th className={Style.headers}>
-                                        {" "}
-                                        Attachments
-                                      </th>
-                                      <th className={Style.headers}>
-                                        {" "}
-                                        Time&Data
-                                      </th>
-                                      <th className={Style.headers}>
-                                        {" "}
-                                        Query Status
-                                      </th>
-                                      <th className={Style.headers}> Action</th>
-                                    </tr>
-
-                                    {/* table body */}
-                                    <tr id={Style.TableRows}>
-                                      <td id={Style.headers}>1</td>
-                                      <td id={Style.headers}>
-                                        {userQueryList.ticket_id}
-                                      </td>
-                                      <td id={Style.headers}>
-                                        {" "}
-                                        {userQueryList.query_type_name}
-                                      </td>
-                                      <td id={Style.headers}>
-                                        {" "}
-                                        {userQueryList.file}
-                                      </td>
-                                      <td id={Style.headers}> null </td>
-                                      <td id={Style.headers}>
-                                        {" "}
-                                        {userQueryList.status}
-                                      </td>
-                                      <button
-                                        id={Style.headersBtn}
-                                        onMouseEnter={() =>
-                                          setIsBtnHovered(true)
-                                        }
-                                        onMouseLeave={() =>
-                                          setIsBtnHovered(false)
-                                        }
-                                        onClick={() => {
-                                          setResolveScreen(!resolveScreen);
-                                        }}
-                                      >
-                                        View | Resolve
-                                      </button>
-                                    </tr>
-                                    <div
-                                      id={
-                                        isBtnHovered
-                                          ? Style.btnHoverMessageDiv
-                                          : Style.btnHoverMessageDivHide
-                                      }
-                                    >
-                                      <p>{userQueryList.query}</p>
-                                    </div>
-                                  </div>
-                                  {!prevQueries ? (
-                                    <div id={Style.previousQuery}>
-                                      <div id={Style.TableHeader}>
-                                        <div id={Style.headers}>S/N</div>
-                                        <div id={Style.headers}>Ticket ID</div>
-                                        <div id={Style.headers}>Query Type</div>
-                                        <div id={Style.headers}>
+                                    <div id={Style.qerydetailsTable}>
+                                      <tr id={Style.TableHeader}>
+                                        <th className={Style.headers}>S/N</th>
+                                        <th className={Style.headers}>
+                                          Ticket className
+                                        </th>
+                                        <th className={Style.headers}>
+                                          Query Type
+                                        </th>
+                                        <th className={Style.headers}>
                                           {" "}
                                           Attachments
-                                        </div>
-                                        <div id={Style.headers}> Time&Data</div>
-                                        <div id={Style.headers}>
+                                        </th>
+                                        <th className={Style.headers}>
+                                          {" "}
+                                          Time&Data
+                                        </th>
+                                        <th className={Style.headers}>
                                           {" "}
                                           Query Status
-                                        </div>
-                                        <div id={Style.headers}> Action</div>
-                                      </div>
-                                      <div id={Style.TableRows}>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <button id={Style.headers}>
+                                        </th>
+                                        <th className={Style.headers}> Action</th>
+                                      </tr>
+                                      <tr id={Style.TableRows}>
+                                        <td id={Style.headers}>1</td>
+                                        <td id={Style.headers}>
+                                          QUE-20251202-FolaOl
+                                        </td>
+                                        <td id={Style.headers}>
+                                          {" "}
+                                          Payment Trouble
+                                        </td>
+                                        <td id={Style.headers}> no file</td>
+                                        <td id={Style.headers}> 2025-02-12</td>
+                                        <td id={Style.headers}> Open</td>
+                                        <button
+                                          id={Style.headersBtn}
+                                          onMouseEnter={() =>
+                                            setIsBtnHovered(true)
+                                          }
+                                          onMouseLeave={() =>
+                                            setIsBtnHovered(false)
+                                          }
+                                          onClick={() =>
+                                            setResolveScreen(!resolveScreen)
+                                          }
+                                        >
                                           View | Resolve
                                         </button>
-                                      </div>
-                                    </div>
-                                  ) : (
-                                    <div id={Style.noPrevQueryDiv}>
-                                      <p id={Style.noPastQueriesHeader}>
-                                        {" "}
-                                        Past queries from this player
-                                      </p>
-                                      <div id={Style.noQueriesDetails}>
-                                        <img
-                                          id={Style.brokenGhost}
-                                          src={solar_ghost_broken}
-                                          alt=""
-                                        />
-                                      </div>
-                                      <div id={Style.noQueryDetailDiv}>
-                                        <h3>No Previous Query History</h3>
-                                        <p style={{ textWrap: "wrap" }}>
-                                          This is empty because this user has
-                                          not logged any query before
-                                        </p>
-                                      </div>
-                                    </div>
-                                  )}
-                                </div>
-                              </>
-                            ) : (
-                              <></>
-                            )}
-                            {resolveScreen ? (
-                              <div id={Style.resolveScreenContainer}>
-                                <div id={Style.modal}>
-                                  {/* Header */}
-                                  <div id={Style.modalHeader}>
-                                    <h2>Query Information & Resolution</h2>
-                                    <button
-                                      id={Style.closeBtn}
-                                      onClick={() =>
-                                        setResolveScreen(!resolveScreen)
-                                      }
-                                    >
-                                      &times;
-                                    </button>
-                                  </div>
-
-                                  {/* Issue Type */}
-                                  <button id={Style.issueBtn}>
-                                    Money Issue
-                                  </button>
-
-                                  {/* Complaint Section */}
-                                  <div id={Style.complaintSection}>
-                                    <label>
-                                      Complaint{" "}
-                                      <span id={Style.date}>(09/01/25)</span>
-                                    </label>
-                                    <textarea readOnly id={Style.textarea}>
-                                      I won a game but I’m still yet to receive
-                                      my money
-                                    </textarea>
-                                  </div>
-                                  {/* Resolution Section */}
-                                  <div className={Style.resolutionSection}>
-                                    <label>
-                                      Resolution{" "}
-                                      <span id={Style.date}>(09/01/25)</span>
-                                    </label>
-                                    {/* <input
-                                    type="email"
-                                    id={Style.inputBox}
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="example@gmail.com"
-                                  /> */}
-                                    <textarea
-                                      id={Style.textarea}
-                                      placeholder="Type here..."
-                                      value={message}
-                                      onChange={(e) =>
-                                        setMessage(e.target.value)
-                                      }
-                                    ></textarea>
-                                  </div>
-
-                                  {/* Update Status */}
-                                  {/* <div id={Style.statusSection}>
-                                  <span id={Style.status}>Resolved</span>
-                                  <span id={Style.status}>Unresolved</span>
-                                  <span id={Style.status}>Escalated</span>
-                                  <span id={Style.status}>In Motion</span>
-                                </div> */}
-                                  <div>
-                                    {[
-                                      "resolved",
-                                      "Unresolved",
-                                      "in-progress",
-                                    ].map((option) => (
-                                      <button
-                                        key={option}
-                                        onClick={() => setnew_status(option)}
-                                        style={{
-                                          margin: "10px",
-                                          fontWeight:
-                                            status === option
-                                              ? "bold"
-                                              : "normal",
-                                        }}
+                                      </tr>
+                                      <div
+                                        id={
+                                          isBtnHovered
+                                            ? Style.btnHoverMessageDiv
+                                            : Style.btnHoverMessageDivHide
+                                        }
                                       >
-                                        {option}
-                                      </button>
-                                    ))}
-                                  </div>
-
-                                  {/* Send Button */}
-                                  {/* <button id={Style.sendBtn}>
-                                  Send Resolution &gt;&gt;&gt;
-                                </button> */}
-                                  {/* Submit Button */}
-                                  <button
-                                    onClick={handleSendResolution}
-                                    disabled={ResolutionSubmissionLoading}
-                                  >
-                                    {ResolutionSubmissionLoading
-                                      ? "Sending..."
-                                      : "Send Resolution"}
-                                  </button>
-
-                                  {/* Success or Error Messages */}
-                                  {ResolutionSubmissionSuccess && (
-                                    <p style={{ color: "green" }}>
-                                      {ResolutionSubmissionSuccess}
-                                    </p>
-                                  )}
-                                  {ResolutionSubmissionError && (
-                                    <p style={{ color: "red" }}>
-                                      {ResolutionSubmissionError}
-                                    </p>
-                                  )}
-                                </div>
-                              </div>
-                            ) : (
-                              // </div>
-                              <></>
-                            )}
-                          </div>
-                        </div>
-                      </>
-                    );
-                  })}
-                  <div>
-                    {/* {Array.from({ length: totalPages }, (_, i) => (
-                      <button
-                        key={i}
-                        onClick={() => setCurrentPage(i + 1)}
-                        className={currentPage === i + 1 ? "active" : ""}
-                      >
-                        {i + 1}
-                      </button>
-                    ))} */}
-                  </div>
-                </tbody>
-              ) : (
-                "what"
-              )}
-              {toggleIndex === 0 ? (
-                <tbody>
-                  {paginatedData.map((obj, index) => {
-                    let color = obj.status === "Pending" ? true : false;
-
-                    return (
-                      <>
-                        <div id={Style.Personal_Info_tr}>
-                          <div> {index + 1}</div>
-                          <div>{obj.date || "20/2/24"}</div>
-                          <div className={Style.tableText}>{obj.queryType}</div>
-                          <div className={Style.tableText}>{obj.category}</div>
-                          <div className={Style.tableText}>{obj.username}</div>
-                          {/* <div className={Style.tableText}>{obj.headline}</div> */}
-                          <div>
-                            <div
-                              className={Style.statusText}
-                              style={{
-                                backgroundColor: color
-                                  ? "#fc9e2f33"
-                                  : "#31c36433",
-                                color: color ? "#FC9E2F" : "#31C364",
-                              }}
-                            >
-                              {obj.status}
-                            </div>
-                          </div>
-                          <div>
-                            <button
-                              style={{
-                                backgroundColor: "#0E093C",
-                                border: "none",
-                                color: "#FFFFFF",
-                                fontSize: "0.7rem",
-                                width: "5.18rem",
-                                borderRadius: "8px",
-                                height: "1.37rem",
-                                cursor: "pointer",
-                              }}
-                              onClick={() => {
-                                HandleViewMoreBtn(obj);
-                              }}
-                            >
-                              see details...
-                            </button>
-                            {queryModal ? (
-                              <>
-                                <span
-                                  id={Style.modalOverlay}
-                                  onClick={() => {
-                                    HandleViewMoreBtn(obj.ticket_id);
-                                  }}
-                                ></span>
-                                <div id={Style.queryDetailsContainer}>
-                                  <div id={Style.queryModalBody}>
-                                    <h2 id={Style.modalHeading}> Query </h2>
-                                    <p id={Style.modalSubHeading}>
-                                      see full details of this query
-                                    </p>
-                                    <div id={Style.profileCard}>
-                                      <img
-                                        id={Style.queryProfileImg}
-                                        src={queryImage}
-                                        alt=""
-                                      />
-                                      <div id={Style.detailsBox}>
-                                        <p className={Style.profileData}>
-                                          username
+                                        <p>
+                                          {" "}
+                                          Lorem ipsum dolor, sit amet consectetur
+                                          adipisicing elit. Aliquam provident
+                                          consectetur harum eos saepe repellat
+                                          sapiente, quaerat eius. Tempore
+                                          accusantium id aliquid tenetur incidunt
+                                          possimus distinctio aliquam, voluptate
+                                          blanditiis ad!
                                         </p>
-                                        <p className={Style.profileData}>
-                                          player sub type
-                                        </p>
-                                        <p className={Style.profileData}>
-                                          joined StakeCut {}
-                                        </p>
-                                        <p className={Style.profileData}>
-                                          email
-                                        </p>
-                                        <p className={Style.profileData}>
-                                          location
-                                        </p>
-                                        <div id={Style.actionsDiv}>
-                                          <div id={Style.userStatus}>
-                                            <span
-                                              id={Style.onlineStatus}
-                                            ></span>
-                                            <p>online</p>
-                                          </div>
-
-                                          <button id={Style.viewProfileBtn}>
+                                      </div>
+                                    </div>
+                                    {!prevQueries ? (
+                                      <div id={Style.previousQuery}>
+                                        <div id={Style.TableHeader}>
+                                          <div id={Style.headers}>S/N</div>
+                                          <div id={Style.headers}>Ticket ID</div>
+                                          <div id={Style.headers}>Query Type</div>
+                                          <div id={Style.headers}>
                                             {" "}
-                                            View User Profile{" "}
+                                            Attachments
+                                          </div>
+                                          <div id={Style.headers}> Time&Data</div>
+                                          <div id={Style.headers}>
+                                            {" "}
+                                            Query Status
+                                          </div>
+                                          <div id={Style.headers}> Action</div>
+                                        </div>
+                                        <div id={Style.TableRows}>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <button id={Style.headers}>
+                                            View | Resolve
                                           </button>
                                         </div>
                                       </div>
-                                    </div>
+                                    ) : (
+                                      <div id={Style.noPrevQueryDiv}>
+                                        <h3 id={Style.noPastQueriesHeader}>
+                                          {" "}
+                                          Past queries from this player
+                                        </h3>
+                                        <div id={Style.noQueriesDetails}>
+                                          <img
+                                            id={Style.brokenGhost}
+                                            src={solar_ghost_broken}
+                                            alt=""
+                                          />
+                                        </div>
+                                        <div id={Style.noQueryDetailDiv}>
+                                          <h3>No Previous Query History</h3>
+                                          <p style={{ textWrap: "wrap" }}>
+                                            This is empty because this user has
+                                            not logged any query before
+                                          </p>
+                                        </div>
+                                      </div>
+                                    )}
                                   </div>
-                                  <div id={Style.qerydetailsTable}>
-                                    <tr id={Style.TableHeader}>
-                                      <th className={Style.headers}>S/N</th>
-                                      <th className={Style.headers}>
-                                        Ticket className
-                                      </th>
-                                      <th className={Style.headers}>
-                                        Query Type
-                                      </th>
-                                      <th className={Style.headers}>
-                                        {" "}
-                                        Attachments
-                                      </th>
-                                      <th className={Style.headers}>
-                                        {" "}
-                                        Time&Data
-                                      </th>
-                                      <th className={Style.headers}>
-                                        {" "}
-                                        Query Status
-                                      </th>
-                                      <th className={Style.headers}> Action</th>
-                                    </tr>
-                                    <tr id={Style.TableRows}>
-                                      <td id={Style.headers}>1</td>
-                                      <td id={Style.headers}>
-                                        QUE-20251202-FolaOl
-                                      </td>
-                                      <td id={Style.headers}>
-                                        {" "}
-                                        Payment Trouble
-                                      </td>
-                                      <td id={Style.headers}> no file</td>
-                                      <td id={Style.headers}> 2025-02-12</td>
-                                      <td id={Style.headers}> Open</td>
+                                </>
+                              ) : (
+                                <></>
+                              )}
+                              {resolveScreen ? (
+                                <div id={Style.resolveScreenContainer}>
+                                  <div id={Style.modal}>
+                                    {/* Header */}
+                                    <div id={Style.modalHeader}>
+                                      <h2>Query Information & Resolution</h2>
                                       <button
-                                        id={Style.headersBtn}
-                                        onMouseEnter={() =>
-                                          setIsBtnHovered(true)
-                                        }
-                                        onMouseLeave={() =>
-                                          setIsBtnHovered(false)
-                                        }
+                                        id={Style.closeBtn}
                                         onClick={() =>
                                           setResolveScreen(!resolveScreen)
                                         }
                                       >
-                                        View | Resolve
+                                        &times;
                                       </button>
-                                    </tr>
-                                    <div
-                                      id={
-                                        isBtnHovered
-                                          ? Style.btnHoverMessageDiv
-                                          : Style.btnHoverMessageDivHide
-                                      }
-                                    >
-                                      <p>
-                                        {" "}
-                                        Lorem ipsum dolor, sit amet consectetur
-                                        adipisicing elit. Aliquam provident
-                                        consectetur harum eos saepe repellat
-                                        sapiente, quaerat eius. Tempore
-                                        accusantium id aliquid tenetur incidunt
-                                        possimus distinctio aliquam, voluptate
-                                        blanditiis ad!
-                                      </p>
                                     </div>
-                                  </div>
-                                  {!prevQueries ? (
-                                    <div id={Style.previousQuery}>
-                                      <div id={Style.TableHeader}>
-                                        <div id={Style.headers}>S/N</div>
-                                        <div id={Style.headers}>Ticket ID</div>
-                                        <div id={Style.headers}>Query Type</div>
-                                        <div id={Style.headers}>
-                                          {" "}
-                                          Attachments
-                                        </div>
-                                        <div id={Style.headers}> Time&Data</div>
-                                        <div id={Style.headers}>
-                                          {" "}
-                                          Query Status
-                                        </div>
-                                        <div id={Style.headers}> Action</div>
-                                      </div>
-                                      <div id={Style.TableRows}>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <button id={Style.headers}>
-                                          View | Resolve
-                                        </button>
-                                      </div>
+
+                                    {/* Issue Type */}
+                                    <button id={Style.issueBtn}>
+                                      Money Issue
+                                    </button>
+
+                                    {/* Complaint Section */}
+                                    <div id={Style.complaintSection}>
+                                      <label>
+                                        Complaint{" "}
+                                        <span id={Style.date}>(09/01/25)</span>
+                                      </label>
+                                      <textarea readOnly id={Style.textarea}>
+                                        I won a game but I’m still yet to receive
+                                        my money
+                                      </textarea>
                                     </div>
-                                  ) : (
-                                    <div id={Style.noPrevQueryDiv}>
-                                      <h3 id={Style.noPastQueriesHeader}>
-                                        {" "}
-                                        Past queries from this player
-                                      </h3>
-                                      <div id={Style.noQueriesDetails}>
-                                        <img
-                                          id={Style.brokenGhost}
-                                          src={solar_ghost_broken}
-                                          alt=""
-                                        />
-                                      </div>
-                                      <div id={Style.noQueryDetailDiv}>
-                                        <h3>No Previous Query History</h3>
-                                        <p style={{ textWrap: "wrap" }}>
-                                          This is empty because this user has
-                                          not logged any query before
-                                        </p>
-                                      </div>
+                                    {/* Resolution Section */}
+                                    <div className={Style.resolutionSection}>
+                                      <label>
+                                        Resolution{" "}
+                                        <span id={Style.date}>(09/01/25)</span>
+                                      </label>
+                                      <input
+                                        type="email"
+                                        id={Style.inputBox}
+                                        placeholder="example@gmail.com"
+                                      />
+                                      <textarea
+                                        id={Style.textarea}
+                                        placeholder="Type here..."
+                                      ></textarea>
                                     </div>
-                                  )}
-                                </div>
-                              </>
-                            ) : (
-                              <></>
-                            )}
-                            {resolveScreen ? (
-                              <div id={Style.resolveScreenContainer}>
-                                <div id={Style.modal}>
-                                  {/* Header */}
-                                  <div id={Style.modalHeader}>
-                                    <h2>Query Information & Resolution</h2>
-                                    <button
-                                      id={Style.closeBtn}
-                                      onClick={() =>
-                                        setResolveScreen(!resolveScreen)
-                                      }
-                                    >
-                                      &times;
+
+                                    {/* Update Status */}
+                                    <div id={Style.statusSection}>
+                                      <span id={Style.status}>Resolved</span>
+                                      <span id={Style.status}>Unresolved</span>
+                                      <span id={Style.status}>Escalated</span>
+                                      <span id={Style.status}>In Motion</span>
+                                    </div>
+                                    {/* Send Button */}
+                                    <button id={Style.sendBtn}>
+                                      Send Resolution &gt;&gt;&gt;
                                     </button>
                                   </div>
-
-                                  {/* Issue Type */}
-                                  <button id={Style.issueBtn}>
-                                    Money Issue
-                                  </button>
-
-                                  {/* Complaint Section */}
-                                  <div id={Style.complaintSection}>
-                                    <label>
-                                      Complaint{" "}
-                                      <span id={Style.date}>(09/01/25)</span>
-                                    </label>
-                                    <textarea readOnly id={Style.textarea}>
-                                      I won a game but I’m still yet to receive
-                                      my money
-                                    </textarea>
-                                  </div>
-                                  {/* Resolution Section */}
-                                  <div className={Style.resolutionSection}>
-                                    <label>
-                                      Resolution{" "}
-                                      <span id={Style.date}>(09/01/25)</span>
-                                    </label>
-                                    <input
-                                      type="email"
-                                      id={Style.inputBox}
-                                      placeholder="example@gmail.com"
-                                    />
-                                    <textarea
-                                      id={Style.textarea}
-                                      placeholder="Type here..."
-                                    ></textarea>
-                                  </div>
-
-                                  {/* Update Status */}
-                                  <div id={Style.statusSection}>
-                                    <span id={Style.status}>Resolved</span>
-                                    <span id={Style.status}>Unresolved</span>
-                                    <span id={Style.status}>Escalated</span>
-                                    <span id={Style.status}>In Motion</span>
-                                  </div>
-
-                                  {/* Send Button */}
-                                  <button id={Style.sendBtn}>
-                                    Send Resolution &gt;&gt;&gt;
-                                  </button>
                                 </div>
-                              </div>
-                            ) : (
-                              // </div>
-                              <></>
-                            )}
-                          </div>
-                        </div>
-                      </>
-                    );
-                  })}
-                  <div>
-                    {/* {Array.from({ length: totalPages }, (_, i) => (
-                      <button
-                        key={i}
-                        onClick={() => setCurrentPage(i + 1)}
-                        className={currentPage === i + 1 ? "active" : ""}
-                      >
-                        {i + 1}
-                      </button>
-                    ))} */}
-                  </div>
-                </tbody>
-              ) : (
-                "what"
-              )}
-              {toggleIndex === 1 ? (
-                <tbody>
-                  {paginatedData.map((obj, index) => {
-                    let color = obj.status === "Pending" ? true : false;
-
-                    return (
-                      <>
-                        <div id={Style.Personal_Info_tr}>
-                          <div> {index + 1}</div>
-                          <div>{obj.date || "20/2/24"}</div>
-                          <div className={Style.tableText}>{obj.queryType}</div>
-                          <div className={Style.tableText}>{obj.category}</div>
-                          <div className={Style.tableText}>{obj.username}</div>
-                          {/* <div className={Style.tableText}>{obj.headline}</div> */}
-                          <div>
-                            <div
-                              className={Style.statusText}
-                              style={{
-                                backgroundColor: color
-                                  ? "#fc9e2f33"
-                                  : "#31c36433",
-                                color: color ? "#FC9E2F" : "#31C364",
-                              }}
-                            >
-                              {obj.status}
+                              ) : (
+                                // </div>
+                                <></>
+                              )}
                             </div>
                           </div>
-                          <div>
-                            <button
-                              style={{
-                                backgroundColor: "#0E093C",
-                                border: "none",
-                                color: "#FFFFFF",
-                                fontSize: "0.7rem",
-                                width: "5.18rem",
-                                borderRadius: "8px",
-                                height: "1.37rem",
-                                cursor: "pointer",
-                              }}
-                              onClick={() => {
-                                HandleViewMoreBtn(obj);
-                              }}
-                            >
-                              see details...
-                            </button>
-                            {queryModal ? (
-                              <>
-                                <span
-                                  id={Style.modalOverlay}
-                                  onClick={() => {
-                                    HandleViewMoreBtn(obj);
-                                  }}
-                                ></span>
-                                <div id={Style.queryDetailsContainer}>
-                                  <div id={Style.queryModalBody}>
-                                    <h2 id={Style.modalHeading}> Query </h2>
-                                    <p id={Style.modalSubHeading}>
-                                      see full details of this query
-                                    </p>
-                                    <div id={Style.profileCard}>
-                                      <img
-                                        id={Style.queryProfileImg}
-                                        src={queryImage}
-                                        alt=""
-                                      />
-                                      <div id={Style.detailsBox}>
-                                        <p className={Style.profileData}>
-                                          username
-                                        </p>
-                                        <p className={Style.profileData}>
-                                          player sub type
-                                        </p>
-                                        <p className={Style.profileData}>
-                                          joined StakeCut {}
-                                        </p>
-                                        <p className={Style.profileData}>
-                                          email
-                                        </p>
-                                        <p className={Style.profileData}>
-                                          location
-                                        </p>
-                                        <div id={Style.actionsDiv}>
-                                          <div id={Style.userStatus}>
-                                            <span
-                                              id={Style.onlineStatus}
-                                            ></span>
-                                            <p>online</p>
-                                          </div>
+                        </>
+                      );
+                    })}
+                    <div>
+                      {/* {Array.from({ length: totalPages }, (_, i) => (
+                        <button
+                          key={i}
+                          onClick={() => setCurrentPage(i + 1)}
+                          className={currentPage === i + 1 ? "active" : ""}
+                        >
+                          {i + 1}
+                        </button>
+                      ))} */}
+                    </div>
+                  </tbody>
+                ) : (
+                  ""
+                )}
+                {toggleIndex === 1 ? (
+                  <tbody>
+                    {paginatedData.map((obj, index) => {
+                      let color = obj.status === "Pending" ? true : false;
 
-                                          <button id={Style.viewProfileBtn}>
+                      return (
+                        <>
+                          <div id={Style.Personal_Info_tr}>
+                            <div> {index + 1}</div>
+                            <div>{obj.date || "20/2/24"}</div>
+                            <div className={Style.tableText}>{obj.queryType}</div>
+                            <div className={Style.tableText}>{obj.category}</div>
+                            <div className={Style.tableText}>{obj.username}</div>
+                            {/* <div className={Style.tableText}>{obj.headline}</div> */}
+                            <div>
+                              <div
+                                className={Style.statusText}
+                                style={{
+                                  backgroundColor: color
+                                    ? "#fc9e2f33"
+                                    : "#31c36433",
+                                  color: color ? "#FC9E2F" : "#31C364",
+                                }}
+                              >
+                                {obj.status}
+                              </div>
+                            </div>
+                            <div>
+                              <button
+                                style={{
+                                  backgroundColor: "#0E093C",
+                                  border: "none",
+                                  color: "#FFFFFF",
+                                  fontSize: "0.7rem",
+                                  width: "5.18rem",
+                                  borderRadius: "8px",
+                                  height: "1.37rem",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => {
+                                  HandleViewMoreBtn(obj);
+                                }}
+                              >
+                                see details...
+                              </button>
+                              {queryModal ? (
+                                <>
+                                  <span
+                                    id={Style.modalOverlay}
+                                    onClick={() => {
+                                      HandleViewMoreBtn(obj);
+                                    }}
+                                  ></span>
+                                  <div id={Style.queryDetailsContainer}>
+                                    <div id={Style.queryModalBody}>
+                                      <h2 id={Style.modalHeading}> Query </h2>
+                                      <p id={Style.modalSubHeading}>
+                                        see full details of this query
+                                      </p>
+                                      <div id={Style.profileCard}>
+                                        <img
+                                          id={Style.queryProfileImg}
+                                          src={queryImage}
+                                          alt=""
+                                        />
+                                        <div id={Style.detailsBox}>
+                                          <p className={Style.profileData}>
+                                            username
+                                          </p>
+                                          <p className={Style.profileData}>
+                                            player sub type
+                                          </p>
+                                          <p className={Style.profileData}>
+                                            joined StakeCut {}
+                                          </p>
+                                          <p className={Style.profileData}>
+                                            email
+                                          </p>
+                                          <p className={Style.profileData}>
+                                            location
+                                          </p>
+                                          <div id={Style.actionsDiv}>
+                                            <div id={Style.userStatus}>
+                                              <span
+                                                id={Style.onlineStatus}
+                                              ></span>
+                                              <p>online</p>
+                                            </div>
+
+                                            <button id={Style.viewProfileBtn}>
+                                              {" "}
+                                              View User Profile{" "}
+                                            </button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div id={Style.qerydetailsTable}>
+                                      <tr id={Style.TableHeader}>
+                                        <th className={Style.headers}>S/N</th>
+                                        <th className={Style.headers}>
+                                          Ticket className
+                                        </th>
+                                        <th className={Style.headers}>
+                                          Query Type
+                                        </th>
+                                        <th className={Style.headers}>
+                                          {" "}
+                                          Attachments
+                                        </th>
+                                        <th className={Style.headers}>
+                                          {" "}
+                                          Time&Data
+                                        </th>
+                                        <th className={Style.headers}>
+                                          {" "}
+                                          Query Status
+                                        </th>
+                                        <th className={Style.headers}> Action</th>
+                                      </tr>
+                                      <tr id={Style.TableRows}>
+                                        <td id={Style.headers}>1</td>
+                                        <td id={Style.headers}>
+                                          QUE-20251202-FolaOl
+                                        </td>
+                                        <td id={Style.headers}>
+                                          {" "}
+                                          Payment Trouble
+                                        </td>
+                                        <td id={Style.headers}> no file</td>
+                                        <td id={Style.headers}> 2025-02-12</td>
+                                        <td id={Style.headers}> Open</td>
+                                        <button
+                                          id={Style.headersBtn}
+                                          onMouseEnter={() =>
+                                            setIsBtnHovered(true)
+                                          }
+                                          onMouseLeave={() =>
+                                            setIsBtnHovered(false)
+                                          }
+                                          onClick={() =>
+                                            setResolveScreen(!resolveScreen)
+                                          }
+                                        >
+                                          View | Resolve
+                                        </button>
+                                      </tr>
+                                      <div
+                                        id={
+                                          isBtnHovered
+                                            ? Style.btnHoverMessageDiv
+                                            : Style.btnHoverMessageDivHide
+                                        }
+                                      >
+                                        <p>
+                                          {" "}
+                                          Lorem ipsum dolor, sit amet consectetur
+                                          adipisicing elit. Aliquam provident
+                                          consectetur harum eos saepe repellat
+                                          sapiente, quaerat eius. Tempore
+                                          accusantium id aliquid tenetur incidunt
+                                          possimus distinctio aliquam, voluptate
+                                          blanditiis ad!
+                                        </p>
+                                      </div>
+                                    </div>
+                                    {!prevQueries ? (
+                                      <div id={Style.previousQuery}>
+                                        <div id={Style.TableHeader}>
+                                          <div id={Style.headers}>S/N</div>
+                                          <div id={Style.headers}>Ticket ID</div>
+                                          <div id={Style.headers}>Query Type</div>
+                                          <div id={Style.headers}>
                                             {" "}
-                                            View User Profile{" "}
+                                            Attachments
+                                          </div>
+                                          <div id={Style.headers}> Time&Data</div>
+                                          <div id={Style.headers}>
+                                            {" "}
+                                            Query Status
+                                          </div>
+                                          <div id={Style.headers}> Action</div>
+                                        </div>
+                                        <div id={Style.TableRows}>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <button id={Style.headers}>
+                                            View | Resolve
                                           </button>
                                         </div>
                                       </div>
-                                    </div>
+                                    ) : (
+                                      <div id={Style.noPrevQueryDiv}>
+                                        <h3 id={Style.noPastQueriesHeader}>
+                                          {" "}
+                                          Past queries from this player
+                                        </h3>
+                                        <div id={Style.noQueriesDetails}>
+                                          <img
+                                            id={Style.brokenGhost}
+                                            src={solar_ghost_broken}
+                                            alt=""
+                                          />
+                                        </div>
+                                        <div id={Style.noQueryDetailDiv}>
+                                          <h3>No Previous Query History</h3>
+                                          <p style={{ textWrap: "wrap" }}>
+                                            This is empty because this user has
+                                            not logged any query before
+                                          </p>
+                                        </div>
+                                      </div>
+                                    )}
                                   </div>
-                                  <div id={Style.qerydetailsTable}>
-                                    <tr id={Style.TableHeader}>
-                                      <th className={Style.headers}>S/N</th>
-                                      <th className={Style.headers}>
-                                        Ticket className
-                                      </th>
-                                      <th className={Style.headers}>
-                                        Query Type
-                                      </th>
-                                      <th className={Style.headers}>
-                                        {" "}
-                                        Attachments
-                                      </th>
-                                      <th className={Style.headers}>
-                                        {" "}
-                                        Time&Data
-                                      </th>
-                                      <th className={Style.headers}>
-                                        {" "}
-                                        Query Status
-                                      </th>
-                                      <th className={Style.headers}> Action</th>
-                                    </tr>
-                                    <tr id={Style.TableRows}>
-                                      <td id={Style.headers}>1</td>
-                                      <td id={Style.headers}>
-                                        QUE-20251202-FolaOl
-                                      </td>
-                                      <td id={Style.headers}>
-                                        {" "}
-                                        Payment Trouble
-                                      </td>
-                                      <td id={Style.headers}> no file</td>
-                                      <td id={Style.headers}> 2025-02-12</td>
-                                      <td id={Style.headers}> Open</td>
+                                </>
+                              ) : (
+                                <></>
+                              )}
+                              {resolveScreen ? (
+                                <div id={Style.resolveScreenContainer}>
+                                  <div id={Style.modal}>
+                                    {/* Header */}
+                                    <div id={Style.modalHeader}>
+                                      <h2>Query Information & Resolution</h2>
                                       <button
-                                        id={Style.headersBtn}
-                                        onMouseEnter={() =>
-                                          setIsBtnHovered(true)
-                                        }
-                                        onMouseLeave={() =>
-                                          setIsBtnHovered(false)
-                                        }
+                                        id={Style.closeBtn}
                                         onClick={() =>
                                           setResolveScreen(!resolveScreen)
                                         }
                                       >
-                                        View | Resolve
+                                        &times;
                                       </button>
-                                    </tr>
-                                    <div
-                                      id={
-                                        isBtnHovered
-                                          ? Style.btnHoverMessageDiv
-                                          : Style.btnHoverMessageDivHide
-                                      }
-                                    >
-                                      <p>
-                                        {" "}
-                                        Lorem ipsum dolor, sit amet consectetur
-                                        adipisicing elit. Aliquam provident
-                                        consectetur harum eos saepe repellat
-                                        sapiente, quaerat eius. Tempore
-                                        accusantium id aliquid tenetur incidunt
-                                        possimus distinctio aliquam, voluptate
-                                        blanditiis ad!
-                                      </p>
                                     </div>
-                                  </div>
-                                  {!prevQueries ? (
-                                    <div id={Style.previousQuery}>
-                                      <div id={Style.TableHeader}>
-                                        <div id={Style.headers}>S/N</div>
-                                        <div id={Style.headers}>Ticket ID</div>
-                                        <div id={Style.headers}>Query Type</div>
-                                        <div id={Style.headers}>
-                                          {" "}
-                                          Attachments
-                                        </div>
-                                        <div id={Style.headers}> Time&Data</div>
-                                        <div id={Style.headers}>
-                                          {" "}
-                                          Query Status
-                                        </div>
-                                        <div id={Style.headers}> Action</div>
-                                      </div>
-                                      <div id={Style.TableRows}>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <button id={Style.headers}>
-                                          View | Resolve
-                                        </button>
-                                      </div>
+
+                                    {/* Issue Type */}
+                                    <button id={Style.issueBtn}>
+                                      Money Issue
+                                    </button>
+
+                                    {/* Complaint Section */}
+                                    <div id={Style.complaintSection}>
+                                      <label>
+                                        Complaint{" "}
+                                        <span id={Style.date}>(09/01/25)</span>
+                                      </label>
+                                      <textarea readOnly id={Style.textarea}>
+                                        I won a game but I’m still yet to receive
+                                        my money
+                                      </textarea>
                                     </div>
-                                  ) : (
-                                    <div id={Style.noPrevQueryDiv}>
-                                      <h3 id={Style.noPastQueriesHeader}>
-                                        {" "}
-                                        Past queries from this player
-                                      </h3>
-                                      <div id={Style.noQueriesDetails}>
-                                        <img
-                                          id={Style.brokenGhost}
-                                          src={solar_ghost_broken}
-                                          alt=""
-                                        />
-                                      </div>
-                                      <div id={Style.noQueryDetailDiv}>
-                                        <h3>No Previous Query History</h3>
-                                        <p style={{ textWrap: "wrap" }}>
-                                          This is empty because this user has
-                                          not logged any query before
-                                        </p>
-                                      </div>
+                                    {/* Resolution Section */}
+                                    <div className={Style.resolutionSection}>
+                                      <label>
+                                        Resolution{" "}
+                                        <span id={Style.date}>(09/01/25)</span>
+                                      </label>
+                                      <input
+                                        type="email"
+                                        id={Style.inputBox}
+                                        placeholder="example@gmail.com"
+                                      />
+                                      <textarea
+                                        id={Style.textarea}
+                                        placeholder="Type here..."
+                                      ></textarea>
                                     </div>
-                                  )}
-                                </div>
-                              </>
-                            ) : (
-                              <></>
-                            )}
-                            {resolveScreen ? (
-                              <div id={Style.resolveScreenContainer}>
-                                <div id={Style.modal}>
-                                  {/* Header */}
-                                  <div id={Style.modalHeader}>
-                                    <h2>Query Information & Resolution</h2>
-                                    <button
-                                      id={Style.closeBtn}
-                                      onClick={() =>
-                                        setResolveScreen(!resolveScreen)
-                                      }
-                                    >
-                                      &times;
+
+                                    {/* Update Status */}
+                                    <div id={Style.statusSection}>
+                                      <span id={Style.status}>Resolved</span>
+                                      <span id={Style.status}>Unresolved</span>
+                                      <span id={Style.status}>Escalated</span>
+                                      <span id={Style.status}>In Motion</span>
+                                    </div>
+
+                                    {/* Send Button */}
+                                    <button id={Style.sendBtn}>
+                                      Send Resolution &gt;&gt;&gt;
                                     </button>
                                   </div>
-
-                                  {/* Issue Type */}
-                                  <button id={Style.issueBtn}>
-                                    Money Issue
-                                  </button>
-
-                                  {/* Complaint Section */}
-                                  <div id={Style.complaintSection}>
-                                    <label>
-                                      Complaint{" "}
-                                      <span id={Style.date}>(09/01/25)</span>
-                                    </label>
-                                    <textarea readOnly id={Style.textarea}>
-                                      I won a game but I’m still yet to receive
-                                      my money
-                                    </textarea>
-                                  </div>
-                                  {/* Resolution Section */}
-                                  <div className={Style.resolutionSection}>
-                                    <label>
-                                      Resolution{" "}
-                                      <span id={Style.date}>(09/01/25)</span>
-                                    </label>
-                                    <input
-                                      type="email"
-                                      id={Style.inputBox}
-                                      placeholder="example@gmail.com"
-                                    />
-                                    <textarea
-                                      id={Style.textarea}
-                                      placeholder="Type here..."
-                                    ></textarea>
-                                  </div>
-
-                                  {/* Update Status */}
-                                  <div id={Style.statusSection}>
-                                    <span id={Style.status}>Resolved</span>
-                                    <span id={Style.status}>Unresolved</span>
-                                    <span id={Style.status}>Escalated</span>
-                                    <span id={Style.status}>In Motion</span>
-                                  </div>
-
-                                  {/* Send Button */}
-                                  <button id={Style.sendBtn}>
-                                    Send Resolution &gt;&gt;&gt;
-                                  </button>
                                 </div>
-                              </div>
-                            ) : (
-                              // </div>
-                              <></>
-                            )}
-                          </div>
-                        </div>
-                      </>
-                    );
-                  })}
-                  <div>
-                    {/* {Array.from({ length: totalPages }, (_, i) => (
-                      <button
-                        key={i}
-                        onClick={() => setCurrentPage(i + 1)}
-                        className={currentPage === i + 1 ? "active" : ""}
-                      >
-                        {i + 1}
-                      </button>
-                    ))} */}
-                  </div>
-                </tbody>
-              ) : (
-                "what"
-              )}
-              {toggleIndex === 2 ? (
-                <tbody>
-                  {paginatedData.map((obj, index) => {
-                    let color = obj.status === "Pending" ? true : false;
-
-                    return (
-                      <>
-                        <div id={Style.Personal_Info_tr}>
-                          <div> {index + 1}</div>
-                          <div>{obj.date || "20/2/24"}</div>
-                          <div className={Style.tableText}>{obj.queryType}</div>
-                          <div className={Style.tableText}>{obj.category}</div>
-                          <div className={Style.tableText}>{obj.username}</div>
-                          {/* <div className={Style.tableText}>{obj.headline}</div> */}
-                          <div>
-                            <div
-                              className={Style.statusText}
-                              style={{
-                                backgroundColor: color
-                                  ? "#fc9e2f33"
-                                  : "#31c36433",
-                                color: color ? "#FC9E2F" : "#31C364",
-                              }}
-                            >
-                              {obj.status}
+                              ) : (
+                                // </div>
+                                <></>
+                              )}
                             </div>
                           </div>
-                          <div>
-                            <button
-                              style={{
-                                backgroundColor: "#0E093C",
-                                border: "none",
-                                color: "#FFFFFF",
-                                fontSize: "0.7rem",
-                                width: "5.18rem",
-                                borderRadius: "8px",
-                                height: "1.37rem",
-                                cursor: "pointer",
-                              }}
-                              onClick={() => {
-                                HandleViewMoreBtn(obj);
-                              }}
-                            >
-                              see details...
-                            </button>
-                            {queryModal ? (
-                              <>
-                                <span
-                                  id={Style.modalOverlay}
-                                  onClick={() => {
-                                    HandleViewMoreBtn(obj);
-                                  }}
-                                ></span>
-                                <div id={Style.queryDetailsContainer}>
-                                  <div id={Style.queryModalBody}>
-                                    <h2 id={Style.modalHeading}> Query </h2>
-                                    <p id={Style.modalSubHeading}>
-                                      see full details of this query
-                                    </p>
-                                    <div id={Style.profileCard}>
-                                      <img
-                                        id={Style.queryProfileImg}
-                                        src={queryImage}
-                                        alt=""
-                                      />
-                                      <div id={Style.detailsBox}>
-                                        <p className={Style.profileData}>
-                                          username
-                                        </p>
-                                        <p className={Style.profileData}>
-                                          player sub type
-                                        </p>
-                                        <p className={Style.profileData}>
-                                          joined StakeCut {}
-                                        </p>
-                                        <p className={Style.profileData}>
-                                          email
-                                        </p>
-                                        <p className={Style.profileData}>
-                                          location
-                                        </p>
-                                        <div id={Style.actionsDiv}>
-                                          <div id={Style.userStatus}>
-                                            <span
-                                              id={Style.onlineStatus}
-                                            ></span>
-                                            <p>online</p>
-                                          </div>
+                        </>
+                      );
+                    })}
+                    <div>
+                      {/* {Array.from({ length: totalPages }, (_, i) => (
+                        <button
+                          key={i}
+                          onClick={() => setCurrentPage(i + 1)}
+                          className={currentPage === i + 1 ? "active" : ""}
+                        >
+                          {i + 1}
+                        </button>
+                      ))} */}
+                    </div>
+                  </tbody>
+                ) : (
+                  ""
+                )}
+                {toggleIndex === 2 ? (
+                  <tbody>
+                    {paginatedData.map((obj, index) => {
+                      let color = obj.status === "Pending" ? true : false;
 
-                                          <button id={Style.viewProfileBtn}>
+                      return (
+                        <>
+                          <div id={Style.Personal_Info_tr}>
+                            <div> {index + 1}</div>
+                            <div>{obj.date || "20/2/24"}</div>
+                            <div className={Style.tableText}>{obj.queryType}</div>
+                            <div className={Style.tableText}>{obj.category}</div>
+                            <div className={Style.tableText}>{obj.username}</div>
+                            {/* <div className={Style.tableText}>{obj.headline}</div> */}
+                            <div>
+                              <div
+                                className={Style.statusText}
+                                style={{
+                                  backgroundColor: color
+                                    ? "#fc9e2f33"
+                                    : "#31c36433",
+                                  color: color ? "#FC9E2F" : "#31C364",
+                                }}
+                              >
+                                {obj.status}
+                              </div>
+                            </div>
+                            <div>
+                              <button
+                                style={{
+                                  backgroundColor: "#0E093C",
+                                  border: "none",
+                                  color: "#FFFFFF",
+                                  fontSize: "0.7rem",
+                                  width: "5.18rem",
+                                  borderRadius: "8px",
+                                  height: "1.37rem",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => {
+                                  HandleViewMoreBtn(obj);
+                                }}
+                              >
+                                see details...
+                              </button>
+                              {queryModal ? (
+                                <>
+                                  <span
+                                    id={Style.modalOverlay}
+                                    onClick={() => {
+                                      HandleViewMoreBtn(obj);
+                                    }}
+                                  ></span>
+                                  <div id={Style.queryDetailsContainer}>
+                                    <div id={Style.queryModalBody}>
+                                      <h2 id={Style.modalHeading}> Query </h2>
+                                      <p id={Style.modalSubHeading}>
+                                        see full details of this query
+                                      </p>
+                                      <div id={Style.profileCard}>
+                                        <img
+                                          id={Style.queryProfileImg}
+                                          src={queryImage}
+                                          alt=""
+                                        />
+                                        <div id={Style.detailsBox}>
+                                          <p className={Style.profileData}>
+                                            username
+                                          </p>
+                                          <p className={Style.profileData}>
+                                            player sub type
+                                          </p>
+                                          <p className={Style.profileData}>
+                                            joined StakeCut {}
+                                          </p>
+                                          <p className={Style.profileData}>
+                                            email
+                                          </p>
+                                          <p className={Style.profileData}>
+                                            location
+                                          </p>
+                                          <div id={Style.actionsDiv}>
+                                            <div id={Style.userStatus}>
+                                              <span
+                                                id={Style.onlineStatus}
+                                              ></span>
+                                              <p>online</p>
+                                            </div>
+
+                                            <button id={Style.viewProfileBtn}>
+                                              {" "}
+                                              View User Profile{" "}
+                                            </button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div id={Style.qerydetailsTable}>
+                                      <tr id={Style.TableHeader}>
+                                        <th className={Style.headers}>S/N</th>
+                                        <th className={Style.headers}>
+                                          Ticket className
+                                        </th>
+                                        <th className={Style.headers}>
+                                          Query Type
+                                        </th>
+                                        <th className={Style.headers}>
+                                          {" "}
+                                          Attachments
+                                        </th>
+                                        <th className={Style.headers}>
+                                          {" "}
+                                          Time&Data
+                                        </th>
+                                        <th className={Style.headers}>
+                                          {" "}
+                                          Query Status
+                                        </th>
+                                        <th className={Style.headers}> Action</th>
+                                      </tr>
+                                      <tr id={Style.TableRows}>
+                                        <td id={Style.headers}>1</td>
+                                        <td id={Style.headers}>
+                                          QUE-20251202-FolaOl
+                                        </td>
+                                        <td id={Style.headers}>
+                                          {" "}
+                                          Payment Trouble
+                                        </td>
+                                        <td id={Style.headers}> no file</td>
+                                        <td id={Style.headers}> 2025-02-12</td>
+                                        <td id={Style.headers}> Open</td>
+                                        <button
+                                          id={Style.headersBtn}
+                                          onMouseEnter={() =>
+                                            setIsBtnHovered(true)
+                                          }
+                                          onMouseLeave={() =>
+                                            setIsBtnHovered(false)
+                                          }
+                                          onClick={() =>
+                                            setResolveScreen(!resolveScreen)
+                                          }
+                                        >
+                                          View | Resolve
+                                        </button>
+                                      </tr>
+                                      <div
+                                        id={
+                                          isBtnHovered
+                                            ? Style.btnHoverMessageDiv
+                                            : Style.btnHoverMessageDivHide
+                                        }
+                                      >
+                                        <p>
+                                          {" "}
+                                          Lorem ipsum dolor, sit amet consectetur
+                                          adipisicing elit. Aliquam provident
+                                          consectetur harum eos saepe repellat
+                                          sapiente, quaerat eius. Tempore
+                                          accusantium id aliquid tenetur incidunt
+                                          possimus distinctio aliquam, voluptate
+                                          blanditiis ad!
+                                        </p>
+                                      </div>
+                                    </div>
+                                    {!prevQueries ? (
+                                      <div id={Style.previousQuery}>
+                                        <div id={Style.TableHeader}>
+                                          <div id={Style.headers}>S/N</div>
+                                          <div id={Style.headers}>Ticket ID</div>
+                                          <div id={Style.headers}>Query Type</div>
+                                          <div id={Style.headers}>
                                             {" "}
-                                            View User Profile{" "}
+                                            Attachments
+                                          </div>
+                                          <div id={Style.headers}> Time&Data</div>
+                                          <div id={Style.headers}>
+                                            {" "}
+                                            Query Status
+                                          </div>
+                                          <div id={Style.headers}> Action</div>
+                                        </div>
+                                        <div id={Style.TableRows}>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <button id={Style.headers}>
+                                            View | Resolve
                                           </button>
                                         </div>
                                       </div>
-                                    </div>
+                                    ) : (
+                                      <div id={Style.noPrevQueryDiv}>
+                                        <h3 id={Style.noPastQueriesHeader}>
+                                          {" "}
+                                          Past queries from this player
+                                        </h3>
+                                        <div id={Style.noQueriesDetails}>
+                                          <img
+                                            id={Style.brokenGhost}
+                                            src={solar_ghost_broken}
+                                            alt=""
+                                          />
+                                        </div>
+                                        <div id={Style.noQueryDetailDiv}>
+                                          <h3>No Previous Query History</h3>
+                                          <p style={{ textWrap: "wrap" }}>
+                                            This is empty because this user has
+                                            not logged any query before
+                                          </p>
+                                        </div>
+                                      </div>
+                                    )}
                                   </div>
-                                  <div id={Style.qerydetailsTable}>
-                                    <tr id={Style.TableHeader}>
-                                      <th className={Style.headers}>S/N</th>
-                                      <th className={Style.headers}>
-                                        Ticket className
-                                      </th>
-                                      <th className={Style.headers}>
-                                        Query Type
-                                      </th>
-                                      <th className={Style.headers}>
-                                        {" "}
-                                        Attachments
-                                      </th>
-                                      <th className={Style.headers}>
-                                        {" "}
-                                        Time&Data
-                                      </th>
-                                      <th className={Style.headers}>
-                                        {" "}
-                                        Query Status
-                                      </th>
-                                      <th className={Style.headers}> Action</th>
-                                    </tr>
-                                    <tr id={Style.TableRows}>
-                                      <td id={Style.headers}>1</td>
-                                      <td id={Style.headers}>
-                                        QUE-20251202-FolaOl
-                                      </td>
-                                      <td id={Style.headers}>
-                                        {" "}
-                                        Payment Trouble
-                                      </td>
-                                      <td id={Style.headers}> no file</td>
-                                      <td id={Style.headers}> 2025-02-12</td>
-                                      <td id={Style.headers}> Open</td>
+                                </>
+                              ) : (
+                                <></>
+                              )}
+                              {resolveScreen ? (
+                                <div id={Style.resolveScreenContainer}>
+                                  <div id={Style.modal}>
+                                    {/* Header */}
+                                    <div id={Style.modalHeader}>
+                                      <h2>Query Information & Resolution</h2>
                                       <button
-                                        id={Style.headersBtn}
-                                        onMouseEnter={() =>
-                                          setIsBtnHovered(true)
-                                        }
-                                        onMouseLeave={() =>
-                                          setIsBtnHovered(false)
-                                        }
+                                        id={Style.closeBtn}
                                         onClick={() =>
                                           setResolveScreen(!resolveScreen)
                                         }
                                       >
-                                        View | Resolve
+                                        &times;
                                       </button>
-                                    </tr>
-                                    <div
-                                      id={
-                                        isBtnHovered
-                                          ? Style.btnHoverMessageDiv
-                                          : Style.btnHoverMessageDivHide
-                                      }
-                                    >
-                                      <p>
-                                        {" "}
-                                        Lorem ipsum dolor, sit amet consectetur
-                                        adipisicing elit. Aliquam provident
-                                        consectetur harum eos saepe repellat
-                                        sapiente, quaerat eius. Tempore
-                                        accusantium id aliquid tenetur incidunt
-                                        possimus distinctio aliquam, voluptate
-                                        blanditiis ad!
-                                      </p>
                                     </div>
-                                  </div>
-                                  {!prevQueries ? (
-                                    <div id={Style.previousQuery}>
-                                      <div id={Style.TableHeader}>
-                                        <div id={Style.headers}>S/N</div>
-                                        <div id={Style.headers}>Ticket ID</div>
-                                        <div id={Style.headers}>Query Type</div>
-                                        <div id={Style.headers}>
-                                          {" "}
-                                          Attachments
-                                        </div>
-                                        <div id={Style.headers}> Time&Data</div>
-                                        <div id={Style.headers}>
-                                          {" "}
-                                          Query Status
-                                        </div>
-                                        <div id={Style.headers}> Action</div>
-                                      </div>
-                                      <div id={Style.TableRows}>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <button id={Style.headers}>
-                                          View | Resolve
-                                        </button>
-                                      </div>
+
+                                    {/* Issue Type */}
+                                    <button id={Style.issueBtn}>
+                                      Money Issue
+                                    </button>
+
+                                    {/* Complaint Section */}
+                                    <div id={Style.complaintSection}>
+                                      <label>
+                                        Complaint{" "}
+                                        <span id={Style.date}>(09/01/25)</span>
+                                      </label>
+                                      <textarea readOnly id={Style.textarea}>
+                                        I won a game but I’m still yet to receive
+                                        my money
+                                      </textarea>
                                     </div>
-                                  ) : (
-                                    <div id={Style.noPrevQueryDiv}>
-                                      <h3 id={Style.noPastQueriesHeader}>
-                                        {" "}
-                                        Past queries from this player
-                                      </h3>
-                                      <div id={Style.noQueriesDetails}>
-                                        <img
-                                          id={Style.brokenGhost}
-                                          src={solar_ghost_broken}
-                                          alt=""
-                                        />
-                                      </div>
-                                      <div id={Style.noQueryDetailDiv}>
-                                        <h3>No Previous Query History</h3>
-                                        <p style={{ textWrap: "wrap" }}>
-                                          This is empty because this user has
-                                          not logged any query before
-                                        </p>
-                                      </div>
+                                    {/* Resolution Section */}
+                                    <div className={Style.resolutionSection}>
+                                      <label>
+                                        Resolution{" "}
+                                        <span id={Style.date}>(09/01/25)</span>
+                                      </label>
+                                      <input
+                                        type="email"
+                                        id={Style.inputBox}
+                                        placeholder="example@gmail.com"
+                                      />
+                                      <textarea
+                                        id={Style.textarea}
+                                        placeholder="Type here..."
+                                      ></textarea>
                                     </div>
-                                  )}
-                                </div>
-                              </>
-                            ) : (
-                              <></>
-                            )}
-                            {resolveScreen ? (
-                              <div id={Style.resolveScreenContainer}>
-                                <div id={Style.modal}>
-                                  {/* Header */}
-                                  <div id={Style.modalHeader}>
-                                    <h2>Query Information & Resolution</h2>
-                                    <button
-                                      id={Style.closeBtn}
-                                      onClick={() =>
-                                        setResolveScreen(!resolveScreen)
-                                      }
-                                    >
-                                      &times;
+
+                                    {/* Update Status */}
+                                    <div id={Style.statusSection}>
+                                      <span id={Style.status}>Resolved</span>
+                                      <span id={Style.status}>Unresolved</span>
+                                      <span id={Style.status}>Escalated</span>
+                                      <span id={Style.status}>In Motion</span>
+                                    </div>
+
+                                    {/* Send Button */}
+                                    <button id={Style.sendBtn}>
+                                      Send Resolution &gt;&gt;&gt;
                                     </button>
                                   </div>
-
-                                  {/* Issue Type */}
-                                  <button id={Style.issueBtn}>
-                                    Money Issue
-                                  </button>
-
-                                  {/* Complaint Section */}
-                                  <div id={Style.complaintSection}>
-                                    <label>
-                                      Complaint{" "}
-                                      <span id={Style.date}>(09/01/25)</span>
-                                    </label>
-                                    <textarea readOnly id={Style.textarea}>
-                                      I won a game but I’m still yet to receive
-                                      my money
-                                    </textarea>
-                                  </div>
-                                  {/* Resolution Section */}
-                                  <div className={Style.resolutionSection}>
-                                    <label>
-                                      Resolution{" "}
-                                      <span id={Style.date}>(09/01/25)</span>
-                                    </label>
-                                    <input
-                                      type="email"
-                                      id={Style.inputBox}
-                                      placeholder="example@gmail.com"
-                                    />
-                                    <textarea
-                                      id={Style.textarea}
-                                      placeholder="Type here..."
-                                    ></textarea>
-                                  </div>
-
-                                  {/* Update Status */}
-                                  <div id={Style.statusSection}>
-                                    <span id={Style.status}>Resolved</span>
-                                    <span id={Style.status}>Unresolved</span>
-                                    <span id={Style.status}>Escalated</span>
-                                    <span id={Style.status}>In Motion</span>
-                                  </div>
-
-                                  {/* Send Button */}
-                                  <button id={Style.sendBtn}>
-                                    Send Resolution &gt;&gt;&gt;
-                                  </button>
                                 </div>
-                              </div>
-                            ) : (
-                              // </div>
-                              <></>
-                            )}
-                          </div>
-                        </div>
-                      </>
-                    );
-                  })}
-                  <div>
-                    {/* {Array.from({ length: totalPages }, (_, i) => (
-                      <button
-                        key={i}
-                        onClick={() => setCurrentPage(i + 1)}
-                        className={currentPage === i + 1 ? "active" : ""}
-                      >
-                        {i + 1}
-                      </button>
-                    ))} */}
-                  </div>
-                </tbody>
-              ) : (
-                "what"
-              )}
-              {toggleIndex === 3 ? (
-                <tbody>
-                  {paginatedData.map((obj, index) => {
-                    let color = obj.status === "Pending" ? true : false;
-
-                    return (
-                      <>
-                        <div id={Style.Personal_Info_tr}>
-                          <div> {index + 1}</div>
-                          <div>{obj.date || "20/2/24"}</div>
-                          <div className={Style.tableText}>{obj.queryType}</div>
-                          <div className={Style.tableText}>{obj.category}</div>
-                          <div className={Style.tableText}>{obj.username}</div>
-                          {/* <div className={Style.tableText}>{obj.headline}</div> */}
-                          <div>
-                            <div
-                              className={Style.statusText}
-                              style={{
-                                backgroundColor: color
-                                  ? "#fc9e2f33"
-                                  : "#31c36433",
-                                color: color ? "#FC9E2F" : "#31C364",
-                              }}
-                            >
-                              {obj.status}
+                              ) : (
+                                // </div>
+                                <></>
+                              )}
                             </div>
                           </div>
-                          <div>
-                            <button
-                              style={{
-                                backgroundColor: "#0E093C",
-                                border: "none",
-                                color: "#FFFFFF",
-                                fontSize: "0.7rem",
-                                width: "5.18rem",
-                                borderRadius: "8px",
-                                height: "1.37rem",
-                                cursor: "pointer",
-                              }}
-                              onClick={() => {
-                                HandleViewMoreBtn(obj);
-                              }}
-                            >
-                              see details...
-                            </button>
-                            {queryModal ? (
-                              <>
-                                <span
-                                  id={Style.modalOverlay}
-                                  onClick={() => {
-                                    HandleViewMoreBtn(obj);
-                                  }}
-                                ></span>
-                                <div id={Style.queryDetailsContainer}>
-                                  <div id={Style.queryModalBody}>
-                                    <h2 id={Style.modalHeading}> Query </h2>
-                                    <p id={Style.modalSubHeading}>
-                                      see full details of this query
-                                    </p>
-                                    <div id={Style.profileCard}>
-                                      <img
-                                        id={Style.queryProfileImg}
-                                        src={queryImage}
-                                        alt=""
-                                      />
-                                      <div id={Style.detailsBox}>
-                                        <p className={Style.profileData}>
-                                          username
-                                        </p>
-                                        <p className={Style.profileData}>
-                                          player sub type
-                                        </p>
-                                        <p className={Style.profileData}>
-                                          joined StakeCut {}
-                                        </p>
-                                        <p className={Style.profileData}>
-                                          email
-                                        </p>
-                                        <p className={Style.profileData}>
-                                          location
-                                        </p>
-                                        <div id={Style.actionsDiv}>
-                                          <div id={Style.userStatus}>
-                                            <span
-                                              id={Style.onlineStatus}
-                                            ></span>
-                                            <p>online</p>
-                                          </div>
+                        </>
+                      );
+                    })}
+                    <div>
+                      {/* {Array.from({ length: totalPages }, (_, i) => (
+                        <button
+                          key={i}
+                          onClick={() => setCurrentPage(i + 1)}
+                          className={currentPage === i + 1 ? "active" : ""}
+                        >
+                          {i + 1}
+                        </button>
+                      ))} */}
+                    </div>
+                  </tbody>
+                ) : (
+                  ""
+                )}
+                {toggleIndex === 3 ? (
+                  <tbody>
+                    {paginatedData.map((obj, index) => {
+                      let color = obj.status === "Pending" ? true : false;
 
-                                          <button id={Style.viewProfileBtn}>
+                      return (
+                        <>
+                          <div id={Style.Personal_Info_tr}>
+                            <div> {index + 1}</div>
+                            <div>{obj.date || "20/2/24"}</div>
+                            <div className={Style.tableText}>{obj.queryType}</div>
+                            <div className={Style.tableText}>{obj.category}</div>
+                            <div className={Style.tableText}>{obj.username}</div>
+                            {/* <div className={Style.tableText}>{obj.headline}</div> */}
+                            <div>
+                              <div
+                                className={Style.statusText}
+                                style={{
+                                  backgroundColor: color
+                                    ? "#fc9e2f33"
+                                    : "#31c36433",
+                                  color: color ? "#FC9E2F" : "#31C364",
+                                }}
+                              >
+                                {obj.status}
+                              </div>
+                            </div>
+                            <div>
+                              <button
+                                style={{
+                                  backgroundColor: "#0E093C",
+                                  border: "none",
+                                  color: "#FFFFFF",
+                                  fontSize: "0.7rem",
+                                  width: "5.18rem",
+                                  borderRadius: "8px",
+                                  height: "1.37rem",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => {
+                                  HandleViewMoreBtn(obj);
+                                }}
+                              >
+                                see details...
+                              </button>
+                              {queryModal ? (
+                                <>
+                                  <span
+                                    id={Style.modalOverlay}
+                                    onClick={() => {
+                                      HandleViewMoreBtn(obj);
+                                    }}
+                                  ></span>
+                                  <div id={Style.queryDetailsContainer}>
+                                    <div id={Style.queryModalBody}>
+                                      <h2 id={Style.modalHeading}> Query </h2>
+                                      <p id={Style.modalSubHeading}>
+                                        see full details of this query
+                                      </p>
+                                      <div id={Style.profileCard}>
+                                        <img
+                                          id={Style.queryProfileImg}
+                                          src={queryImage}
+                                          alt=""
+                                        />
+                                        <div id={Style.detailsBox}>
+                                          <p className={Style.profileData}>
+                                            username
+                                          </p>
+                                          <p className={Style.profileData}>
+                                            player sub type
+                                          </p>
+                                          <p className={Style.profileData}>
+                                            joined StakeCut {}
+                                          </p>
+                                          <p className={Style.profileData}>
+                                            email
+                                          </p>
+                                          <p className={Style.profileData}>
+                                            location
+                                          </p>
+                                          <div id={Style.actionsDiv}>
+                                            <div id={Style.userStatus}>
+                                              <span
+                                                id={Style.onlineStatus}
+                                              ></span>
+                                              <p>online</p>
+                                            </div>
+
+                                            <button id={Style.viewProfileBtn}>
+                                              {" "}
+                                              View User Profile{" "}
+                                            </button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div id={Style.qerydetailsTable}>
+                                      <tr id={Style.TableHeader}>
+                                        <th className={Style.headers}>S/N</th>
+                                        <th className={Style.headers}>
+                                          Ticket className
+                                        </th>
+                                        <th className={Style.headers}>
+                                          Query Type
+                                        </th>
+                                        <th className={Style.headers}>
+                                          {" "}
+                                          Attachments
+                                        </th>
+                                        <th className={Style.headers}>
+                                          {" "}
+                                          Time&Data
+                                        </th>
+                                        <th className={Style.headers}>
+                                          {" "}
+                                          Query Status
+                                        </th>
+                                        <th className={Style.headers}> Action</th>
+                                      </tr>
+                                      <tr id={Style.TableRows}>
+                                        <td id={Style.headers}>1</td>
+                                        <td id={Style.headers}>
+                                          QUE-20251202-FolaOl
+                                        </td>
+                                        <td id={Style.headers}>
+                                          {" "}
+                                          Payment Trouble
+                                        </td>
+                                        <td id={Style.headers}> no file</td>
+                                        <td id={Style.headers}> 2025-02-12</td>
+                                        <td id={Style.headers}> Open</td>
+                                        <button
+                                          id={Style.headersBtn}
+                                          onMouseEnter={() =>
+                                            setIsBtnHovered(true)
+                                          }
+                                          onMouseLeave={() =>
+                                            setIsBtnHovered(false)
+                                          }
+                                          onClick={() =>
+                                            setResolveScreen(!resolveScreen)
+                                          }
+                                        >
+                                          View | Resolve
+                                        </button>
+                                      </tr>
+                                      <div
+                                        id={
+                                          isBtnHovered
+                                            ? Style.btnHoverMessageDiv
+                                            : Style.btnHoverMessageDivHide
+                                        }
+                                      >
+                                        <p>
+                                          {" "}
+                                          Lorem ipsum dolor, sit amet consectetur
+                                          adipisicing elit. Aliquam provident
+                                          consectetur harum eos saepe repellat
+                                          sapiente, quaerat eius. Tempore
+                                          accusantium id aliquid tenetur incidunt
+                                          possimus distinctio aliquam, voluptate
+                                          blanditiis ad!
+                                        </p>
+                                      </div>
+                                    </div>
+                                    {!prevQueries ? (
+                                      <div id={Style.previousQuery}>
+                                        <div id={Style.TableHeader}>
+                                          <div id={Style.headers}>S/N</div>
+                                          <div id={Style.headers}>Ticket ID</div>
+                                          <div id={Style.headers}>Query Type</div>
+                                          <div id={Style.headers}>
                                             {" "}
-                                            View User Profile{" "}
+                                            Attachments
+                                          </div>
+                                          <div id={Style.headers}> Time&Data</div>
+                                          <div id={Style.headers}>
+                                            {" "}
+                                            Query Status
+                                          </div>
+                                          <div id={Style.headers}> Action</div>
+                                        </div>
+                                        <div id={Style.TableRows}>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <button id={Style.headers}>
+                                            View | Resolve
                                           </button>
                                         </div>
                                       </div>
-                                    </div>
+                                    ) : (
+                                      <div id={Style.noPrevQueryDiv}>
+                                        <h3 id={Style.noPastQueriesHeader}>
+                                          {" "}
+                                          Past queries from this player
+                                        </h3>
+                                        <div id={Style.noQueriesDetails}>
+                                          <img
+                                            id={Style.brokenGhost}
+                                            src={solar_ghost_broken}
+                                            alt=""
+                                          />
+                                        </div>
+                                        <div id={Style.noQueryDetailDiv}>
+                                          <h3>No Previous Query History</h3>
+                                          <p style={{ textWrap: "wrap" }}>
+                                            This is empty because this user has
+                                            not logged any query before
+                                          </p>
+                                        </div>
+                                      </div>
+                                    )}
                                   </div>
-                                  <div id={Style.qerydetailsTable}>
-                                    <tr id={Style.TableHeader}>
-                                      <th className={Style.headers}>S/N</th>
-                                      <th className={Style.headers}>
-                                        Ticket className
-                                      </th>
-                                      <th className={Style.headers}>
-                                        Query Type
-                                      </th>
-                                      <th className={Style.headers}>
-                                        {" "}
-                                        Attachments
-                                      </th>
-                                      <th className={Style.headers}>
-                                        {" "}
-                                        Time&Data
-                                      </th>
-                                      <th className={Style.headers}>
-                                        {" "}
-                                        Query Status
-                                      </th>
-                                      <th className={Style.headers}> Action</th>
-                                    </tr>
-                                    <tr id={Style.TableRows}>
-                                      <td id={Style.headers}>1</td>
-                                      <td id={Style.headers}>
-                                        QUE-20251202-FolaOl
-                                      </td>
-                                      <td id={Style.headers}>
-                                        {" "}
-                                        Payment Trouble
-                                      </td>
-                                      <td id={Style.headers}> no file</td>
-                                      <td id={Style.headers}> 2025-02-12</td>
-                                      <td id={Style.headers}> Open</td>
+                                </>
+                              ) : (
+                                <></>
+                              )}
+                              {resolveScreen ? (
+                                <div id={Style.resolveScreenContainer}>
+                                  <div id={Style.modal}>
+                                    {/* Header */}
+                                    <div id={Style.modalHeader}>
+                                      <h2>Query Information & Resolution</h2>
                                       <button
-                                        id={Style.headersBtn}
-                                        onMouseEnter={() =>
-                                          setIsBtnHovered(true)
-                                        }
-                                        onMouseLeave={() =>
-                                          setIsBtnHovered(false)
-                                        }
+                                        id={Style.closeBtn}
                                         onClick={() =>
                                           setResolveScreen(!resolveScreen)
                                         }
                                       >
-                                        View | Resolve
+                                        &times;
                                       </button>
-                                    </tr>
-                                    <div
-                                      id={
-                                        isBtnHovered
-                                          ? Style.btnHoverMessageDiv
-                                          : Style.btnHoverMessageDivHide
-                                      }
-                                    >
-                                      <p>
-                                        {" "}
-                                        Lorem ipsum dolor, sit amet consectetur
-                                        adipisicing elit. Aliquam provident
-                                        consectetur harum eos saepe repellat
-                                        sapiente, quaerat eius. Tempore
-                                        accusantium id aliquid tenetur incidunt
-                                        possimus distinctio aliquam, voluptate
-                                        blanditiis ad!
-                                      </p>
                                     </div>
-                                  </div>
-                                  {!prevQueries ? (
-                                    <div id={Style.previousQuery}>
-                                      <div id={Style.TableHeader}>
-                                        <div id={Style.headers}>S/N</div>
-                                        <div id={Style.headers}>Ticket ID</div>
-                                        <div id={Style.headers}>Query Type</div>
-                                        <div id={Style.headers}>
-                                          {" "}
-                                          Attachments
-                                        </div>
-                                        <div id={Style.headers}> Time&Data</div>
-                                        <div id={Style.headers}>
-                                          {" "}
-                                          Query Status
-                                        </div>
-                                        <div id={Style.headers}> Action</div>
-                                      </div>
-                                      <div id={Style.TableRows}>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <button id={Style.headers}>
-                                          View | Resolve
-                                        </button>
-                                      </div>
+
+                                    {/* Issue Type */}
+                                    <button id={Style.issueBtn}>
+                                      Money Issue
+                                    </button>
+
+                                    {/* Complaint Section */}
+                                    <div id={Style.complaintSection}>
+                                      <label>
+                                        Complaint{" "}
+                                        <span id={Style.date}>(09/01/25)</span>
+                                      </label>
+                                      <textarea readOnly id={Style.textarea}>
+                                        I won a game but I’m still yet to receive
+                                        my money
+                                      </textarea>
                                     </div>
-                                  ) : (
-                                    <div id={Style.noPrevQueryDiv}>
-                                      <h3 id={Style.noPastQueriesHeader}>
-                                        {" "}
-                                        Past queries from this player
-                                      </h3>
-                                      <div id={Style.noQueriesDetails}>
-                                        <img
-                                          id={Style.brokenGhost}
-                                          src={solar_ghost_broken}
-                                          alt=""
-                                        />
-                                      </div>
-                                      <div id={Style.noQueryDetailDiv}>
-                                        <h3>No Previous Query History</h3>
-                                        <p style={{ textWrap: "wrap" }}>
-                                          This is empty because this user has
-                                          not logged any query before
-                                        </p>
-                                      </div>
+                                    {/* Resolution Section */}
+                                    <div className={Style.resolutionSection}>
+                                      <label>
+                                        Resolution{" "}
+                                        <span id={Style.date}>(09/01/25)</span>
+                                      </label>
+                                      <input
+                                        type="email"
+                                        id={Style.inputBox}
+                                        placeholder="example@gmail.com"
+                                      />
+                                      <textarea
+                                        id={Style.textarea}
+                                        placeholder="Type here..."
+                                      ></textarea>
                                     </div>
-                                  )}
-                                </div>
-                              </>
-                            ) : (
-                              <></>
-                            )}
-                            {resolveScreen ? (
-                              <div id={Style.resolveScreenContainer}>
-                                <div id={Style.modal}>
-                                  {/* Header */}
-                                  <div id={Style.modalHeader}>
-                                    <h2>Query Information & Resolution</h2>
-                                    <button
-                                      id={Style.closeBtn}
-                                      onClick={() =>
-                                        setResolveScreen(!resolveScreen)
-                                      }
-                                    >
-                                      &times;
+
+                                    {/* Update Status */}
+                                    <div id={Style.statusSection}>
+                                      <span id={Style.status}>Resolved</span>
+                                      <span id={Style.status}>Unresolved</span>
+                                      <span id={Style.status}>Escalated</span>
+                                      <span id={Style.status}>In Motion</span>
+                                    </div>
+
+                                    {/* Send Button */}
+                                    <button id={Style.sendBtn}>
+                                      Send Resolution &gt;&gt;&gt;
                                     </button>
                                   </div>
-
-                                  {/* Issue Type */}
-                                  <button id={Style.issueBtn}>
-                                    Money Issue
-                                  </button>
-
-                                  {/* Complaint Section */}
-                                  <div id={Style.complaintSection}>
-                                    <label>
-                                      Complaint{" "}
-                                      <span id={Style.date}>(09/01/25)</span>
-                                    </label>
-                                    <textarea readOnly id={Style.textarea}>
-                                      I won a game but I’m still yet to receive
-                                      my money
-                                    </textarea>
-                                  </div>
-                                  {/* Resolution Section */}
-                                  <div className={Style.resolutionSection}>
-                                    <label>
-                                      Resolution{" "}
-                                      <span id={Style.date}>(09/01/25)</span>
-                                    </label>
-                                    <input
-                                      type="email"
-                                      id={Style.inputBox}
-                                      placeholder="example@gmail.com"
-                                    />
-                                    <textarea
-                                      id={Style.textarea}
-                                      placeholder="Type here..."
-                                    ></textarea>
-                                  </div>
-
-                                  {/* Update Status */}
-                                  <div id={Style.statusSection}>
-                                    <span id={Style.status}>Resolved</span>
-                                    <span id={Style.status}>Unresolved</span>
-                                    <span id={Style.status}>Escalated</span>
-                                    <span id={Style.status}>In Motion</span>
-                                  </div>
-
-                                  {/* Send Button */}
-                                  <button id={Style.sendBtn}>
-                                    Send Resolution &gt;&gt;&gt;
-                                  </button>
                                 </div>
-                              </div>
-                            ) : (
-                              // </div>
-                              <></>
-                            )}
-                          </div>
-                        </div>
-                      </>
-                    );
-                  })}
-                  <div>
-                    {/* {Array.from({ length: totalPages }, (_, i) => (
-                      <button
-                        key={i}
-                        onClick={() => setCurrentPage(i + 1)}
-                        className={currentPage === i + 1 ? "active" : ""}
-                      >
-                        {i + 1}
-                      </button>
-                    ))} */}
-                  </div>
-                </tbody>
-              ) : (
-                "what"
-              )}
-              {toggleIndex === 4 ? (
-                <tbody>
-                  {paginatedData.map((obj, index) => {
-                    let color = obj.status === "Pending" ? true : false;
-
-                    return (
-                      <>
-                        <div id={Style.Personal_Info_tr}>
-                          <div> {index + 1}</div>
-                          <div>{obj.date || "20/2/24"}</div>
-                          <div className={Style.tableText}>{obj.queryType}</div>
-                          <div className={Style.tableText}>{obj.category}</div>
-                          <div className={Style.tableText}>{obj.username}</div>
-                          {/* <div className={Style.tableText}>{obj.headline}</div> */}
-                          <div>
-                            <div
-                              className={Style.statusText}
-                              style={{
-                                backgroundColor: color
-                                  ? "#fc9e2f33"
-                                  : "#31c36433",
-                                color: color ? "#FC9E2F" : "#31C364",
-                              }}
-                            >
-                              {obj.status}
+                              ) : (
+                                // </div>
+                                <></>
+                              )}
                             </div>
                           </div>
-                          <div>
-                            <button
-                              style={{
-                                backgroundColor: "#0E093C",
-                                border: "none",
-                                color: "#FFFFFF",
-                                fontSize: "0.7rem",
-                                width: "5.18rem",
-                                borderRadius: "8px",
-                                height: "1.37rem",
-                                cursor: "pointer",
-                              }}
-                              onClick={() => {
-                                HandleViewMoreBtn(obj);
-                              }}
-                            >
-                              see details...
-                            </button>
-                            {queryModal ? (
-                              <>
-                                <span
-                                  id={Style.modalOverlay}
-                                  onClick={() => {
-                                    HandleViewMoreBtn(obj);
-                                  }}
-                                ></span>
-                                <div id={Style.queryDetailsContainer}>
-                                  <div id={Style.queryModalBody}>
-                                    <h2 id={Style.modalHeading}> Query </h2>
-                                    <p id={Style.modalSubHeading}>
-                                      see full details of this query
-                                    </p>
-                                    <div id={Style.profileCard}>
-                                      <img
-                                        id={Style.queryProfileImg}
-                                        src={queryImage}
-                                        alt=""
-                                      />
-                                      <div id={Style.detailsBox}>
-                                        <p className={Style.profileData}>
-                                          username
-                                        </p>
-                                        <p className={Style.profileData}>
-                                          player sub type
-                                        </p>
-                                        <p className={Style.profileData}>
-                                          joined StakeCut {}
-                                        </p>
-                                        <p className={Style.profileData}>
-                                          email
-                                        </p>
-                                        <p className={Style.profileData}>
-                                          location
-                                        </p>
-                                        <div id={Style.actionsDiv}>
-                                          <div id={Style.userStatus}>
-                                            <span
-                                              id={Style.onlineStatus}
-                                            ></span>
-                                            <p>online</p>
-                                          </div>
+                        </>
+                      );
+                    })}
+                    <div>
+                      {/* {Array.from({ length: totalPages }, (_, i) => (
+                        <button
+                          key={i}
+                          onClick={() => setCurrentPage(i + 1)}
+                          className={currentPage === i + 1 ? "active" : ""}
+                        >
+                          {i + 1}
+                        </button>
+                      ))} */}
+                    </div>
+                  </tbody>
+                ) : (
+                  ""
+                )}
+                {toggleIndex === 4 ? (
+                  <tbody>
+                    {paginatedData.map((obj, index) => {
+                      let color = obj.status === "Pending" ? true : false;
 
-                                          <button id={Style.viewProfileBtn}>
+                      return (
+                        <>
+                          <div id={Style.Personal_Info_tr}>
+                            <div> {index + 1}</div>
+                            <div>{obj.date || "20/2/24"}</div>
+                            <div className={Style.tableText}>{obj.queryType}</div>
+                            <div className={Style.tableText}>{obj.category}</div>
+                            <div className={Style.tableText}>{obj.username}</div>
+                            {/* <div className={Style.tableText}>{obj.headline}</div> */}
+                            <div>
+                              <div
+                                className={Style.statusText}
+                                style={{
+                                  backgroundColor: color
+                                    ? "#fc9e2f33"
+                                    : "#31c36433",
+                                  color: color ? "#FC9E2F" : "#31C364",
+                                }}
+                              >
+                                {obj.status}
+                              </div>
+                            </div>
+                            <div>
+                              <button
+                                style={{
+                                  backgroundColor: "#0E093C",
+                                  border: "none",
+                                  color: "#FFFFFF",
+                                  fontSize: "0.7rem",
+                                  width: "5.18rem",
+                                  borderRadius: "8px",
+                                  height: "1.37rem",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => {
+                                  HandleViewMoreBtn(obj);
+                                }}
+                              >
+                                see details...
+                              </button>
+                              {queryModal ? (
+                                <>
+                                  <span
+                                    id={Style.modalOverlay}
+                                    onClick={() => {
+                                      HandleViewMoreBtn(obj);
+                                    }}
+                                  ></span>
+                                  <div id={Style.queryDetailsContainer}>
+                                    <div id={Style.queryModalBody}>
+                                      <h2 id={Style.modalHeading}> Query </h2>
+                                      <p id={Style.modalSubHeading}>
+                                        see full details of this query
+                                      </p>
+                                      <div id={Style.profileCard}>
+                                        <img
+                                          id={Style.queryProfileImg}
+                                          src={queryImage}
+                                          alt=""
+                                        />
+                                        <div id={Style.detailsBox}>
+                                          <p className={Style.profileData}>
+                                            username
+                                          </p>
+                                          <p className={Style.profileData}>
+                                            player sub type
+                                          </p>
+                                          <p className={Style.profileData}>
+                                            joined StakeCut {}
+                                          </p>
+                                          <p className={Style.profileData}>
+                                            email
+                                          </p>
+                                          <p className={Style.profileData}>
+                                            location
+                                          </p>
+                                          <div id={Style.actionsDiv}>
+                                            <div id={Style.userStatus}>
+                                              <span
+                                                id={Style.onlineStatus}
+                                              ></span>
+                                              <p>online</p>
+                                            </div>
+
+                                            <button id={Style.viewProfileBtn}>
+                                              {" "}
+                                              View User Profile{" "}
+                                            </button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div id={Style.qerydetailsTable}>
+                                      <tr id={Style.TableHeader}>
+                                        <th className={Style.headers}>S/N</th>
+                                        <th className={Style.headers}>
+                                          Ticket className
+                                        </th>
+                                        <th className={Style.headers}>
+                                          Query Type
+                                        </th>
+                                        <th className={Style.headers}>
+                                          {" "}
+                                          Attachments
+                                        </th>
+                                        <th className={Style.headers}>
+                                          {" "}
+                                          Time&Data
+                                        </th>
+                                        <th className={Style.headers}>
+                                          {" "}
+                                          Query Status
+                                        </th>
+                                        <th className={Style.headers}> Action</th>
+                                      </tr>
+                                      <tr id={Style.TableRows}>
+                                        <td id={Style.headers}>1</td>
+                                        <td id={Style.headers}>
+                                          QUE-20251202-FolaOl
+                                        </td>
+                                        <td id={Style.headers}>
+                                          {" "}
+                                          Payment Trouble
+                                        </td>
+                                        <td id={Style.headers}> no file</td>
+                                        <td id={Style.headers}> 2025-02-12</td>
+                                        <td id={Style.headers}> Open</td>
+                                        <button
+                                          id={Style.headersBtn}
+                                          onMouseEnter={() =>
+                                            setIsBtnHovered(true)
+                                          }
+                                          onMouseLeave={() =>
+                                            setIsBtnHovered(false)
+                                          }
+                                          onClick={() =>
+                                            setResolveScreen(!resolveScreen)
+                                          }
+                                        >
+                                          View | Resolve
+                                        </button>
+                                      </tr>
+                                      <div
+                                        id={
+                                          isBtnHovered
+                                            ? Style.btnHoverMessageDiv
+                                            : Style.btnHoverMessageDivHide
+                                        }
+                                      >
+                                        <p>
+                                          {" "}
+                                          Lorem ipsum dolor, sit amet consectetur
+                                          adipisicing elit. Aliquam provident
+                                          consectetur harum eos saepe repellat
+                                          sapiente, quaerat eius. Tempore
+                                          accusantium id aliquid tenetur incidunt
+                                          possimus distinctio aliquam, voluptate
+                                          blanditiis ad!
+                                        </p>
+                                      </div>
+                                    </div>
+                                    {!prevQueries ? (
+                                      <div id={Style.previousQuery}>
+                                        <div id={Style.TableHeader}>
+                                          <div id={Style.headers}>S/N</div>
+                                          <div id={Style.headers}>Ticket ID</div>
+                                          <div id={Style.headers}>Query Type</div>
+                                          <div id={Style.headers}>
                                             {" "}
-                                            View User Profile{" "}
+                                            Attachments
+                                          </div>
+                                          <div id={Style.headers}> Time&Data</div>
+                                          <div id={Style.headers}>
+                                            {" "}
+                                            Query Status
+                                          </div>
+                                          <div id={Style.headers}> Action</div>
+                                        </div>
+                                        <div id={Style.TableRows}>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <div id={Style.headers}></div>
+                                          <button id={Style.headers}>
+                                            View | Resolve
                                           </button>
                                         </div>
                                       </div>
-                                    </div>
+                                    ) : (
+                                      <div id={Style.noPrevQueryDiv}>
+                                        <h3 id={Style.noPastQueriesHeader}>
+                                          {" "}
+                                          Past queries from this player
+                                        </h3>
+                                        <div id={Style.noQueriesDetails}>
+                                          <img
+                                            id={Style.brokenGhost}
+                                            src={solar_ghost_broken}
+                                            alt=""
+                                          />
+                                        </div>
+                                        <div id={Style.noQueryDetailDiv}>
+                                          <h3>No Previous Query History</h3>
+                                          <p style={{ textWrap: "wrap" }}>
+                                            This is empty because this user has
+                                            not logged any query before
+                                          </p>
+                                        </div>
+                                      </div>
+                                    )}
                                   </div>
-                                  <div id={Style.qerydetailsTable}>
-                                    <tr id={Style.TableHeader}>
-                                      <th className={Style.headers}>S/N</th>
-                                      <th className={Style.headers}>
-                                        Ticket className
-                                      </th>
-                                      <th className={Style.headers}>
-                                        Query Type
-                                      </th>
-                                      <th className={Style.headers}>
-                                        {" "}
-                                        Attachments
-                                      </th>
-                                      <th className={Style.headers}>
-                                        {" "}
-                                        Time&Data
-                                      </th>
-                                      <th className={Style.headers}>
-                                        {" "}
-                                        Query Status
-                                      </th>
-                                      <th className={Style.headers}> Action</th>
-                                    </tr>
-                                    <tr id={Style.TableRows}>
-                                      <td id={Style.headers}>1</td>
-                                      <td id={Style.headers}>
-                                        QUE-20251202-FolaOl
-                                      </td>
-                                      <td id={Style.headers}>
-                                        {" "}
-                                        Payment Trouble
-                                      </td>
-                                      <td id={Style.headers}> no file</td>
-                                      <td id={Style.headers}> 2025-02-12</td>
-                                      <td id={Style.headers}> Open</td>
+                                </>
+                              ) : (
+                                <></>
+                              )}
+                              {resolveScreen ? (
+                                <div id={Style.resolveScreenContainer}>
+                                  <div id={Style.modal}>
+                                    {/* Header */}
+                                    <div id={Style.modalHeader}>
+                                      <h2>Query Information & Resolution</h2>
                                       <button
-                                        id={Style.headersBtn}
-                                        onMouseEnter={() =>
-                                          setIsBtnHovered(true)
-                                        }
-                                        onMouseLeave={() =>
-                                          setIsBtnHovered(false)
-                                        }
+                                        id={Style.closeBtn}
                                         onClick={() =>
                                           setResolveScreen(!resolveScreen)
                                         }
                                       >
-                                        View | Resolve
+                                        &times;
                                       </button>
-                                    </tr>
-                                    <div
-                                      id={
-                                        isBtnHovered
-                                          ? Style.btnHoverMessageDiv
-                                          : Style.btnHoverMessageDivHide
-                                      }
-                                    >
-                                      <p>
-                                        {" "}
-                                        Lorem ipsum dolor, sit amet consectetur
-                                        adipisicing elit. Aliquam provident
-                                        consectetur harum eos saepe repellat
-                                        sapiente, quaerat eius. Tempore
-                                        accusantium id aliquid tenetur incidunt
-                                        possimus distinctio aliquam, voluptate
-                                        blanditiis ad!
-                                      </p>
                                     </div>
-                                  </div>
-                                  {!prevQueries ? (
-                                    <div id={Style.previousQuery}>
-                                      <div id={Style.TableHeader}>
-                                        <div id={Style.headers}>S/N</div>
-                                        <div id={Style.headers}>Ticket ID</div>
-                                        <div id={Style.headers}>Query Type</div>
-                                        <div id={Style.headers}>
-                                          {" "}
-                                          Attachments
-                                        </div>
-                                        <div id={Style.headers}> Time&Data</div>
-                                        <div id={Style.headers}>
-                                          {" "}
-                                          Query Status
-                                        </div>
-                                        <div id={Style.headers}> Action</div>
-                                      </div>
-                                      <div id={Style.TableRows}>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <div id={Style.headers}></div>
-                                        <button id={Style.headers}>
-                                          View | Resolve
-                                        </button>
-                                      </div>
+
+                                    {/* Issue Type */}
+                                    <button id={Style.issueBtn}>
+                                      Money Issue
+                                    </button>
+
+                                    {/* Complaint Section */}
+                                    <div id={Style.complaintSection}>
+                                      <label>
+                                        Complaint{" "}
+                                        <span id={Style.date}>(09/01/25)</span>
+                                      </label>
+                                      <textarea readOnly id={Style.textarea}>
+                                        I won a game but I’m still yet to receive
+                                        my money
+                                      </textarea>
                                     </div>
-                                  ) : (
-                                    <div id={Style.noPrevQueryDiv}>
-                                      <h3 id={Style.noPastQueriesHeader}>
-                                        {" "}
-                                        Past queries from this player
-                                      </h3>
-                                      <div id={Style.noQueriesDetails}>
-                                        <img
-                                          id={Style.brokenGhost}
-                                          src={solar_ghost_broken}
-                                          alt=""
-                                        />
-                                      </div>
-                                      <div id={Style.noQueryDetailDiv}>
-                                        <h3>No Previous Query History</h3>
-                                        <p style={{ textWrap: "wrap" }}>
-                                          This is empty because this user has
-                                          not logged any query before
-                                        </p>
-                                      </div>
+                                    {/* Resolution Section */}
+                                    <div className={Style.resolutionSection}>
+                                      <label>
+                                        Resolution{" "}
+                                        <span id={Style.date}>(09/01/25)</span>
+                                      </label>
+                                      <input
+                                        type="email"
+                                        id={Style.inputBox}
+                                        placeholder="example@gmail.com"
+                                      />
+                                      <textarea
+                                        id={Style.textarea}
+                                        placeholder="Type here..."
+                                      ></textarea>
                                     </div>
-                                  )}
-                                </div>
-                              </>
-                            ) : (
-                              <></>
-                            )}
-                            {resolveScreen ? (
-                              <div id={Style.resolveScreenContainer}>
-                                <div id={Style.modal}>
-                                  {/* Header */}
-                                  <div id={Style.modalHeader}>
-                                    <h2>Query Information & Resolution</h2>
-                                    <button
-                                      id={Style.closeBtn}
-                                      onClick={() =>
-                                        setResolveScreen(!resolveScreen)
-                                      }
-                                    >
-                                      &times;
+
+                                    {/* Update Status */}
+                                    <div id={Style.statusSection}>
+                                      <span id={Style.status}>Resolved</span>
+                                      <span id={Style.status}>Unresolved</span>
+                                      <span id={Style.status}>Escalated</span>
+                                      <span id={Style.status}>In Motion</span>
+                                    </div>
+
+                                    {/* Send Button */}
+                                    <button id={Style.sendBtn}>
+                                      Send Resolution &gt;&gt;&gt;
                                     </button>
                                   </div>
-
-                                  {/* Issue Type */}
-                                  <button id={Style.issueBtn}>
-                                    Money Issue
-                                  </button>
-
-                                  {/* Complaint Section */}
-                                  <div id={Style.complaintSection}>
-                                    <label>
-                                      Complaint{" "}
-                                      <span id={Style.date}>(09/01/25)</span>
-                                    </label>
-                                    <textarea readOnly id={Style.textarea}>
-                                      I won a game but I’m still yet to receive
-                                      my money
-                                    </textarea>
-                                  </div>
-                                  {/* Resolution Section */}
-                                  <div className={Style.resolutionSection}>
-                                    <label>
-                                      Resolution{" "}
-                                      <span id={Style.date}>(09/01/25)</span>
-                                    </label>
-                                    <input
-                                      type="email"
-                                      id={Style.inputBox}
-                                      placeholder="example@gmail.com"
-                                    />
-                                    <textarea
-                                      id={Style.textarea}
-                                      placeholder="Type here..."
-                                    ></textarea>
-                                  </div>
-
-                                  {/* Update Status */}
-                                  <div id={Style.statusSection}>
-                                    <span id={Style.status}>Resolved</span>
-                                    <span id={Style.status}>Unresolved</span>
-                                    <span id={Style.status}>Escalated</span>
-                                    <span id={Style.status}>In Motion</span>
-                                  </div>
-
-                                  {/* Send Button */}
-                                  <button id={Style.sendBtn}>
-                                    Send Resolution &gt;&gt;&gt;
-                                  </button>
                                 </div>
-                              </div>
-                            ) : (
-                              // </div>
-                              <></>
-                            )}
+                              ) : (
+                                // </div>
+                                <></>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      </>
-                    );
-                  })}
-                  <div>
-                    {/* {Array.from({ length: totalPages }, (_, i) => (
+                        </>
+                      );
+                    })}
+                    <div>
+                      {/* {Array.from({ length: totalPages }, (_, i) => (
+                        <button
+                          key={i}
+                          onClick={() => setCurrentPage(i + 1)}
+                          className={currentPage === i + 1 ? "active" : ""}
+                        >
+                          {i + 1}
+                        </button>
+                      ))} */}
+                    </div>
+                  </tbody>
+                ) : (
+                  ""
+                )}
+              </table>
+            </div>
+                {/*  Paagination */}
+                    <div className={Style.pagination}>
                       <button
-                        key={i}
-                        onClick={() => setCurrentPage(i + 1)}
-                        className={currentPage === i + 1 ? "active" : ""}
+                        onClick={prevPage}
+                        disabled={currentPage === 1}
+                       className={`${Style.pageButton} ${currentPage === 1 ? Style.disabled : ""}`}
                       >
-                        {i + 1}
+                        Previous
                       </button>
-                    ))} */}
-                  </div>
-                </tbody>
-              ) : (
-                "what"
-              )}
-            </table>
-          </div>
+                       {/* Show a range of page numbers around the current page */}
+                        {Array.from({ length: totalPages }, (_, i) => i + 1)
+                          .filter((page) => Math.abs(currentPage - page) <= 2)
+                          .map((page) => (
+                            <button
+                              key={page}
+                              onClick={() => setCurrentPage(page)}
+                              className={`${Style.pageButton} ${
+                                currentPage === page ? Style.active : ""
+                              }`}
+                            >
+                              {page}
+                            </button>
+                          ))}
               
+                        {/* Show ellipsis and last page */}
+                        {currentPage < totalPages - 2 && (
+                          <>
+                            {currentPage < totalPages - 3 && <span className={Style.ellipsis}>...</span>}
+                            <button onClick={() => setCurrentPage(totalPages)} className={Style.pageButton}>
+                              {totalPages}
+                            </button>
+                          </>
+                        )}
+                      <button
+                        onClick={nextPage}
+                        disabled={currentPage === totalPages}
+                        className={`${Style.pageButton} ${currentPage === totalPages ? Style.disabled : ""}`}
+                      >
+                        Next
+                      </button>
+                      <span>Page {currentPage} of {totalPages}</span>
+                    </div>
               {/* paginations */}
-          {toggleIndex == 100 && 
-            (
-              <div id={window.innerWidth < 480 ? Style.paginationDiv : null}>
-                <App_Pagination
-                  postsPerPage={postsPerPage}
-                  totalPosts={paginatedData.length}
-                  paginate={paginate}
-                  currentPage={currentPage}
-                />
-              </div>
-            )
-          }
-          {toggleIndex == 0 && 
-            (
-              <div id={window.innerWidth < 480 ? Style.paginationDiv : null}>
-                <App_Pagination
-                  postsPerPage={postsPerPage}
-                  totalPosts={paginatedData.length}
-                  paginate={paginate}
-                  currentPage={currentPage}
-                />
-              </div>
-            )
-          }
-          {toggleIndex == 1 && 
-            (
-              <div id={window.innerWidth < 480 ? Style.paginationDiv : null}>
-                <App_Pagination
-                  postsPerPage={postsPerPage}
-                  totalPosts={paginatedData.length}
-                  paginate={paginate}
-                  currentPage={currentPage}
-                />
-              </div>
-            )
-          }
-          {toggleIndex == 2 && 
-            (
-              <div id={window.innerWidth < 480 ? Style.paginationDiv : null}>
-                <App_Pagination
-                  postsPerPage={postsPerPage}
-                  totalPosts={paginatedData.length}
-                  paginate={paginate}
-                  currentPage={currentPage}
-                />
-              </div>
-            )
-          }
-          {toggleIndex == 3 && 
-            (
-              <div id={window.innerWidth < 480 ? Style.paginationDiv : null}>
-                <App_Pagination
-                  postsPerPage={postsPerPage}
-                  totalPosts={paginatedData.length}
-                  paginate={paginate}
-                  currentPage={currentPage}
-                />
-              </div>
-            )
-          }
+            {/* {toggleIndex == 100 && 
+              (
+                <div id={window.innerWidth < 480 ? Style.paginationDiv : null}>
+                  <App_Pagination
+                    postsPerPage={postsPerPage}
+                    totalPosts={paginatedData.length}
+                    paginate={paginate}
+                    currentPage={currentPage}
+                  />
+                </div>
+              )
+            }
+            {toggleIndex == 0 && 
+              (
+                <div id={window.innerWidth < 480 ? Style.paginationDiv : null}>
+                  <App_Pagination
+                    postsPerPage={postsPerPage}
+                    totalPosts={paginatedData.length}
+                    paginate={paginate}
+                    currentPage={currentPage}
+                  />
+                </div>
+              )
+            }
+            {toggleIndex == 1 && 
+              (
+                <div id={window.innerWidth < 480 ? Style.paginationDiv : null}>
+                  <App_Pagination
+                    postsPerPage={postsPerPage}
+                    totalPosts={paginatedData.length}
+                    paginate={paginate}
+                    currentPage={currentPage}
+                  />
+                </div>
+              )
+            }
+            {toggleIndex == 2 && 
+              (
+                <div id={window.innerWidth < 480 ? Style.paginationDiv : null}>
+                  <App_Pagination
+                    postsPerPage={postsPerPage}
+                    totalPosts={paginatedData.length}
+                    paginate={paginate}
+                    currentPage={currentPage}
+                  />
+                </div>
+              )
+            }
+            {toggleIndex == 3 && 
+              (
+                <div id={window.innerWidth < 480 ? Style.paginationDiv : null}>
+                  <App_Pagination
+                    postsPerPage={postsPerPage}
+                    totalPosts={paginatedData.length}
+                    paginate={paginate}
+                    currentPage={currentPage}
+                  />
+                </div>
+              )
+            } */}
 
             {/* Filter Cards */}
           <div id={Style.Total_Stats_CardWrapper}>

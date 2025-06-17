@@ -14,6 +14,7 @@ import { PopupContextHook } from "../../../WhiteHouse_PopupContext";
 // import {useBetApiContext} from '../api_detaills/GlobalStates/BetsContext'
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDiceBetList } from "../api_detaills/GlobalStates/DiceBetsList";
+import { fetchFootballBetList } from "../api_detaills/GlobalStates/FootballBetList";
 import LoadingScreen from "../../../components/loader/LoadingSreen";
 import { motion } from "framer-motion";
 import logo from "../../../assets/images/S_icon.png"
@@ -22,50 +23,34 @@ import logo from "../../../assets/images/S_icon.png"
 const Total_BetPlaced = () => {
   const [loading, setLoading] = useState(true);
 
-  const dispatch = useDispatch();
-  useEffect(() => {
+  const dispatch = useDispatch();  
+  const location = useLocation();
+
+  const {
+    source,
+    extraData, // Optional - for prefilled display
+    initialPage = 1,
+    initialLimit = 10,
+  } = location.state || {};
+
+  
+  // Local state for pagination
+  const [currentPage, setCurrentPage] = useState(initialPage);
+  const [limit] = useState(initialLimit); // If limit is fixed
+
+    const { footballBetsList, footballBetsListloading, footballBetsListerror } =
+    useSelector((state) => state.FootballBetList);
+        
+    useEffect(() => {
+    dispatch(fetchFootballBetList({ page: currentPage, limit }));
     dispatch(fetchDiceBetList());
-  }, [dispatch]);
+    }, [dispatch, currentPage, limit]);       
 
   // const { data, loading, error } = useSelector((state) => state.DiceBetsList);
 
   const { winningdata, winningLoading, winningError } = useSelector(
     (state) => state.WinningDiceBetsList
   );
-  // const { losingdata, losingLoading, losingError } = useSelector((state) => state.LoosingDiceBetsList);
-
-  // console.log(LosingData);
-  // console.log(winningdata);
-
-  // useEffect(() => {
-
-  //   TotalDiceBetProvider({
-
-  //     updateSetBetsPopup: (data) => {
-
-  //           setTotalBetsData(data)
-  //         },
-  //         updateErrorPopup,
-  //         updateErrorText
-  //     })
-  // }, [])
-
-  // const {totalBetPlaced, totalPlayers, totalWinners, totalLoser} = totalBetsData;
-  // console.log(totalPlayers);
-
-  // if (error) {
-  //   console.log(error);
-  //   return updateErrorText(error);
-  // }
-  // if (totalBets) {
-  //   console.log(totalBets);
-  // }
-  // if (loading) {
-  //   return <> {error} </>;
-  // }
-
-  const location = useLocation();
-  const { source, extraData } = location.state || {}; // Destructuring the state
 
   let [toggleIndex, setToggleIndex] = useState(0);
 
@@ -77,146 +62,9 @@ const Total_BetPlaced = () => {
   // console.log(data);
 
   // const arr = extraData
-  const arr = extraData;
-  console.log(extraData);
-  //  [
-  // data,
-  // action: {
-  //   eye: green_eyes,
-  //   warning: warning,
-  //   delete: delete_list
-  // }
-
-  // {
-  //   SN: "1",
-  //   userID: "5466FH",
-  //   BetID: "6458575RFG",
-  //   game: extraData[2],
-  //   amount: "1000",
-  //   players: person,
-  //   status: "Won",
-  //   Winners: '',
-  //   win: "5000",
-  //   action: {
-  //     eye: green_eyes,
-  //     warning: warning,
-  //     delete: delete_list
-  //   }
-
-  // },
-  // {
-  //   SN: "2",
-  //   userID: "5466FH",
-  //   BetID: "6458575RFG",
-  //   game: extraData[2],
-  //   amount: "1000",
-  //   players: person,
-  //   status: "Lost",
-  //   win: "5000",
-  //   action: {
-  //     eye: green_eyes,
-  //     warning: warning,
-  //     delete: delete_list
-  //   }
-
-  // },
-  // {
-  //   SN: "2",
-  //   userID: "5466FH",
-  //   BetID: "6458575RFG",
-  //   game: extraData[0],
-  //   amount: "1000",
-  //   players: person,
-  //   status: "Lost",
-  //   win: "5000",
-  //   action: {
-  //     eye: green_eyes,
-  //     warning: warning,
-  //     delete: delete_list
-  //   }
-
-  // },
-  // {
-  //   SN: "2",
-  //   userID: "5466FH",
-  //   BetID: "6458575RFG",
-  //   game: extraData[1],
-  //   amount: "1000",
-  //   players: person,
-  //   status: "Lost",
-  //   win: "5000",
-  //   action: {
-  //     eye: green_eyes,
-  //     warning: warning,
-  //     delete: delete_list
-  //   }
-
-  // },
-  // {
-  //   SN: "3",
-  //   userID: "5466FH",
-  //   BetID: "6458575RFG",
-  //   game: extraData[1],
-  //   amount: "1000",
-  //   players: person,
-  //   status: "Won",
-  //   Winners: '',
-  //   win: "5000",
-  //   action: {
-  //     eye: green_eyes,
-  //     warning: warning,
-  //     delete: delete_list
-  //   }
-  // },
-  // {
-  //   SN: "4",
-  //   userID: "5466FH",
-  //   BetID: "6458575RFG",
-  //   game: extraData[1],
-  //   amount: "1000",
-  //   players: person,
-  //   status: "Lost",
-  //   win: "5000",
-  //   action: {
-  //     eye: green_eyes,
-  //     warning: warning,
-  //     delete: delete_list
-  //   }
-
-  // },
-  // {
-  //   SN: "3",
-  //   userID: "5466FH",
-  //   BetID: "6458575RFG",
-  //   game: extraData[1],
-  //   amount: "1000",
-  //   players: person,
-  //   status: "Won",
-  //   Winners: '',
-  //   win: "5000",
-  //   action: {
-  //     eye: green_eyes,
-  //     warning: warning,
-  //     delete: delete_list
-  //   }
-  // },
-  // {
-  //   SN: "3",
-  //   userID: "5466FH",
-  //   BetID: "6458575RFG",
-  //   game: extraData[1],
-  //   amount: "1000",
-  //   players: person,
-  //   status: "Won",
-  //   Winners: '',
-  //   win: "5000",
-  //   action: {
-  //     eye: green_eyes,
-  //     warning: warning,
-  //     delete: delete_list
-  //   }
-  // }
-  // ]
+  const arr = extraData.allFootballBets;
+  console.log(extraData.allFootballBets);
+  
 
   const diceHeaders = [
     "S/N",
@@ -244,7 +92,7 @@ const Total_BetPlaced = () => {
 
   return (
     <>
-      {loading ? (
+      {/* {loading ? (
         <div className={Style.loadingContainer}>
           <motion.img
             src={logo}
@@ -267,7 +115,7 @@ const Total_BetPlaced = () => {
             }}
           />
         </div>
-      ) : null}
+      ) : null} */}
       <div id={Style.Total_BetPlaced_mainDiv}>
         <Header
           headerText={"Total Bet Placed"}
@@ -276,7 +124,7 @@ const Total_BetPlaced = () => {
 
         <div id={Style.TotalBet_wrapperDiv}>
           <BetPlaced_com
-            arr={arr}
+            // arr={arr}
             winningdata={winningdata}
             initialIndex={paramIndex}
             GameTypeColumn={Sports}

@@ -1,12 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const API_URL = "https://stake-cut-api.onrender.com/api/v1/admin/games/dice/dice-loosing-bets";
-
 export const fetchLoosingDiceBetList = createAsyncThunk(
   "DiceBetsList/fetch",
   async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("token");
+      
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+      const API_URL = `${API_BASE_URL}/games/dice/dice-loosing-bets`;
       const response = await fetch(API_URL, {
         headers: {
           Authorization: `Bearer ${token}`,

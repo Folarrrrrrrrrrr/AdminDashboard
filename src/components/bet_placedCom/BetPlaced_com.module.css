@@ -402,6 +402,52 @@
   #tablerow div{
     width: 90px;
   }
+  .pagination{
+    /* border: solid black ; */
+    width: 90vw;
+    margin-top: 10px;
+    justify-self: center;
+    display: flex;
+    justify-content: space-between;
+    color: rgba(0, 0, 255, 0.390);
+    gap: 10px;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+
+.pageButton {
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: white;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.pageButton:hover {
+  background-color: #f0f0f0;
+}
+
+.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.disabled {
+  background-color: #eee;
+  cursor: not-allowed;
+  color: #888;
+}
+
+.ellipsis {
+  padding: 6px 10px;
+  color: #888;
+}
   
   @media (max-width: 480px) {
     #Total_BetPlaced_TableWrapperDiv {

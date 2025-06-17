@@ -43,7 +43,7 @@ const Department = () => {
                 headerText={"Department"}
                 headerInfo={"Here’s an overview of departments"} />
             <div id={Style.Department_wrapperDiv}>
-                <p id={Style.Department_summaryText}>Customer Care Summary</p>
+                <p id={Style.Department_summaryText}> Departmental Summary</p>
                 <div id={Style.Total_Card_mapDiv}>
                     {
                         total_Card4.map((object) => {

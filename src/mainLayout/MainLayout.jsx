@@ -1,5 +1,5 @@
-import React from 'react'
-import Style from './MainLayout.module.css'
+import React,{useState} from 'react'
+import  './MainLayout.css'
 import { Outlet, useLocation } from 'react-router-dom'
 import NavBar from '../components/navBar/NavBar'
 import { PopupContextHook } from '../WhiteHouse_PopupContext'
@@ -10,6 +10,8 @@ import SuspendUser_Success from '../popUps/suspendReason/sucess/SuspendUser_Succ
 import Profile_Success from "../popUps/profile/Profile_Success"
 import SignIn_Success from '../popUps/signIn_success/SignIn_Success'
 import ProtectedRoute from '../components/protectedRoutes/ProtectedRoute'
+import LeftNav from '../components/navLeft/LeftNav'
+import menu from "../assets/svg/menu.svg"
 // import useAuthCheck from '../components/auth/useAuthCheck'
 // import Revenue_Details from '../pages/WhiteHouse/admin/foot_soldiers/revenue_details/Revenue_Details'
 // import ForgotPassword from '../popUps/whitehouse/forgotPassword/ForgotPassword'
@@ -36,14 +38,19 @@ const MainLayout = () => {
   const { errorPopup, loadingPopup, suspendUsers, suspendSuccess, profilePopup, signInSuccess, revenuePopup, passwordPopup, onlineCountPopup, reAccessPopup, confirmPendingPopup, approvePendingPopup, approveTrashPopup,
     confirmTrashPopup, signUpPopup } = PopupContextHook()
 
-
+    const [toggleNav, setToggleNav] = useState(false)
 
 
   return (
+    <>
+      <img src={menu} alt="" id='toggleIcon' onClick={()=>setToggleNav(!toggleNav)} />
+    <div id={toggleNav? "wrapper": "wrapperFlex"}>
+      {showNavbar && toggleNav?
+        <NavBar id= "NavBar" />      
+        : 
+        <LeftNav id="LeftBar"/> 
+      }
 
-    <div id={Style.wrapper}>
-
-      {showNavbar && <NavBar id={Style.NavBar} />}
 
       {/* {loadingPopup && <Loading />} */}
 
@@ -80,8 +87,9 @@ const MainLayout = () => {
       {loadingPopup && <Loading/>} */}
 
 
-      <ProtectedRoute><div id={Style.generalBody}><Outlet /></div></ProtectedRoute>
+      <ProtectedRoute><div id= {toggleNav? "generalBody":"generalBodyFlex"}><Outlet /></div></ProtectedRoute>
     </div>
+    </>
   )
 }
 

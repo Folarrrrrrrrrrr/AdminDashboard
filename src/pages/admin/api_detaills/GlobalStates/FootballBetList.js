@@ -1,16 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const API_URL = "https://stake-cut-api.onrender.com/api/v1/admin/games/sports/football/football-bet-list";
-
 export const fetchFootballBetList = createAsyncThunk(
   "FootballBetsList/fetch",
-  async (_, { rejectWithValue }) => {
+  async ({ page, limit }, { rejectWithValue }) => {
     try {
       const accessToken = localStorage.getItem("token");
       if (!accessToken) {
         throw new Error("No access token found");
       }
-
+      
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
+      const API_URL = `${API_BASE_URL}/games/sports/football/football-bet-list?page=${page}&limit=${limit}`;
       const response = await fetch(API_URL, {
         method: "GET",
         headers: {
@@ -23,19 +23,23 @@ export const fetchFootballBetList = createAsyncThunk(
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
-      const footballBetsList = await response.json();
-      return footballBetsList.responseBody;
+      const footballBetsList = await response.json();  
+      return {
+        data: footballBetsList.responseBody,
+        pagination: footballBetsList.pagination,
+      };
     } catch (error) {
       console.log("Fetch Football Bets List Error:", error.message);
-      return rejectWithValue(error.message);
+      return rejectWithValue({ message: error.message, status: error.response?.status });
     }
   }
 );
 
 const FootballBetListsSlice = createSlice({
   name: "FootballBetsList",
-  initialState: {
+   initialState: {
     footballBetsList: [],
+    pagination: { page: 1, limit: 10, total: 0 },
     footballBetsListLoading: false,
     footballBetsListError: null,
   },
@@ -48,7 +52,7 @@ const FootballBetListsSlice = createSlice({
       })
       .addCase(fetchFootballBetList.fulfilled, (state, action) => {
         state.footballBetsListLoading = false;
-        state.footballBetsList = action.payload;
+        state.footballBetsList = action.payload.data;
       })
       .addCase(fetchFootballBetList.rejected, (state, action) => {
         state.footballBetsListLoading = false;

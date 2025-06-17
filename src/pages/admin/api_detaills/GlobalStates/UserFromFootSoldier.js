@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // import NigerianUsers from "../constant/url_path"
-const API_URL = 'https://stake-cut-api.onrender.com/api/v1/admin/footsoldiers-soldiers-users';
 
 // Async thunk for fetching dice summary data
 export const fetchFootSolidersOnboardedUsers = createAsyncThunk(
@@ -8,6 +7,10 @@ export const fetchFootSolidersOnboardedUsers = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("token");
+      
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+      const API_URL = `${API_BASE_URL}/footsoldiers-soldiers-users`;
+
       const response = await fetch( API_URL,{
         headers:{
           Authorization:`bearer${token}`,

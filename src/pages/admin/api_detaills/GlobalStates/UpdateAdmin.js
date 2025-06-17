@@ -5,10 +5,11 @@ export const updateAdminProfile = createAsyncThunk(
   async ({ email, fullName, phone }, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("token");
-      const API_URL = `https://stake-cut-api.onrender.com/api/v1/admin/users/update-profile/${email}`;
-
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+      const API_URL = `${API_BASE_URL}/users/update-profile/${email}`;
+     
       const response = await fetch(API_URL, {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,

@@ -26,111 +26,31 @@ const All_FootSoldiers = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchFootSolidersProfile());
-  }, [dispatch]);
-
-  // /totalBetPlaced/${0}
-
-  const handleViewMore = () => {
-    navigate(
-      `@/soldiersDetails/${FootSolidersProfileData.user_id}`
-      //    {
-      //   state: { source : "Sports", extraData: footballBetsList }
-      // }
-    );
-  };
-
   const {
     FootSolidersProfileData,
     FootSolidersProfileloading,
     FootSolidersProfileerror,
   } = useSelector((state) => state.FooltSoldiersProfile);
-  console.log(FootSolidersProfileData);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const pageSize = 9;
+
+  useEffect(() => {
+    dispatch(fetchFootSolidersProfile({ page: currentPage, limit: pageSize }));
+  }, [dispatch, currentPage]);
+
+  useEffect(() => {
+    if (FootSolidersProfileData?.totalPages) {
+      setTotalPages(FootSolidersProfileData.totalPages);
+    }
+  }, [FootSolidersProfileData]);
 
   const [isGridView, setIsGridView] = useState(true);
 
-  const all_soldiers_arr = FootSolidersProfileData;
-  //  [
-  //   {
-  //     img: person,
-  //     name: "John Doe",
-  //     position: "Nigeria",
-  //     status: "Offline",
-  //     to: "/soldiersDetails",
-  //   },
-  //   {
-  //     img: person,
-  //     name: "John Doe",
-  //     position: "Nigeria",
-  //     status: "Online",
-  //     to: "/soldiersDetails",
-  //   },
-  //   {
-  //     img: person,
-  //     name: "John Doe",
-  //     position: "Nigeria",
-  //     status: "Online",
-  //   },
-  //   {
-  //     img: person,
-  //     name: "John Doe",
-  //     position: "Nigeria",
-  //     status: "Online",
-  //   },
-  //   {
-  //     img: person,
-  //     name: "John Doe",
-  //     position: "Nigeria",
-  //     status: "Online",
-  //     to: "/soldiersDetails",
-  //   },
-  //   {
-  //     img: person,
-  //     name: "John Doe",
-  //     position: "Nigeria",
-  //     status: "Online",
-  //     to: "/soldiersDetails",
-  //   },
-  //   {
-  //     img: person,
-  //     name: "John Doe",
-  //     position: "Nigeria",
-  //     status: "Online",
-  //     to: "/soldiersDetails",
-  //   },
-  //   {
-  //     img: person,
-  //     name: "John Doe",
-  //     position: "Nigeria",
-  //     status: "Online",
-  //   },
-  //   {
-  //     img: person,
-  //     name: "John Doe",
-  //     position: "Nigeria",
-  //     status: "Online",
-  //   },
-  //   {
-  //     img: person,
-  //     name: "John Doe",
-  //     position: "Nigeria",
-  //     status: "Online",
-  //   },
-  //   {
-  //     img: person,
-  //     name: "John Doe",
-  //     position: "Nigeria",
-  //     status: "Online",
-  //   },
-  //   {
-  //     img: person,
-  //     name: "John Doe",
-  //     position: "Nigeria",
-  //     status: "Online",
-  //   },
-  // ];
-
+  const all_soldiers_arr = FootSolidersProfileData.soldiers;
+  console.log(all_soldiers_arr);
+  
   const listView_arr = [
     {
       name: {
@@ -258,15 +178,18 @@ const All_FootSoldiers = () => {
 
           {isGridView ? (
             <div id={Style.All_Users_Card}>
-              {all_soldiers_arr.map((object) => {
+              {all_soldiers_arr?.map((object) => {
                 let statusColor = object.status === "Online" ? true : false;
 
                 return (
                   <Staff_Card
                     img={object.img}
                     status={object.status}
-                    name={object.name}
+                    name={object.firstname}
+                    lastname={object.lastname}
                     position={object.position}
+                    // phone={object.phone}
+                    country={object.country}
                     // to="/soldiersDetails/" 
                     to={`/soldiersDetails/${object.phone}`}                  
                     // to={`/userDetails/${object.user_id}`}
@@ -281,13 +204,29 @@ const All_FootSoldiers = () => {
 
           {!isGridView ? (
             <div id={window.innerWidth ? Style.SoldiersListView : null}>
-              <List_viewTable listView_arr={listView_arr} />
+              <List_viewTable listView_arr={all_soldiers_arr} />
             </div>
           ) : (
             ""
           )}
         </div>
       </div>
+      <div className={Style.pagination}>
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        <span>Page {currentPage} of {totalPages}</span>
+        <button
+          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+      </div>
+
     </motion.div>
   );
 };

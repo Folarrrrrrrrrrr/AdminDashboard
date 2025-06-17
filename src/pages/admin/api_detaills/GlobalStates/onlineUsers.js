@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+// import { aP } from "vitest/dist/chunks/reporters.d.79o4mouw.js";
 // import DiceSummaries from "../constant/url_path"
-const API_URL = "https://stake-cut-api.onrender.com/api/v1/admin/total-online-users";
 
 // Async thunk for fetching dice summary data
 export const fetchOnlineUsers = createAsyncThunk(
@@ -8,6 +8,9 @@ export const fetchOnlineUsers = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("token");
+      
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+    const API_URL = `${API_BASE_URL}/total-online-users`;
       const response = await fetch(API_URL, {
         headers:{
           Authorization: `bearer${token}`,

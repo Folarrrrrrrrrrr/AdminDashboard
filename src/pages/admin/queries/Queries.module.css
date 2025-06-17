@@ -293,7 +293,7 @@ td {
 }
 #modalHeading{
   position: relative;
-  top:-165px;
+  top:-200px;
   width:750px;
   font-family: 'latto', sans-serif;
   font-weight: 700;
@@ -304,7 +304,7 @@ td {
 
 #modalSubHeading{
   position: relative;
-  top:-175px;
+  top:-210px;
   /* border:2px solid black; */
   font-family: 'lato', sans-serif;
   font-size:13px;
@@ -312,7 +312,7 @@ td {
 }
 #profileCard{
   position: relative;
-  top:-205px;
+  top:-240px;
   justify-content:center;
   /* border:2px solid black; */
 
@@ -353,17 +353,31 @@ td {
 #userStatus{
   display: flex;
   align-content:center;
+  align-items: center;
+  /* justify-content: center; */
+
   /* border:2px solid black; */
 }
 #onlineStatus{
-  position:relative;
-  left:-40px;
-  border:1px solid black;
+  margin-right: 5px;
+  align-self: center;
+  /* border:1px solid black; */
   width:9px;
   border-radius:10px;
   height:10px;
   align-self:center;
   justify-self:center;
+  background-color: #02d602;
+
+}
+#offlineStatus{
+  /* border:1px solid black; */
+  width:9px;
+  border-radius:10px;
+  height:10px;
+  align-self:center;
+  justify-self:center;
+  background-color: #02d602;
 
 }
 #userStatus p{
@@ -371,6 +385,7 @@ td {
   left:-35px;
   align-self:center;
   justify-self:center;
+  text-align: center;
 }
 #actionsDiv #viewProfileBtn{
   height:30px;
@@ -380,6 +395,16 @@ td {
   border:none;
   border-radius: 10px;
   background-color: rgba(159, 159, 161, 0.52);
+}
+#actionsDiv #viewProfileBtn:hover{
+  height:30px;
+  align-self: center;
+  min-width: 130px;
+  margin-left:-45px;
+  border:none;
+  border-radius: 10px;
+  color: white;
+  background-color: rgba(1, 1, 56, 0.52);
 }
 
 
@@ -462,15 +487,21 @@ td {
 }
 #brokenGhost{
   position:relative;
-  top: -20px;
+  top: -15px;
   /* border: 2px solid black; */
-  width: 120px;
+  width: 40px;
 }
 #noQueryDetailDiv{
   position: relative;
-  top: -40px;
+  top: -70px;
   /* border: 2px solid black; */
 }
+#noQueriesDetails{
+  position: relative;
+  top: -30px;
+  /* border: 2px solid black; */
+}
+
 
 @keyframes scaleIn {
   0% {
@@ -614,7 +645,53 @@ td {
 #sendBtn:hover {
   background: #0033aa;
 }
+.pagination{
+    /* border: solid black ; */
+    width: 90vw;
+    margin-top: 10px;
+    justify-self: center;
+    display: flex;
+    justify-content: space-between;
+    color: rgba(0, 0, 255, 0.390);
+    gap: 10px;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 
+
+.pageButton {
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: white;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.pageButton:hover {
+  background-color: #f0f0f0;
+}
+
+.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.disabled {
+  background-color: #eee;
+  cursor: not-allowed;
+  color: #888;
+}
+
+.ellipsis {
+  padding: 6px 10px;
+  color: #888;
+}
 
 
 

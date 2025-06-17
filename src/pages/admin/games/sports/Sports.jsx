@@ -75,7 +75,12 @@ const Sports = () => {
 
   const handleTotalBetsClick = () => {
     navigate(`/totalBetPlaced/${0}`, {
-      state: { source: "Sports", extraData: footballBetsList },
+      state: {
+         source: "Sports", 
+         extraData: footballBetsList,
+        //  initialPage: currentPage,
+        //  initialLimit: postPerPage 
+        },
     });
   };
 
@@ -335,6 +340,8 @@ const Sports = () => {
     // { key: "age", label: "Age" },
     { key: "details", label: "view details" },
   ];
+
+  
   const weeklyRevenueData = [
     { day: "Mon", revenue: 1200 },
     { day: "Tue", revenue: 2100 },
@@ -385,7 +392,7 @@ const Sports = () => {
       }, [])
 
   return (
-      <>
+    <>
         {loading ? (
           <div className={Style.loadingContainer}>
             <motion.img
@@ -409,124 +416,127 @@ const Sports = () => {
               }}
             />
           </div>
-        ) : null}
-    <div id={Style.DiceGame_mainDiv}>
-      <Header
-        headerText={"Sports"}
-        headerInfo={"Here’s an information on Sports"}
-        image2={sports}
-      />
+        ) : null
+      }
+      <div id={Style.DiceGame_mainDiv}>
+        <Header
+          headerText={"Sports"}
+          headerInfo={"Here’s an information on Sports"}
+          image2={sports}
+        />
 
-      <div id={Style.DiceGame_wrapperDiv}>
-        <div id={Style.Sports_selection_wrapperDiv}>
-          <button className={Style.Sports_selectionDiv}>Football</button>
+        <div id={Style.DiceGame_wrapperDiv}>
+          <div>
+            <div id={Style.Sports_selection_wrapperDiv}>
+              <button className={Style.Sports_selectionDiv}>Football</button>
 
-          <div className={Style.Sports_selectionDiv}>Basketball</div>
-          <div className={Style.Sports_selectionDiv}>Tennis</div>
-          <div className={Style.Sports_selectionDiv}>8 balls</div>
-          <div className={Style.Sports_selectionDiv}> 9 balls</div>
-          {/* <div className={Style.Sports_selectionDiv} id={Style.basket}>Basketball</div> */}
-        </div>
+              <div className={Style.Sports_selectionDiv}>Basketball</div>
+              <div className={Style.Sports_selectionDiv}>Tennis</div>
+              <div className={Style.Sports_selectionDiv}>8 balls</div>
+              <div className={Style.Sports_selectionDiv}> 9 balls</div>
+              {/* <div className={Style.Sports_selectionDiv} id={Style.basket}>Basketball</div> */}
+            </div>
 
-        <p className={Style.PlaceBet_headerText}>Today's Summary</p>
+            <p className={Style.PlaceBet_headerText}>Today's Summary</p>
 
-        <div id={Style.DiceGame_Card_mapDiv}>
-          {total_Card2.map((object, i) => {
-            return (
-              <Total_Card
-                image1={object.image1}
-                text={object.text}
-                divText={object.divText}
-                price={object.price}
-                isPurple={i == 0 ? "true" : null}
-                isGreen={i == 1 ? "true" : null}
-                isRed={i == 2 ? "true" : null}
-                isBlack={i == 3 ? "true" : null}
-                onClick={() => handleTotalBetsClick()}
-                // view_div ={object.view_div}
-                key={i}
-              />
-            );
-          })}
-        </div>
-       {/* <p className={Style.PlaceBet_headerText_Two}>Overview</p> */}
-      <div className={Style.gridContainer}>
-        <div style={{width:"800px"}}>
-          {/* Total Revenue */}
-          <div className={Style.card} >
-            <h2 className={Style.cardTitle}>Total Revenue</h2>
-            <div className={Style.chartContainer} >
-              <div id={Style.doughnutChart} style={{color:"black"}}>
-                <DoughnutChart
-                  totalRevenue={32678}
-                  goalRevenue={50000}
-                  dailyRevenue={3000}
-                  monthlyEarnings={23000}
-                />
+            <div id={Style.DiceGame_Card_mapDiv}>
+              {total_Card2.map((object, i) => {
+                return (
+                  <Total_Card
+                    image1={object.image1}
+                    text={object.text}
+                    divText={object.divText}
+                    price={object.price}
+                    isPurple={i == 0 ? "true" : null}
+                    isGreen={i == 1 ? "true" : null}
+                    isRed={i == 2 ? "true" : null}
+                    isBlack={i == 3 ? "true" : null}
+                    onClick={() => handleTotalBetsClick()}
+                    // view_div ={object.view_div}
+                    key={i}
+                  />
+                );
+              })}
+            </div>
+          </div>
+          {/* <p className={Style.PlaceBet_headerText_Two}>Overview</p> */}
+          <div className={Style.gridContainer}>
+            <div style={{width:"800px"}}>
+              {/* Total Revenue */}
+              <div className={Style.card} >
+                <h2 className={Style.cardTitle}>Total Revenue</h2>
+                <div className={Style.chartContainer} >
+                  <div id={Style.doughnutChart} style={{color:"black"}}>
+                    <DoughnutChart
+                      totalRevenue={32678}
+                      goalRevenue={50000}
+                      dailyRevenue={3000}
+                      monthlyEarnings={23000}
+                    />
+                  </div>
+                </div>
+                <p className={Style.revenueAmount}>$32,678</p>
+              </div>
+
+              {/* Weekly Revenue Chart */}
+              <div className={Style.card} style={{paddingLeft: "5rem",paddingRight:"5rem", height:"400px"}}>
+                <h2 className={Style.cardTitle}>Weekly Revenue Report</h2>
+                <ResponsiveContainer width="100%" height={310}>
+                  <LineChart data={weeklyRevenueData}>
+                    <XAxis dataKey="day" stroke="#94A3B8" />
+                    <YAxis stroke="#94A3B8" />
+                    <Tooltip />
+                    <Line
+                      type="monotone"
+                      dataKey="revenue"
+                      stroke="#1E3A8A"
+                      strokeWidth={2}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+                <p className={Style.increaseText}>+12.5% Increase</p>
               </div>
             </div>
-            <p className={Style.revenueAmount}>$32,678</p>
-          </div>
+            <div style={{width:"350px"}}>
+            {/* New Users */}
+              <div className={Style.card} style={{ paddingTop:"2px", marginTop:"20px", width:"350px",height:"450px", marginBottom:"10px", color:"black",overflow:"scroll",}} >
+                <h2 className={Style.cardTitle} style={{marginLeft:"5px"}}>Online Players</h2>
+                <ul >
+                  {newUsers.map((user, index) => (
+                    <li key={index} className={Style.userItem} style={{color:"black", height:"40px", justifyContent:"space-evenly", marginLeft:"-50px"}}>
+                      <img
+                        src={user.avatar}
+                        alt={user.name}
+                        className={Style.userAvatar }
+                        id={Style.scaler}
+                      />
+                      <span className={Style.userName} id={Style.scaler}>{user.name}</span>
+                        <div id={Style.scaler}>
+                        <p style={{color:"blue", cursor:"pointer", display:"flex", marginLeft:"10px"}}>View User <img src={arrowRight}></img></p>
+                      </div>
+                    </li>
+                  ))}
+                  <button className={Style.viewAllBtn}> View all Users </button>
+                </ul>
+              </div>
 
-          {/* Weekly Revenue Chart */}
-          <div className={Style.card} style={{paddingLeft: "5rem",paddingRight:"5rem", height:"400px"}}>
-            <h2 className={Style.cardTitle}>Weekly Revenue Report</h2>
-            <ResponsiveContainer width="100%" height={310}>
-              <LineChart data={weeklyRevenueData}>
-                <XAxis dataKey="day" stroke="#94A3B8" />
-                <YAxis stroke="#94A3B8" />
-                <Tooltip />
-                <Line
-                  type="monotone"
-                  dataKey="revenue"
-                  stroke="#1E3A8A"
-                  strokeWidth={2}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-            <p className={Style.increaseText}>+12.5% Increase</p>
-          </div>
-        </div>
-        <div style={{width:"350px"}}>
-        {/* New Users */}
-          <div className={Style.card} style={{ paddingTop:"2px", marginTop:"20px", width:"350px",height:"450px", marginBottom:"10px", color:"black",overflow:"scroll",}} >
-            <h2 className={Style.cardTitle} style={{marginLeft:"5px"}}>Online Players</h2>
-            <ul >
-              {newUsers.map((user, index) => (
-                <li key={index} className={Style.userItem} style={{color:"black", height:"40px", justifyContent:"space-evenly", marginLeft:"-50px"}}>
-                  <img
-                    src={user.avatar}
-                    alt={user.name}
-                    className={Style.userAvatar }
-                    id={Style.scaler}
-                  />
-                  <span className={Style.userName} id={Style.scaler}>{user.name}</span>
-                    <div id={Style.scaler}>
-                    <p style={{color:"blue", cursor:"pointer", display:"flex", marginLeft:"10px"}}>View User <img src={arrowRight}></img></p>
-                  </div>
-                </li>
-              ))}
-              <button className={Style.viewAllBtn}> View all Users </button>
-            </ul>
-          </div>
-
-          {/* Registered Countries */}
-          <div className={Style.cardCentered} style={{color:"black"}}>
-            <h2 className={Style.cardTitle}>Registered Countries</h2>
-            <div className={Style.flagContainer}>
-              {countries.map((flag, index) => (
-                <div style={{color:"black"}}>
-                  <span key={index} className={Style.flag}>
-                    {flag.id}
-                  </span>
+              {/* Registered Countries */}
+              <div className={Style.cardCentered} style={{color:"black"}}>
+                <h2 className={Style.cardTitle}>Registered Countries</h2>
+                <div className={Style.flagContainer}>
+                  {countries.map((flag, index) => (
+                    <div style={{color:"black"}}>
+                      <span key={index} className={Style.flag}>
+                        {flag.id}
+                      </span>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
-      </div>
-    </div>
     </>
   );
 };

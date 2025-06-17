@@ -22,6 +22,7 @@ import crownAvatar from "../../assets/images/WinnerCrown.png";
 import locationIcon from "../../assets/images/location.png";
 import { useDispatch, useSelector } from "react-redux";
 import {fetchFootballBetDetails} from "../../pages/admin/api_detaills/GlobalStates/FootballBetDetails"
+import {fetchFootballBetList} from "../../pages/admin/api_detaills/GlobalStates/FootballBetList"
 
 
 const BetPlaced_com = (props) => {
@@ -33,6 +34,7 @@ const BetPlaced_com = (props) => {
   //   const { source } = location.state || {};
 
   const { arr: initialArr, initialIndex } = props;
+  
   // Load `arr` from localStorage or use the provided prop as fallback
   const [arr, setArr] = useState(() => {
     const storedArr = localStorage.getItem("betPlacedArr");
@@ -60,6 +62,7 @@ const BetPlaced_com = (props) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
+   console.log(arr)
   let array = [...arr];
 
   let activeFootbalBets,
@@ -72,16 +75,41 @@ const BetPlaced_com = (props) => {
   activeFootbalBets = array.filter((bet) => bet.status === "active");
   // console.log(activeFootbalBets);
 
-  source === "Dashboard"
-    ? (dashboardFootballData = extraData.filter(
-        (bet) => bet.sports === "football"
-      ))
-    : null;
-  source === "Dashboard"
-    ? (dashboardDiceData = extraData.filter((bet) => bet.sports))
-    : null;
+  const pageSize = 6; // Number of rows per page
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
-  closedFootballBets = array.filter((bet) => bet.status === "closed");
+  
+  useEffect(() => {
+    dispatch(fetchFootballBetList({ page: currentPage, limit: itemsPerPage }));
+  }, [dispatch, currentPage]);
+
+    const { footballBetsList, footballBetsListloading, footballBetsListerror } =
+      useSelector((state) => state.FootballBetList);
+      
+      console.log(footballBetsList);
+      
+    // console.log(footballBetsList);
+  // When source is "Sports", use Redux data directly
+
+  const listData = source === "Sports" 
+  ? footballBetsList :
+   source === "Dashboard"
+    ?  extraData:
+        extraData || arr || [];
+        console.log(listData);
+        
+  // console.log(extraData.allFootballBets)
+  // source === "Dashboard"
+  //   ? (dashboardFootballData = extraData?.filter(
+  //       (bet) => bet.sports === "football"
+  //     ))
+  //   : null;
+  // source === "Dashboard"
+  //   ? (dashboardDiceData = extraData?.filter((bet) => bet.sports))
+  //   : null;
+
+  closedFootballBets = array?.filter((bet) => bet.status === "closed");
   // console.log(closedFootballBets);
 
   const toggle = (index) => setToggleIndex(index);
@@ -149,8 +177,9 @@ const BetPlaced_com = (props) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortColumn, setSortColumn] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 6; // Number of rows per page
+  // const [currentPage, setCurrentPage] = useState(1);
+  
+
 
   let headers =
     source === "Dice Games"
@@ -203,41 +232,57 @@ const BetPlaced_com = (props) => {
         // );
   // **1. Filtering Logic**
   
-  const filteredData = 
+  const filteredData = listData;
+  console.log(filteredData);
+  
   source === "Dashboard" && toggleIndex == 0 || searchQuery
-    ? extraData.filter((row) =>
+    ? listData.allFootballBets?.filter((row) =>
         Object.values(row).some((value) =>
           value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
         )
       )
-    : source === "Dashboard" && toggleIndex === 1
-    ? dashboardFootballData.filter((row) =>
+    :    
+    source === "Dashboard" && toggleIndex === 1
+    ? dashboardFootballData?.filter((row) =>
         Object.values(row).some((value) =>
           value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
         )
       )
     : source === "Dashboard" && toggleIndex === 2
-    ? dashboardDiceData.filter((row) =>
+    ? dashboardDiceData?.filter((row) =>
         Object.values(row).some((value) =>
           value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
         )
       )
-    : source === "Placed Bets"
-    ? extraData.filter((row) =>
+    :
+    source === "Placed Bets"
+    ? extraData?.filter((row) =>
         Object.values(row).some((value) =>
           value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
         )
       )
-    : array.filter((row) =>
+    : 
+    source === "sports"
+    ? listData.allFootballBets?.filter((row) =>
         Object.values(row).some((value) =>
           value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
         )
-      );
+      )
+    : 
+    array?.filter((row) =>
+        Object.values(row).some((value) =>
+          value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      ) ;
 
-
+      //implementing type safety to enusre when the conditions in the filteredData above all comes empty 
+      // filtered will just return an empty arraty insteasd of an undefine.
+      // and paasing the result into a variable filteredDataSafe below:
+      const filteredDataSafe = Array.isArray(filteredData.allFootballBets) ? filteredData.allFootballBets : [];
+      
 
   // **2. Sorting Logic**
-  const sortedData = [...filteredData].sort((a, b) => {
+  const sortedData = [...filteredDataSafe].sort((a, b) => {
     if (!sortColumn) return 0; // No sorting initially
     const aValue = a[sortColumn];
     const bValue = b[sortColumn];
@@ -246,6 +291,8 @@ const BetPlaced_com = (props) => {
     if (aValue > bValue) return sortOrder === "asc" ? 1 : -1;
     return 0;
   });
+  console.log(sortedData);
+  
 
   // **3. Pagination Logic**
   const totalPages = Math.ceil(sortedData.length / pageSize);
@@ -259,7 +306,8 @@ const BetPlaced_com = (props) => {
     setSortOrder(sortColumn === column && sortOrder === "asc" ? "desc" : "asc");
     setSortColumn(column);
   };
-  console.log(paginatedData);
+  // console.log(paginatedData);
+  // console.log(extraData);
   
   return (
     <div>
@@ -354,7 +402,7 @@ const BetPlaced_com = (props) => {
           </p>
 
           {/* Pagination Controls */}
-          <div id={Style.paginationByNumberDiv}>
+          {/* <div id={Style.paginationByNumberDiv}>
             <button
               id={Style.paginationBtn}
               onClick={() => setCurrentPage(currentPage - 1)}
@@ -374,7 +422,48 @@ const BetPlaced_com = (props) => {
             >
               Next
             </button>
+          </div> */}
+          <div className={Style.paginationControls}>
+            <button
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage(prev => prev - 1)}
+              className={Style.paginationButton}
+            >
+              Previous
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => i + 1)
+                .filter((page) => Math.abs(currentPage - page) <= 2)
+                .map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    className={`${Style.pageButton} ${
+                      currentPage === page ? Style.active : ""
+                    }`}
+                  >
+                    {page}
+                  </button>
+                ))}
+            
+              {/* Show ellipsis and last page */}
+              {currentPage < totalPages - 2 && (
+                <>
+                  {currentPage < totalPages - 3 && <span className={Style.ellipsis}>...</span>}
+                  <button onClick={() => setCurrentPage(totalPages)} className={Style.pageButton}>
+                    {totalPages}
+                  </button>
+                </>
+              )}
+            <button
+              disabled={footballBetsList.length < itemsPerPage}
+              onClick={() => setCurrentPage(prev => prev + 1)}
+              className={Style.paginationButton}
+            >
+              Next
+            </button>
+            {/* <span className={Style.pageIndicator}>Page {currentPage}</span> */}
           </div>
+
 
           <div id={Style.imgDiv}>
             <FilterModal
@@ -553,7 +642,7 @@ const BetPlaced_com = (props) => {
                                           />
                                         {/* )} */}
                                       
-                                        <h3 id={Style.playersFullname}>{betDetailsData.players.user.username} </h3>
+                                        <h3 id={Style.playersFullname}>{betDetailsData?.players?.user?.username} </h3>
                                         <div id={Style.locationDiv}>
                                           {/* <img src={location} alt="" srcset="" /> */}
                                           <img
@@ -571,7 +660,7 @@ const BetPlaced_com = (props) => {
                                         </div>
                                       </div>
                                           {/* Opponent Card */}
-                                          {betDetailsData.players.opponent &&(
+                                          {betDetailsData?.players?.opponent &&(
                                             <div id={Style.profileCard}>
                                             <img
                                               className={Style.profileAvatar}
@@ -623,11 +712,11 @@ const BetPlaced_com = (props) => {
                                         <div>Date</div>
                                       </tr>
                                       <tr id={Style.tablerow}>
-                                        <div> {betDetailsData.gameSummary.betType}</div>
-                                        <div> {betDetailsData.gameSummary.gameStatus}</div>
-                                        <div> {betDetailsData.gameSummary.staked}</div>
-                                        <div> {betDetailsData.gameSummary.time}</div>
-                                        <div> {betDetailsData.gameSummary.Date}</div>
+                                        <div> {betDetailsData?.gameSummary?.betType}</div>
+                                        <div> {betDetailsData?.gameSummary?.gameStatus}</div>
+                                        <div> {betDetailsData?.gameSummary?.staked}</div>
+                                        <div> {betDetailsData?.gameSummary?.time}</div>
+                                        <div> {betDetailsData?.gameSummary?.Date}</div>
                                       </tr>
                                     </table>
                                   </div>

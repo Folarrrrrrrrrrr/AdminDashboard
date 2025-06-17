@@ -1,7 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const API_URL = "https://stake-cut-api.onrender.com/api/v1/admin/games/dice/dice-summary";
-
 export const fetchDiceSummary = createAsyncThunk(
   "diceSummary/fetch",
   async (_, { rejectWithValue }) => {
@@ -10,6 +8,8 @@ export const fetchDiceSummary = createAsyncThunk(
       if (!accessToken) {
         throw new Error("No access token found");
       }
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+      const API_URL = `${API_BASE_URL}/games/dice/dice-summary`;
 
       const response = await fetch(API_URL, {
         method: "GET",

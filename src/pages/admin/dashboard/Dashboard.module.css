@@ -1,4 +1,40 @@
 /*  loading-container */
+.errorContainer {
+  z-index: 100000;
+  height: 200px;
+  width: 200px;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 40%;
+  padding:15px;
+  border-radius: 20px;
+  background-color: rgba(241, 240, 245, 0.61); /* Dark background */
+}
+#closeErrorBtn{
+  position: relative;
+  left: 75%;
+  top: 10px;
+  border: none;
+  border-radius: 10px;
+  width:40px;
+  height:35px;
+  font-weight: 900;
+  color:#fff;
+  background-color: #003f796b;
+}
+#closeErrorBtn:hover{
+  background-color:rgb(48, 49, 49);
+  color: #fff;
+  font-size:20px;
+}
+.errorText{
+  color: rgb(59, 59, 61);
+  flex-wrap: wrap;
+  font-weight:600;
+  font-size:20px;
+}
 .loadingContainer {
   z-index: 10000;
   display: flex;
@@ -100,6 +136,7 @@
 
 #BarChart_Div {
     margin-top: -360px;
+    margin-left: 30px;
     width: 50%;
     display: flex;
     column-gap: 2.5rem;
@@ -115,6 +152,7 @@
     box-sizing: border-box;
     width: 100%;
     height: 37.5rem;
+    box-shadow: 1px -2px 9px 0px rgba(128, 128, 128, 0.226) ;
     /* border: 2px solid black; */
 }
 
@@ -140,7 +178,8 @@
     padding: 0 1rem;
     box-sizing: border-box;
     width: 90%;
-    height: 19.56rem;
+    height: 21.76rem;
+    box-shadow: 1px -2px 9px 0px rgba(128, 128, 128, 0.226) ;
 }
 
 #Dashboard_lineChart_Two #Graph_headerDiv {
@@ -186,6 +225,50 @@
     color: #003E79;
 }
 
+.chart_calendar_container {
+  display: flex;
+  background-color: white;
+  border-radius: 8px;
+  /* box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05); */
+  padding: 16px;
+  max-width: 800px;
+  margin: auto;
+}
+
+.chart_container {
+  flex: 2;
+  padding-right: 16px;
+  width:170%;
+  position: relative;
+}
+
+.calendar_container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height:200px;
+  overflow-y:scroll;
+  overflow-x:hidden;
+  scrollbar-width:none; 
+  height:120px;
+  min-width:210px;
+  border:.5px solid black;
+  border-radius:20px;
+  padding-top:70px;
+  margin-top:-2%;
+  position:relative;
+  right:-15px;
+  box-shadow: 1px 3px 9px 0px rgba(128, 128, 128, 0.226) ;
+}
+
+/* Highlight a special date */
+.highlighted_day {
+  background: #FBBF24 !important;
+  color: white !important;
+  border-radius: 50% !important;
+}
+
 
 
 
@@ -219,3 +302,8 @@
   }
 
 }
+
+
+
+
+

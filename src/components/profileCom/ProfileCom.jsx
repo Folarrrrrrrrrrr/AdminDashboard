@@ -48,7 +48,7 @@ const ProfileCom = () => {
           </button>
           { signOutModal&& (
             <div className='confirmSignOutDiv'>
-                <p>are you sure you want to sign out?</p>
+                <p style={{fontSize:"10px"}}>are you sure you want to sign out?</p>
                 <div className="signOutModalBtns">
                   <button  className='signedOutBtn' onClick={()=>handleLogOut()} style={{border:"none", borderRadius:"8px", padding:"5px"}}>Sign out</button>
                   <button className="cancealSignedOutBtn" onClick={()=>setSignOutModal(false)} style={{border:"none",  borderRadius:"8px", padding:"5px"}}> Cancel </button>
@@ -113,13 +113,7 @@ const ProfileCom = () => {
             </div>
             )          
           }
-        </div>
-
-        {/* Footer */}
-        <div className="footer">
-          <span>Mobile</span>
-          <span>Desktop</span>
-        </div>
+        </div>        
       </div>
       )
 

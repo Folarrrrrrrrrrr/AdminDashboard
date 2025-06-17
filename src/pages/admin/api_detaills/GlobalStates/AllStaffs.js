@@ -13,8 +13,8 @@ export const fetchAllStaffs = createAsyncThunk(
       if (!accessToken) {
         throw new Error("No access token found");
       }
-
-      const response = await fetch('http://stake-cut-api.onrendercom/api/v1/admin/staff/get-all-staffs', {
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+      const response = await fetch(`${API_BASE_URL}/staffs/get-all-staffs`, {
         method: "GET",
         headers: {
           // "Content-Type": "application/json",
@@ -22,17 +22,16 @@ export const fetchAllStaffs = createAsyncThunk(
         },
       });
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
             const AllStaffsData = await response.json();
-            console.log(AllStaffsData.responseBody);
+            console.log(AllStaffsData.responseBody);            
             
             return AllStaffsData.responseBody.staffs; // Extract the relevant data
         } catch (error) {
             console.error(error.message);
-            return rejectWithValue(error.message);
+            return rejectWithValue(error.message);                      
         }
     }
 );

@@ -10,7 +10,7 @@ import WH_logo from '../../../assets/images/WH_logo.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { login_provider } from '../api_detaills/provider/auth_provider'
 import { PopupContextHook } from '../../../WhiteHouse_PopupContext'
-import { login } from '../api_detaills/GlobalStates/authSlice'
+import { loginUser } from '../api_detaills/GlobalStates/authSlice'
 import { useDispatch, useSelector } from 'react-redux'
 const Admin_SignIn = () => {
 
@@ -21,11 +21,11 @@ const Admin_SignIn = () => {
   const user = useSelector((state) => state.auth.user);
   console.log(user);
   
-  useEffect(() => {
-    if (user) {
-      navigate("/dashboard"); // Prevent login if already authenticated
-    }
-  }, [user, navigate]);
+  // useEffect(() => {
+  //   if (user) {
+  //     navigate("/dashboard"); // Prevent login if already authenticated
+  //   }
+  // }, [user, navigate]);
 
 
   const [signIn, setSignIn] = useState({
@@ -82,16 +82,22 @@ const Admin_SignIn = () => {
     })
 
     let valid = emailVal == false && passwordVal == false
-
+    
     if (valid) {
-      LoginSubmit()
+      dispatch(loginUser({ email:signIn.email, password:signIn.password }));
     }
+      
 
     // LoginSubmit()
 
     console.log(signIn.email, signIn.password)
   }
-
+    const token = useSelector((state) => state.auth.token);
+    useEffect(() => {
+    if (token) {
+      navigate("/dashboard"); // Prevent login if already authenticated
+    }
+  }, [token, navigate]);
 
   return (
     <div id={Style.SignIn_mainDiv}>

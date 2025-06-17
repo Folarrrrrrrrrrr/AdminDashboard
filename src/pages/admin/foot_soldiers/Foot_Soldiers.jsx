@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Style from "./Foot_Soldiers.module.css";
+import Button from "../../../components/button/Button";
 import Total_Card from "../../../components/total_Card/Total_Card";
 import Activity from "../../../assets/svg/Activity.svg";
 import total_users from "../../../assets/svg/total_users.svg";
@@ -17,10 +18,11 @@ import { fetchFootSoldiersSummary } from "../api_detaills/GlobalStates/FootSoldi
 // import { fetchFootballBetList } from '../api_detaills/GlobalStates/FootballBetList'
 import footSoldiers from "../../../assets/images/footSoldiers.png";
 import LoadingScreen from "../../../components/loader/LoadingSreen";
-
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 const Foot_Soldiers = () => {
   const dispatch = useDispatch();
+  const [erorPopup, setErrorPopup] = useState(true);
 
   useEffect(() => {
     dispatch(fetchFootSoldiersSummary());
@@ -32,7 +34,8 @@ const Foot_Soldiers = () => {
     footSoldiersSummaryerror,
   } = useSelector((state) => state.FootSoldierSummary);
 
-  console.log(footSoldiersSummaryData);
+  console.log(footSoldiersSummaryData);  
+  // console.log(footSoldiersSummaryerror);
 
   const { updateRevenuePopup } = PopupContextHook();
 
@@ -123,7 +126,6 @@ const Foot_Soldiers = () => {
 
   // Card slider section.
 
-
     const [loading, setLoading ]= useState(true);
     const [currentIndex, setCurrentIndex] = useState(0);
     const nextSlide = () => {
@@ -134,9 +136,9 @@ const Foot_Soldiers = () => {
       setCurrentIndex((prevIndex) => (prevIndex - 1 + cards.length) % cards.length);
     };
 
-    useEffect(()=>{
-          setTimeout(()=> footSoldiersSummaryData ? setLoading(false): setLoading(true), 3000)
-        }, [])
+  useEffect(()=>{
+    setTimeout(()=> footSoldiersSummaryData ? setLoading(false): setLoading(true), 3000)
+  }, [])
   return (
    loading ? <LoadingScreen/> : 
     <div id={Style.Foot_Soldiers_mainDiv}>
@@ -148,6 +150,42 @@ const Foot_Soldiers = () => {
         />
       </div>
 
+     {/* This is 404 animation */}
+      {
+        erorPopup && footSoldiersSummaryerror?.includes('401')?
+          <div className={Style.errorContainer}>
+            <button
+              id={Style.closeErrorBtn}
+              onClick={() => setErrorPopup(false)}
+            >
+              &times;
+            </button>
+            <DotLottieReact
+              src="https://lottie.host/75c1ee26-7356-43d6-983b-f0c3e9ad86ad/H1VFgjJyzy.lottie"
+              loop
+              autoplay
+            />
+            <p className={Style.errorText}>{footSoldiersSummaryerror}: log in </p>
+          </div> 
+        : 
+        erorPopup && footSoldiersSummaryerror?.includes('Failed to fetch')?
+          <div className={Style.errorContainer} onClick={()=> setErrorPopup(false)}>
+            <button
+              id={Style.closeErrorBtn}
+              onClick={() => setErrorPopup(false)}
+            >
+              &times;
+            </button>
+            <DotLottieReact
+            src="https://lottie.host/6f960326-5802-4519-8bd7-c84a28ca486a/gbi9gKTA09.lottie"
+            loop
+            autoplay
+            />
+          <p className={Style.errorText} >{footSoldiersSummaryerror}: check server or connection </p>
+            </div>
+          : 
+          <></>
+      }
       <div id={Style.Foot_Soldiers_wrapperDiv}>
           <p id={Style.Foot_Soldiers_headerText}>Foot Soldier's Summary</p>
         <div id={Style.allCardsDiv}>
@@ -203,6 +241,95 @@ const Foot_Soldiers = () => {
                 </div>
               </div>
             </div>
+            <div id={Style.Customer_Support_performanceDiv}>
+            <div id={Style.performance_headerDiv}>
+              <p>Top Performing Foot Soldiers</p>
+              <div id={Style.date_viewDiv}>
+                <p id={Style.dateText}>
+                  Week One October, 2024 <img src={arrow_down} alt="" />
+                </p>
+                <Link to={"/TotalTopAgents"}>
+                  <Button text={"View All"} />
+                </Link>
+              </div>
+            </div>
+
+            <table>
+              <tbody>
+                <tr>
+                  <td>Days</td>
+                  <td className={Style.performing_agentText}>Calls</td>
+                  <td className={Style.performing_agentText}>Mails</td>
+                  <td className={Style.performing_agentText}>Msg</td>
+                </tr>
+                <tr>
+                  <td>John Doe</td>
+                  <td className={Style.performing_agentText}>46</td>
+                  <td className={Style.performing_agentText}>5</td>
+                  <td className={Style.performing_agentText}>5</td>
+                  <td>
+                    <Link to={"/topAgent"}>
+                      <Button text={"View Details"} />
+                    </Link>
+                  </td>
+                </tr>
+                <tr>
+                  <td>John Doe</td>
+                  <td className={Style.performing_agentText}>22</td>
+                  <td className={Style.performing_agentText}>13</td>
+                  <td className={Style.performing_agentText}>5</td>
+                  <td>
+                    <Button text={"View Details"} />
+                  </td>
+                </tr>
+                <tr>
+                  <td>John Doe</td>
+                  <td className={Style.performing_agentText}>45</td>
+                  <td className={Style.performing_agentText}>8</td>
+                  <td className={Style.performing_agentText}>5</td>
+                  <td>
+                    <Button text={"View Details"} />
+                  </td>
+                </tr>
+                <tr>
+                  <td>John Doe</td>
+                  <td className={Style.performing_agentText}>34</td>
+                  <td className={Style.performing_agentText}>77</td>
+                  <td className={Style.performing_agentText}>5</td>
+                  <td>
+                    <Button text={"View Details"} />
+                  </td>
+                </tr>
+                <tr>
+                  <td>John Doe</td>
+                  <td className={Style.performing_agentText}>89</td>
+                  <td className={Style.performing_agentText}>5</td>
+                  <td className={Style.performing_agentText}>5</td>
+                  <td>
+                    <Button text={"View Details"} />
+                  </td>
+                </tr>
+                <tr>
+                  <td>John Doe</td>
+                  <td className={Style.performing_agentText}>33</td>
+                  <td className={Style.performing_agentText}>566</td>
+                  <td className={Style.performing_agentText}>5</td>
+                  <td>
+                    <Button text={"View Details"} />
+                  </td>
+                </tr>
+                <tr>
+                  <td>John Doe</td>
+                  <td className={Style.performing_agentText}>21</td>
+                  <td className={Style.performing_agentText}>44</td>
+                  <td className={Style.performing_agentText}>5</td>
+                  <td>
+                    <Button text={"View Details"} />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
             <div id={Style.foot_soldiers_stats_cardDiv}>
               {foot_soldiers_stats_card.map((obj) => {
                 return (

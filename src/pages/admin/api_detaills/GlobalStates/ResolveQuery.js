@@ -1,7 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const RESOLUTION_API_URL = "https://stake-cut-api.onrender.com/api/v1/admin/query/resolve-query";
-
 // 🔹 Async thunk for submitting query resolution
 export const submitQueryResolution = createAsyncThunk(
   "submitResolution/post",
@@ -11,6 +9,8 @@ export const submitQueryResolution = createAsyncThunk(
       if (!accessToken) {
         throw new Error("No access token found");
       }
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+      const RESOLUTION_API_URL = `${API_BASE_URL}/query/resolve-query`;
 
       const response = await fetch(RESOLUTION_API_URL, {
         method: "POST",

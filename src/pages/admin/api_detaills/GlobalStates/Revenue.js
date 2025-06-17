@@ -1,15 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const API_URL = "https://stake-cut-api.onrender.com/api/v1/admin/dashboard/dashboard-data";
-
 export const fetchRevenue = createAsyncThunk(
   "Revenue/fetch",
   async (_, { rejectWithValue }) => {
     try {
       const accessToken = localStorage.getItem("token");
+      console.log(accessToken);
+      
       if (!accessToken) {
         throw new Error("No access token found");
       }
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+      const API_URL = `${API_BASE_URL}/dashboard/dashboard-data`;
 
       const response = await fetch(API_URL, {
         method: "GET",

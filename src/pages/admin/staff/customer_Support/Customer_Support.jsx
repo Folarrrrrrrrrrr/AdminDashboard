@@ -283,7 +283,7 @@ const Customer_Support = () => {
                   <Button text={"View Details"} />
                 </td>
 
-                {CCPerformanceData.map((performance, i) => {
+                {/* {CCPerformanceData.map((performance, i) => {
                   if (i <= 6) {
                     let adjustedResp = performance.queries;
                     return (
@@ -306,7 +306,32 @@ const Customer_Support = () => {
                       </tr>
                     );
                   }
-                })}
+                })} */}
+                {CCPerformanceData.map((performance, i) => {
+  if (i <= 6 && Array.isArray(performance.queries) && performance.queries[0]) {
+    let adjustedResp = performance.queries;
+    return (
+      <tr key={i}>
+        <td>{performance.agentName}</td>
+        <td className={performance.type}>
+          {adjustedResp[0]?.count || 0}
+        </td>
+        <td className={performance.type}>
+          {adjustedResp[1]?.count || 0}
+        </td>
+        <td className={Style.performing_agentText}>
+          {adjustedResp[2]?.count || 0}
+        </td>
+        <td>
+          <Button text={"View Details"} />
+        </td>
+      </tr>
+    );
+  } else {
+    return null;
+  }
+})}
+
               </tbody>
             </table>
           </div>

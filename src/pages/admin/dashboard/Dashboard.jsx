@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Style from "./Dashboard.module.css";
-import {
-  BarChart,
-  YAxis,
-  XAxis,
-  Bar,
-  Tooltip,
-  ResponsiveContainer,
-  Area,
-  AreaChart,
-} from "recharts";
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import {AreaChart,Area ,BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, Legend } from "recharts";
+import Unauthorized from "../../../components/errorPopup/unauthorised/Unauthorized"
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 import rise from "../../../assets/svg/rise.svg";
 import flag from "../../../assets/svg/flag.svg";
 import person from "../../../assets/svg/person.svg";
@@ -36,8 +31,27 @@ import {
   InfoWindow,
 } from "@vis.gl/react-google-maps";
 import { fetchRevenue } from "../api_detaills/GlobalStates/Revenue";
+// import {logout} from "../../admin/api_detaills/GlobalStates/authSlice"
+const colors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884d8", "#82ca9d"];
+import {logout} from "../../../pages/admin/api_detaills/GlobalStates/authSlice"
+const TriangleBar = (props) => {
+  const { fill, x, y, width, height } = props;
+  return (
+    <path
+      d={`M${x},${y + height} 
+         L${x + width / 2},${y} 
+         L${x + width},${y + height} 
+         Z`}
+      stroke="none"
+      fill={fill}
+    />
+  );
+};
 
 const Dashboard = () => {
+  
+    const dispatch = useDispatch();
+  const [date, setDate] = useState(new Date());
   const { updateErrorText, updateErrorPopup } = PopupContextHook();
 
   //  Google map implementation begins
@@ -45,7 +59,8 @@ const Dashboard = () => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [betMap, setBetMap] = useState(false);
   const [revenueMap, setRevenueMap] = useState(true);
-
+  const [erorPopup, setErrorPopup] = useState(true);
+  
   const markers = [
     // Nigeria States (36 + FCT)
     {
@@ -315,14 +330,15 @@ const Dashboard = () => {
 
     // Expand to 100 locations with similar pattern...
   ];
+  
 
   //  Google map implementation ends
   const customTickFormatter = (tick) => {
     return `${tick}k`;
   };
   const [loading, setLoading] = useState(true);
+  // console.log(footballBetsListError)
 
-  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchFootballBetList());
     dispatch(fetchDiceBetList());
@@ -331,9 +347,12 @@ const Dashboard = () => {
   const { DiceBetsdata, DiceBetsloading, DiceBetserror } = useSelector(
     (state) => state.DiceBetsList
   );
-  const { footballBetsList, footballBetsListloading, footballBetsListerror } =
-    useSelector((state) => state.FootballBetList);
-
+  const { footballBetsList, footballBetsListLoading, footballBetsListError } = useSelector(
+    (state) => state.FootballBetList
+  );
+  // console.log(footballBetsList);
+  
+  
   function interleaveArrays(arr1, arr2) {
     const maxLength = Math.max(arr1.length, arr2.length);
     const result = [];
@@ -349,9 +368,10 @@ const Dashboard = () => {
 
     return result;
   }
-  const mixedArray = interleaveArrays([], footballBetsList);
+  // const mixedArray = interleaveArrays([], footballBetsList);
+  const mixedArray =  footballBetsList;
 
-  console.log(mixedArray);
+  // console.log(mixedArray);
 
   const navigate = useNavigate();
   const handleTotalBetsClick = () => {
@@ -374,7 +394,7 @@ const Dashboard = () => {
 
   const { totalBetPlaced, totalUsers, totalCountries, totalFootSoldiers } =
     dashboardCount;
-  console.log(totalBetPlaced);
+  // console.log(dashboardCount);
 
   const line_data = [
     {
@@ -489,11 +509,51 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(fetchRevenue());
   }, [dispatch]);
+  // const [date, setDate] = useState(new Date());
+  const selectedYear = date.getFullYear(); // Extract the selected year
   const { Revenue, RevenueLoading, RevenueError } = useSelector(
     (state) => state.RevenueReducer
   );
   const yearly = Revenue.yearlyRevenue;
+  // console.log(yearly);
+  
 
+  //below I filtered the yearly data for the selected year, e.g., "2025"
+  const filteredData = yearly?.filter((item) =>
+    item.month.includes(selectedYear)
+  ) || [];
+
+//Here I am slicing the Months Key value(January, 2025) to Jan and store the result in label, and ensuring my total key value is a number and not a string   
+//The label is added to the object and the outcome looks like this:
+// [
+//   { month: "2024-Jan", total: 1000, label: "Jan" },
+//   ...
+// ], see code below:
+  const formattedData = filteredData.map((item) => ({
+    ...item,
+    label: item.month.slice(0, 3), // "Jan", "Feb", etc.
+    total: Number(item.total),     // Ensure it's a number for the chart
+  }));
+  
+  
+  // console.log(RevenueError);
+  
+  
+  const formattedYearly = yearly?.map(item => {
+    const [monthName] = item.month.split(','); // Extract "January" from "January, 2025"
+    const prefix = monthName.slice(0, 3);
+    const rest = monthName.slice(3);
+    const filtered = rest
+      .split('')
+      .filter((char, index) => index % 2 === 0)
+      .join('');
+    return {
+      ...item,
+      month: prefix + filtered // "Jan" + filtered part
+    };
+  });
+
+  
   useEffect(() => {
     setTimeout(
       () =>
@@ -502,7 +562,7 @@ const Dashboard = () => {
         // totalCountries &&
         // totalUsers &&
         // totalBetPlaced &&
-        footballBetsList &&
+        // footballBetsList&&
         Revenue
           ? setLoading(false)
           : setLoading(true),
@@ -510,6 +570,16 @@ const Dashboard = () => {
     );
   }, []);
 
+  const CloseErrorPopup =(id)=>{
+    setErrorPopup(false)
+  }
+
+  //here is logic to sign put from the error popup
+  const SignOut =()=>{
+    dispatch(logout());
+    navigate("/");
+    // console.log("gtgtgt")
+  }
   return (
     <>
       {loading ? (
@@ -535,7 +605,7 @@ const Dashboard = () => {
             }}
           />
         </div>
-      ) : null}
+      ) : null}         
       <div id={Style.Dashboard_MainDiv}>
         <Header
           className={Style.Header_Div}
@@ -543,6 +613,56 @@ const Dashboard = () => {
           headerInfo={"Here’s an overview of White House"}
           back1={false}
         />
+        {/* This is football 401 animation */}
+        {
+          erorPopup && footballBetsListError?.message?.includes('401')?
+           <Unauthorized
+            animationLink="https://lottie.host/75c1ee26-7356-43d6-983b-f0c3e9ad86ad/H1VFgjJyzy.lottie" 
+            errorResponse={footballBetsListError?.message} 
+            extraErrorDetails="log in for valid token"
+            actionText="Sign Out"
+            errorAction={()=>SignOut()}
+            closePopup={()=> setErrorPopup(false)}
+            />
+          :
+          
+          // {/* This is football 404 animation */}
+            erorPopup && footballBetsListError?.message?.includes('Failed to fetch')?
+            <Unauthorized
+              animationLink="https://lottie.host/75c1ee26-7356-43d6-983b-f0c3e9ad86ad/H1VFgjJyzy.lottie" 
+              errorResponse={footballBetsListError?.message} 
+              extraErrorDetails=" Not Found"
+              closePopup={()=> setErrorPopup(false)}
+              // actionText=""
+              // errorAction={()=>SignOut()}
+              />
+            : 
+          // {/* This is revenued 401 animation */}
+            erorPopup && RevenueError?.includes('401')?
+            <Unauthorized
+            animationLink="https://lottie.host/75c1ee26-7356-43d6-983b-f0c3e9ad86ad/H1VFgjJyzy.lottie" 
+              // animationLink="https://lottie.host/6f960326-5802-4519-8bd7-c84a28ca486a/gbi9gKTA09.lottie" 
+              errorResponse={RevenueError} 
+              extraErrorDetails=""
+              actionText="Sign Out"
+              errorAction={()=>SignOut()}
+              closePopup={()=> setErrorPopup(false)}
+              />
+              :
+          // {/* This is revenued 404 animation */}
+            erorPopup && RevenueError?.includes('Failed to fetch')?
+            <Unauthorized
+              animationLink="https://lottie.host/75c1ee26-7356-43d6-983b-f0c3e9ad86ad/H1VFgjJyzy.lottie" 
+              errorResponse={RevenueError} 
+              extraErrorDetails=""
+              closePopup={()=> setErrorPopup(false)}
+              // actionText=""
+              // errorAction={()=>SignOut()}
+              />
+            : 
+            <></>
+          }
+
 
         <div id={Style.Dashboard_WrapperDiv}>
           <div id={Style.Dashboard_CardGraph_Wrapper}>
@@ -569,10 +689,6 @@ const Dashboard = () => {
                       figure={obj.figure}
                       text={obj.text}
                       isTransparent="true"
-                      // isPurple={i == 0 ? "true" : null}
-                      // isGreen={i == 1 ? "true" : null}
-                      // isRed={i == 2 ? "true" : null}
-                      // isBlack={i == 3 ? "true" : null}
                       onClick={i === 0 ? () => handleTotalBetsClick() : null}
                       to={i !== 0 ? obj.to : undefined} // Use `to` only for non-click items
                     />
@@ -580,10 +696,10 @@ const Dashboard = () => {
                 );
               })}
             </div>
-            <div id={Style.Dashboard_lineChart}>
-              <APIProvider apiKey="AIzaSyDP_49wNtgJOtpKqxMJhqtHrOdoakXD-0U">
+            <div id={Style.Dashboard_lineChart} style={{}}>
+              <APIProvider apiKey="AIzaSyDP_49wNtgJOtpKqxMJhqtHrOdoakXD-0U" >
                 <Map
-                  style={{ width: "100%", height: "500px" }}
+                  style={{ width: "100%", height: "500px"}}
                   defaultCenter={{ lat: 37.7749, lng: -122.4194 }} // San Francisco
                   defaultZoom={10}
                   mapId="4a23760bc1d6f83"
@@ -679,49 +795,63 @@ const Dashboard = () => {
           <div id={Style.BarChart_Div}>
             <div id={Style.Dashboard_lineChart_Two}>
               <div id={Style.Graph_headerDiv}>
-                <p id={Style.Dashboard_RevenueText}>Revenue</p>
+                <p id={Style.Dashboard_RevenueText}> Yearly Revenue</p>
                 <Link to={"/revenue"}>
                   <p id={Style.Graph_BoxText}>See More</p>
                 </Link>
-                
               </div>
 
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart
-                  width={150}
-                  height={40}
-                  data={yearly}
-                  margin={{
-                    top: 20,
-                    right: 30,
-                    left: -20,
-                    bottom: 10,
-                  }}
-                >
-                  <XAxis
-                    dataKey="name"
-                    axisLine={false}
-                    tickLine={false}
-                    fontSize={"0.8rem"}
+              <div className={Style.chart_calendar_container}>
+                {/* Area Chart */}
+                <div className={Style.chart_container}>
+                <ResponsiveContainer width="100%" height={200}>
+                  <AreaChart key={selectedYear} data={formattedData}>
+                    <defs>
+                      <linearGradient id="colorSeries" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#FBBF24" stopOpacity={0.8} />
+                        <stop offset="95%" stopColor="#FBBF24" stopOpacity={0} />
+                      </linearGradient>
+                      <linearGradient id="colorSeries2" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#1E3A8A" stopOpacity={0.8} />
+                        <stop offset="95%" stopColor="#1E3A8A" stopOpacity={0} />
+                      </linearGradient>
+                    </defs>
+                    <XAxis dataKey="label" />
+                    <Tooltip />
+                    <Area
+                      type="monotone"
+                      dataKey="total"
+                      stroke="#1E3A8A"
+                      fillOpacity={1}
+                      fill="url(#colorSeries2)"
+                      animationDuration={3000}
+                      animationEasing="ease-in-out"
+                      isAnimationActive={true}
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+
+                </div>
+
+                {/* Calendar */}
+                <div className={Style.calendar_container}>
+                <Calendar
+                    onChange={setDate}
+                    value={date}
+                    // Only show years
+                    defaultView="decade"
+                    view="decade"
+                    // Disable navigation to months/days
+                    onClickYear={(value) => setDate(value)}
+                    border={false}
+                    showNavigation={true}
+                    tileDisabled={() => false} // disable year selection if needed
                   />
-                  <YAxis
-                    axisLine={false}
-                    tickLine={false}
-                    fontSize={"0.7rem"}
-                  />
-                  <Tooltip />
-                  <Bar
-                    dataKey="total"
-                    fill="#4d4a4a"
-                    isAnimationActive={true} // Enable animation
-                    animationDuration={7500} // Duration of animation (1.5s)
-                    animationBegin={500} // Delay before animation starts (0.5s)
-                    animationEasing="ease-in-out"
-                  />
-                </BarChart>
-              </ResponsiveContainer>
+                </div>
+              </div>
             </div>
           </div>
+
         </div>
       </div>
     </>

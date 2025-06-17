@@ -27,7 +27,12 @@ const Staff_Details = () => {
     }, []);
     
     const { StaffProfileData, StaffProfileDataLoading, StaffProfileDataError } = useSelector((state) => state.StaffsProfile);
-    // console.log(StaffProfileData)
+    // const {
+    //     StaffProfileData = [],
+    //     StaffProfileDataLoading = false,
+    //     StaffProfileDataError = null,
+    // } = useSelector((state) => state.StaffsProfile || {});
+    console.log(StaffProfileData)
 
     const data = [
         {

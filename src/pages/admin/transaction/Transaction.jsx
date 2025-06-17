@@ -26,12 +26,20 @@ import { transactionSummaryProvider } from "../api_detaills/provider/user_provid
 import LoadingScreen from "../../../components/loader/LoadingSreen";
 import logo from "../../../assets/images/S_icon.png";
 import { motion } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTransactions } from "../api_detaills/GlobalStates/Transactions";
+import Unauthorized from "../../../components/errorPopup/unauthorised/Unauthorized";
+
+
 
 const Transaction = () => {
+
+  const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPage2, setCurrentPage2] = useState(1);
   const [postsPerPage] = useState(10);
   const [loading, setLoading] = useState(true);
+  const [apiErrorPopup,setErrorPopup] = useState(true)
 
   const { updateErrorText, updateErrorPopup } = PopupContextHook();
 
@@ -260,6 +268,17 @@ const Transaction = () => {
     },
   ];
 
+
+  useEffect(() => {
+    dispatch(fetchTransactions());
+  }, [dispatch]);
+
+   const { TransactionsData, TransactionsDataLoading, TransactionsDataError } = useSelector(
+      (state) => state.TransactionReducer
+    );
+    console.log(TransactionsDataError);
+    
+
   useEffect(() => {
     setTimeout(
       () => (coinPurchaseHistory && coinWithdrawHistory ? setLoading(false) : setLoading(true)),
@@ -292,12 +311,35 @@ const Transaction = () => {
           />
         </div>
       ) : null}
+     
       <div id={Style.Transaction_mainDiv}>
       <Header
         headerText={"Transactions"}
         headerInfo={"Here is a list of all transactions"}
       />
-
+     {
+        apiErrorPopup && TransactionsDataError?.includes('401')?
+          <Unauthorized
+          animationLink="https://lottie.host/75c1ee26-7356-43d6-983b-f0c3e9ad86ad/H1VFgjJyzy.lottie" 
+          errorResponse={TransactionsDataError} 
+          extraErrorDetails="log in for valid token"
+          actionText="Sign Out"
+          errorAction={()=>SignOut()}
+          closePopup={()=> setErrorPopup(false)}
+          />
+        :// {/* This is  404 animation */}
+            apiErrorPopup && TransactionsDataError?.includes('Failed to fetch')?
+            <Unauthorized
+              animationLink="https://lottie.host/75c1ee26-7356-43d6-983b-f0c3e9ad86ad/H1VFgjJyzy.lottie" 
+              errorResponse={TransactionsDataError} 
+              extraErrorDetails=" Not Found"
+              closePopup={()=> setErrorPopup(false)}
+              // actionText=""
+              // errorAction={()=>SignOut()}
+              />
+            : 
+        <></>
+      }
       <div id={Style.Transaction_wrapperDiv}>
         {/* cards */}
         <div id={Style.Transaction_mapDiv}> 

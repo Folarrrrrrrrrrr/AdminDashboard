@@ -1,15 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // import NigerianUsers from "../constant/url_path"
-const API_URL = "https://stake-cut-api.onrender.com/api/v1/admin/query/query-summary";
 // Async thunk for fetching dice summary data
 export const fetchQuerySummary= createAsyncThunk(
   "QuerySummary/fetch",
-  async (_, { rejectWithValue }) => {
+  async ({ page, limit }, { rejectWithValue }) => {
     try {
       const accessToken = localStorage.getItem("token");
       if (!accessToken) {
         throw new Error("No access token found");
       }
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+      const API_URL = `${API_BASE_URL}/query/query-summary?page=${page}&limit=${limit}`;
 
       const response = await fetch(API_URL, {
         method: "GET",
@@ -18,7 +19,7 @@ export const fetchQuerySummary= createAsyncThunk(
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      // console.log(response)
+      console.log(response)
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }

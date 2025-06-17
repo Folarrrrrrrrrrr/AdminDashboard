@@ -8,8 +8,7 @@
     justify-content: start;
     align-items: center;
     position: absolute;
-    
-    top: 0;
+    top: 55px;
     bottom: 0;
     z-index: 1000;
     padding-top: 30px;

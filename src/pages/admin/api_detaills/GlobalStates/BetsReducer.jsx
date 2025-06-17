@@ -20,7 +20,9 @@ export const BetsReducer = (state, action) => {
 export const fetchBets = async (dispatch) => {
   try {
       const accessToken = localStorage.getItem("accessToken");
-      const response = await fetch("https://stake-cut-api.onrender.com/api/v1/admin/bets", {
+      
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+      const response = await fetch(`${API_BASE_URL}/bets`, {
           method: "GET",
           headers: {
               // "Content-Type": "application/json",

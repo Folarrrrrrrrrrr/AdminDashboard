@@ -8,9 +8,9 @@ export const fetchCCWeeklyPerformance = createAsyncThunk(
       if (!accessToken) {
         throw new Error("No access token found");
       }
-
-      const response = await fetch(
-        "https://stake-cut-api.onrender.com/customer-care-admin/api/top-performing-agents",
+      
+      const CC_BASE_URL = import.meta.env.VITE_CC_BASE_URL;
+      const response = await fetch(`${CC_BASE_URL}/top-performing-agents`,
         {
           method: "GET",
           headers: {

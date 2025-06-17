@@ -56,7 +56,6 @@ export const getprofileService = async (email) => {
   const response = await authAxios.get(`${profile}/${email}`);
 
   console.log(response);
-
   return response;
 };
 

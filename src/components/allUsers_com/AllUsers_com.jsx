@@ -18,17 +18,21 @@ const AllUsers_com = (props) => {
   const [loading, setLoading] = useState(true);
 
   const { arr } = props;
-  let array = { ...arr };
-
-  const { allUsers, subscribedUsers, unsubscribedUsers } = array;
+  // let array = { ...arr };
+  let array = props.arr;
+  console.log(array);
+ 
+  // const { allUsers, subscribedUsers, unsubscribedUsers } = array;
 
   const [toggleIndex, setToggleIndex] = useState(0);
   const [searchUser, setSearchUser] = useState("");
   const [sortList, setSortList] = useState("name"); // Default sort by name
 
   // Pagination state
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
+  const { currentPage, setCurrentPage, totalCount } = props;
   const usersPerPage = 12; // Max 10 users per page
+  const totalPages = Math.ceil(totalCount / usersPerPage);
 
   useEffect(() => {
     setTimeout(() => (allUsers ? setLoading(false) : setLoading(true)), 3000);
@@ -39,10 +43,12 @@ const AllUsers_com = (props) => {
   };
 
   // Filter users based on search input
-  const filteredUsers = allUsers.filter((user) =>
+  const filteredUsers = array?.filter((user) =>
     user.username.toLowerCase().includes(searchUser.toLowerCase())
   );
 
+    console.log(filteredUsers);
+    
   // Sort users based on selected option
   const sortedUsers = [...filteredUsers].sort((a, b) =>
     sortList === "name"
@@ -50,12 +56,11 @@ const AllUsers_com = (props) => {
       : a.country.localeCompare(b.country)
   );
 
-  // Pagination logic
-  const indexOfLastUser = currentPage * usersPerPage;
-  const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = sortedUsers.slice(indexOfFirstUser, indexOfLastUser);
+  console.log(sortedUsers.length);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
 
-  const totalPages = Math.ceil(sortedUsers.length / usersPerPage);
 
   return (
     <div>
@@ -120,7 +125,7 @@ const AllUsers_com = (props) => {
         {
           toggleIndex === 0 &&
             // <div id={Style.UserCardsDiv}>
-            currentUsers.map((object) => {
+            sortedUsers.map((object) => {
               let statusColor = object.status === "Online" ? true : false;
 
               let verify =
@@ -136,6 +141,8 @@ const AllUsers_com = (props) => {
                 <div id={Style.eachCard}>
                     <Staff_Card
                       img={object.profile_picture}
+                      subscriptionType={object.subscriptionType}
+                      email={object.email}
                       status={object.status}
                       name={object.username}
                       position={object.country}
@@ -204,33 +211,55 @@ const AllUsers_com = (props) => {
         
 
         {/* {
-                    allUsers === 0 || unsubscribedUsers === 0 &&
-                    <div className={Style.empty_userDiv}>
-                        <img src={empty_user} alt="" />
-                        <p>No Subscribed Users</p>
-                    </div>
-                } */}
+              allUsers === 0 || unsubscribedUsers === 0 &&
+              <div className={Style.empty_userDiv}>
+                  <img src={empty_user} alt="" />
+                  <p>No Subscribed Users</p>
+              </div>
+          } */}
       </div>
+       {/*  Paagination */}
       <div className={Style.pagination}>
-            <div>
-                <button
-                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                    disabled={currentPage === 1}
-                    style={{marginRight:"20px"}}
-                >
-                   prev 
-                </button>
-                <button
-                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                    disabled={currentPage === totalPages}
-                >
-                   
-                   next
-                </button>
-            </div>
-            
-            <span >Page {currentPage} of {totalPages}</span>
-        </div>
+        <button
+          onClick={props.prevPage}
+          disabled={currentPage === 1}
+         className={`${Style.pageButton} ${currentPage === 1 ? Style.disabled : ""}`}
+        >
+          Previous
+        </button>
+         {/* Show a range of page numbers around the current page */}
+          {Array.from({ length: totalPages }, (_, i) => i + 1)
+            .filter((page) => Math.abs(currentPage - page) <= 2)
+            .map((page) => (
+              <button
+                key={page}
+                onClick={() => setCurrentPage(page)}
+                className={`${Style.pageButton} ${
+                  currentPage === page ? Style.active : ""
+                }`}
+              >
+                {page}
+              </button>
+            ))}
+
+          {/* Show ellipsis and last page */}
+          {currentPage < totalPages - 2 && (
+            <>
+              {currentPage < totalPages - 3 && <span className={Style.ellipsis}>...</span>}
+              <button onClick={() => setCurrentPage(totalPages)} className={Style.pageButton}>
+                {totalPages}
+              </button>
+            </>
+          )}
+        <button
+          onClick={props.nextPage}
+          disabled={currentPage === totalPages}
+          className={`${Style.pageButton} ${currentPage === totalPages ? Style.disabled : ""}`}
+        >
+          Next
+        </button>
+        <span>Page {currentPage} of {totalPages}</span>
+      </div>
     </div>
   );
 };

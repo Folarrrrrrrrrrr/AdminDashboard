@@ -9,8 +9,8 @@ export const fetchDiceBetList = createAsyncThunk(
         throw new Error("No access token found");
       }
 
-      const response = await fetch(
-        "https://stake-cut-api.onrender.com/api/v1/admin/games/dice/dice-bet-list",
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+      const response = await fetch(`${API_BASE_URL}/games/dice/dice-bet-list`,
         {
           method: "GET",
           headers: {

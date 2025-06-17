@@ -103,12 +103,12 @@ const Query_com = (props) => {
 
                                     <td><div className={Style.statusText} style={{ color: color ? "#FC9E2F" : "#31C364", backgroundColor: color ? "#fc9e2f33" : "#31c36433" }}>{obj.status}</div></td>
 
-                                    <td><
-                                        Link to={"/QueryReview"}>
-                                        <button style={{ backgroundColor: "#0E093C", border: "none", color: "#FFFFFF", fontSize: "0.7rem", width: "5.18rem", borderRadius: "8px", height: "1.37rem" }}>
-                                            {obj.action.reviews}
-                                        </button>
-                                    </Link>
+                                    <td>
+                                        <Link to={"/QueryReview"}>
+                                            <button style={{ backgroundColor: "#0E093C", border: "none", color: "#FFFFFF", fontSize: "0.7rem", width: "5.18rem", borderRadius: "8px", height: "1.37rem" }}>
+                                                {obj.action.reviews}
+                                            </button>
+                                        </Link>
                                     </td>
                                 </tr>
                             )

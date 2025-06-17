@@ -77,12 +77,14 @@
 #All_Users_Card{
     margin-top: 4rem;
     display: grid;
+    margin-left: -60px;
     grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
     gap: 5px; /* Adds spacing between cards */
     justify-content: center;
     gap: 2rem;
-    width: 100vw;
+    width: 80vw;
     justify-self: center;
+    /* border: solid black; */
 }
 .empty_userDiv{
     display: flex;
@@ -104,8 +106,46 @@
     justify-self: center;
     display: flex;
     justify-content: space-between;
-    color: black;
+    color: rgba(0, 0, 255, 0.390);
+    gap: 10px;
 }
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+
+.pageButton {
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: white;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.pageButton:hover {
+  background-color: #f0f0f0;
+}
+
+.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.disabled {
+  background-color: #eee;
+  cursor: not-allowed;
+  color: #888;
+}
+
+.ellipsis {
+  padding: 6px 10px;
+  color: #888;
+}
+
 
 
 @media(max-width:480px){

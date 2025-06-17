@@ -1,0 +1,120 @@
+#sideNavContainer{
+    position: fixed;
+    height: 100vw;
+    z-index: 9999;
+    background: linear-gradient(to top, #f2f5f9 0%,#eff1f3 50%, #ffffff 100%);
+    animation: slide-In-Left .5s;
+}
+@keyframes slide-In-Left {
+  from {
+    position: fixed;
+    left: -50px;
+  }
+  to {
+    position: fixed;
+    left: 0;
+  }
+}
+
+#navList{
+    list-style: none;
+    margin-top: 70px;
+}
+
+#navList:hover{ 
+    width: 170px;
+    margin-left: -59px;
+}
+
+#navs{
+    align-self: center;
+    justify-self: center;
+    width: 60px;
+    color: blue;
+    display: flex;
+    cursor: pointer;
+    display: flex;
+    
+}
+svg{
+  justify-self: center;
+  align-self: center;
+}
+.NavBar_text{
+  background-color: none;
+}
+.NavBar_text:hover{
+  background-color: #ffffff;
+}
+#navs p{
+  width:0px ;
+  opacity: 0;
+  visibility: hidden;
+  color: #000000;
+  transition: opacity 0.9s all-ease;
+}
+
+/* Reveal the <p> only when the <img> is hovered */
+#navs svg:hover + p {
+  opacity: 1;
+  visibility: visible;
+  width: 40px;
+}
+
+#navListTwo{
+    position: fixed;
+    bottom: 0px;
+    list-style: none;
+    list-style: none;
+    margin-top: 70px;
+}
+#navListTwo:hover{ 
+    width: 170px;
+    margin-left: -59px;
+}
+#navsTwo{
+    align-self: center;
+    justify-self: center;
+    margin-bottom: 10px;
+    width: 60px;
+    color: blue;
+    display: flex;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+#navs Img{
+  width: 28px;
+}
+#navs Img:hover{
+  width: 19px;
+}
+#navsTwo p{
+  width:0px ;
+  opacity: 0;
+  visibility: hidden;
+  color: #000000;
+  transition: opacity 0.9s all-ease;
+}
+#navsTwo img:hover + p {
+  opacity: 1;
+  visibility: visible;
+  width: 50px;
+}
+
+#editProfileBanner{
+  position: absolute;
+  top: 0px;
+  left: 70%;
+  /* z-index: 9999; */
+  animation: slide-In-Left .5s;
+}  
+@keyframes slide-In-Left {
+  from {
+    position: fixed;
+    left: -50px;
+  }
+  to {
+    position: fixed;
+    left: 0;
+  }
+}

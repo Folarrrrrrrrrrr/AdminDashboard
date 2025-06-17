@@ -4,8 +4,10 @@ export const fetchStaffDetails = createAsyncThunk(
     "StaffProfile/fetch",
     async (email, { rejectWithValue }) => {
         try {
-            const accessToken = localStorage.getItem("accessToken");
-            const response = await fetch(`https://stay-cut-api.onrender.com/api/v1/admin/staffs/get-staff-details/${email}`, {
+            const accessToken = localStorage.getItem("token");
+            
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+            const response = await fetch(`${API_BASE_URL}/staffs/get-staff-details/${email}`, {
                 method: "GET",
                 headers: {
                     // "Content-Type": "application/json",
@@ -16,6 +18,7 @@ export const fetchStaffDetails = createAsyncThunk(
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const StaffProfileData = await response.json();
+            console.log(StaffProfileData)
             return StaffProfileData.responseBody;
         } catch (error) {
             console.log(error.message);

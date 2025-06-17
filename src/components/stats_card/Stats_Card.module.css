@@ -16,9 +16,12 @@
    column-gap: 1.5rem; 
 }
 .Card_figure{
-    font-size: 1.5rem;
+    margin-top: 20px;
+    font-size: 1rem;
     height: 0.5rem;
+    font-weight: 600;
 }
 .Card_text{
     font-size: 1.2rem;
+    font-weight: 500;
 }

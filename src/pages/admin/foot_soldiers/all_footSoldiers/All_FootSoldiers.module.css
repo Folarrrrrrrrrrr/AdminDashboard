@@ -70,10 +70,26 @@
 #All_Users_Card{
     margin-top: 1.56rem;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
     justify-content: center;
-    gap: 2.2rem;
+    gap: 1.2rem;
 }
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.pagination button {
+  padding: 8px 12px;
+  border: none;
+  background: #222;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
 
 
 @media(max-width:480px){

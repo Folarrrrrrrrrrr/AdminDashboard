@@ -30,7 +30,11 @@ const Profile = () => {
     }
 
     // Retrieve email from local storage
-    const email = getEmail()
+    const user = getEmail()
+    // if (user) {
+    const jsonUser = JSON.parse(user);
+    const email = jsonUser.email;   
+    
 
     // State to manage edit mode and image URL
     const [editState, setEditState] = useState(false)
@@ -39,8 +43,8 @@ const Profile = () => {
 
     // State to manage profile update fields
     const [profileUpdate, setProfileUpdate] = useState({
-        fullname: "",
-        phone_number: "",
+        fullName: "",
+        phone: "",
     })
 
     const [profile, setProfile] = useState({
@@ -170,7 +174,7 @@ const Profile = () => {
 const HandleSubmit = (e) => {
     e.preventDefault();
   
-    if (!profileUpdate.fullname || !profileUpdate.phone_number) {
+    if (!profileUpdate.fullName || !profileUpdate.phone) {
       updateErrorText("Full name and phone number are required.");
       updateErrorPopup(true);
       return;
@@ -180,8 +184,8 @@ const HandleSubmit = (e) => {
   
     dispatch(updateAdminProfile({
       email: details.email, // using the existing profile details
-      fullname: profileUpdate.fullname,
-      phone_number: profileUpdate.phone_number
+      fullName: profileUpdate.fullName,
+      phone: profileUpdate.phone
     }))
       .unwrap()
       .then(() => {
@@ -309,8 +313,8 @@ const HandleSubmit = (e) => {
                                     type={"text"}
                                     placeholder={"Type your full name"}
                                     label={"Full Name"}
-                                    name={"fullname"}
-                                    value={profileUpdate.fullname}
+                                    name={"fullName"}
+                                    value={profileUpdate.fullName}
                                     onChange={HandleChange}
                                 />
 
@@ -318,8 +322,8 @@ const HandleSubmit = (e) => {
                                     type={"tel"}
                                     placeholder={"Type your phone number"}
                                     label={"Phone"}
-                                    name={"phone_number"}
-                                    value={profileUpdate.phone_number}
+                                    name={"phone"}
+                                    value={profileUpdate.phone}
                                     onChange={HandleChange}
                                 />
 
