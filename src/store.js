@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import diceSummaryReducer from "../src/pages/admin/api_detaills/GlobalStates/diceSummarySlice";
 import NigerianUsersReducer from "./pages/admin/api_detaills/GlobalStates/NigerianUsersSlice";
-import OnlineUsersReducers from "./pages/admin/api_detaills/GlobalStates/onlineUsers";
+// import OnlineUsersReducers from "./pages/admin/api_detaills/GlobalStates/onlineUsers";
 import DiceBetsListReducer from "./pages/admin/api_detaills/GlobalStates/DiceBetsList";
 import LoosingDiceBetsListReducer from "./pages/admin/api_detaills/GlobalStates/LoosingDiceBetsListSlice";
 import WinningDiceBetsListReducer from "./pages/admin/api_detaills/GlobalStates/WinningDiceBetListSlice";
@@ -25,7 +25,9 @@ import adminProfileReducer from "./pages/admin/api_detaills/GlobalStates/UpdateA
 import AllUsersReducer from "./pages/admin/api_detaills/GlobalStates/AllUsers"
 import CountriesReducer from "./pages/admin/api_detaills/GlobalStates/Countries"
 import TransactionReducer from "./pages/admin/api_detaills/GlobalStates/Transactions"
-
+import AddStaffReducer from "./pages/admin/api_detaills/GlobalStates/AddStaff"
+// import OnlinePlayersReducer from "./pages/admin/api_detaills/GlobalStates "
+import OnlinePlayers from "./pages/admin/api_detaills/GlobalStates/OnlinePlayers"
 
 
 
@@ -34,7 +36,7 @@ const store = configureStore({
   reducer: {
     diceSummary: diceSummaryReducer,
     NigerianUsers: NigerianUsersReducer,
-    OnlineUser: OnlineUsersReducers,
+    // OnlineUser: OnlineUsersReducers,
     DiceBetsList: DiceBetsListReducer,
     WinningDiceBetsList: WinningDiceBetsListReducer,
     LoosingDiceBetsList: LoosingDiceBetsListReducer,
@@ -57,8 +59,10 @@ const store = configureStore({
     CountriesReducer : CountriesReducer,
     TransactionReducer : TransactionReducer,
     StaffsProfile : StaffsProfileReducer,
-    
-    // TopPerformingCCList : TopPerformingCC,
+    AddStaff : AddStaffReducer,
+    OnlinePlayersReducer : OnlinePlayers,
+
+    // OnlinePlayers  : OnlinePlayersReducer,
     
 
   },

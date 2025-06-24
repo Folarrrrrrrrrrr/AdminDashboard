@@ -33,10 +33,22 @@ const LeftNav = () => {
       sethamburger(!hamburger);
     }
   };
+  
   // Retrieve email from local storage
-      const user = getEmail()
-   const jsonUser = JSON.parse(user);
-    const email = jsonUser.email; 
+  //     const user = getEmail()
+  //  const jsonUser = JSON.parse(user);
+  //   const email = jsonUser.email; 
+   
+  const email = (() => {
+    try {
+      const user = getEmail();
+      return user ? JSON.parse(user)?.email || "" : "";
+    } catch (err) {
+      console.error("Error parsing user data", err);
+      return "";
+    }
+  })();
+
 
   return (
     <div id={Style.sideNavContainer} >

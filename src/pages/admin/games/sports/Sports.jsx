@@ -36,6 +36,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFootballBetSummary } from "../../api_detaills/GlobalStates/FootballSummarySlice";
 import { fetchFootballBetList } from "../../api_detaills/GlobalStates/FootballBetList";
+import { fetchOnlinePlayers } from "../../api_detaills/GlobalStates/OnlinePlayers";
 import NanoTable from "../../../../components/NanoTable/NanoTable";
 import DoughnutChart from "../../../../components/chart/DoughnutChart";
 import LoadingScreen from "../../../../components/loader/LoadingSreen";
@@ -56,18 +57,25 @@ const Sports = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchFootballBetSummary());
+    dispatch(fetchOnlinePlayers());
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(fetchFootballBetList());
+    dispatch(fetchFootballBetList({page:1, limit:10}));
   }, [dispatch]);
 
   const { FootballSummary, FootballSummaryLoading, FootballSummaryError } =
     useSelector((state) => state.FootballSummary);
+
+
   const { footballBetsList, footballBetsListloading, footballBetsListerror } =
     useSelector((state) => state.FootballBetList);
 
-  console.log(FootballSummary);
+  const { OnlinePlayers, OnlinePlayersLoading, OnlinePlayersError } =
+    useSelector((state) => state.OnlinePlayersReducer);
+    const OnlinePlayersStats = OnlinePlayers?.statistics?.totalOnlinePlayers
+    console.log(OnlinePlayersStats);
+  
 
   const customTickFormatter = (tick) => {
     return `${tick}k`;
@@ -78,15 +86,13 @@ const Sports = () => {
       state: {
          source: "Sports", 
          extraData: footballBetsList,
-        //  initialPage: currentPage,
-        //  initialLimit: postPerPage 
         },
     });
   };
 
   let Sports = "";
 
-  // useEffect( ()=>{
+  
   const total_Card2 = [
     {
       image1: Activity,
@@ -106,14 +112,14 @@ const Sports = () => {
     },
     {
       image1: winner,
-      text: "Winners",
+      text: "Online Players",
       divText: "View all",
-      price: FootballSummary.totalWinners,
+      price: OnlinePlayersStats,
       // to: `/totalBetPlaced/${1}`
     },
     {
       image1: loosers,
-      text: "Loosers",
+      text: "....",
       divText: "View all",
       price: FootballSummary.totalLosers,
       // to: `/totalBetPlaced/${2}`

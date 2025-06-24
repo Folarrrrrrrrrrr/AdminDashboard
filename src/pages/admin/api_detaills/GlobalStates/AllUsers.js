@@ -8,6 +8,8 @@ export const fetchAllUsers = createAsyncThunk(
             // Retrieve token from Redux state or localStorage
             // const token = getState().auth?.token || localStorage.getItem("accessToken");
             // console.log(token);
+            // console.log(
+            // gittoken);
 
             const accessToken = localStorage.getItem("token");
       if (!accessToken) {
@@ -15,7 +17,7 @@ export const fetchAllUsers = createAsyncThunk(
       }
 
       const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-      const response = await fetch(`https://api.stakecut.bet/api/v1/admin/users/get-all-users?page=${page}&limit=${limit}`, {
+      const response = await fetch(`${API_BASE_URL}/users/get-all-users?page=${page}&limit=${limit}`, {
     //   const response = await fetch(`${API_BASE_URL}/users/get-all-users`, {
         method: "GET",
         headers: {

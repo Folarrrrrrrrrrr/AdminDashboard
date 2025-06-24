@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Style from "../bet_placedCom/BetPlaced_com.module.css";
 import winners_background from "../../assets/svg/winners_background.svg";
 import arrow_down from "../../assets/svg/arrow_down-dark.svg";
@@ -41,9 +41,6 @@ const BetPlaced_com = (props) => {
     return storedArr ? JSON.parse(storedArr) : initialArr || [];
   });
 
-  // console.log(arr);
-  // console.log(extraData);
-
   // Save `arr` to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem("betPlacedArr", JSON.stringify(arr));
@@ -71,8 +68,7 @@ const BetPlaced_com = (props) => {
     sortedArrayTwo,
     dashboardFootballData,
     dashboardDiceData;
-
-  activeFootbalBets = array.filter((bet) => bet.status === "active");
+    
   // console.log(activeFootbalBets);
 
   const pageSize = 6; // Number of rows per page
@@ -92,13 +88,25 @@ const BetPlaced_com = (props) => {
     // console.log(footballBetsList);
   // When source is "Sports", use Redux data directly
 
-  const listData = source === "Sports" 
-  ? footballBetsList :
-   source === "Dashboard"
-    ?  extraData:
-        extraData || arr || [];
-        console.log(listData);
-        
+  // const listData = source === "Sports" 
+  // ? footballBetsList :
+  //  source === "Dashboard"
+  //   ?  extraData || footballBetsList:
+  //       extraData || arr || [];
+
+  const listData = useMemo(() => {
+  if (source === "Sports") return footballBetsList;
+  if (source === "Dashboard") return extraData ?? footballBetsList ?? [];
+  return extraData ?? arr ?? [];
+  }, [source, extraData, footballBetsList, arr]);
+
+  useEffect(() => {
+  console.log('extraData:', extraData);
+  }, [extraData]);
+  // console.log(listData);
+     
+  //      
+    
   // console.log(extraData.allFootballBets)
   // source === "Dashboard"
   //   ? (dashboardFootballData = extraData?.filter(
@@ -320,6 +328,8 @@ const BetPlaced_com = (props) => {
           />
         )}
       </div> */}
+
+  
 
       <div id={Style.Total_BetPlaced_TableWrapperDiv}>
         <div id={Style.ToggleRow}>

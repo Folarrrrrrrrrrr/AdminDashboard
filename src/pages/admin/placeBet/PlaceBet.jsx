@@ -9,7 +9,6 @@ import winner from '../../../assets/svg/winner.svg'
 import loosers from '../../../assets/svg/loosers.svg'
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
-import fetchOnlineUsers from "../api_detaills/GlobalStates/onlineUsers";
 import { fetchFootballBetList } from "../api_detaills/GlobalStates/FootballBetList";
 import { fetchDiceBetList } from "../api_detaills/GlobalStates/DiceBetsList";
 

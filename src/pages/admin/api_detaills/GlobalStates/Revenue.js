@@ -20,7 +20,7 @@ export const fetchRevenue = createAsyncThunk(
           Authorization: `Bearer ${accessToken}`,
         },
       });
-
+ 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }

@@ -5,42 +5,6 @@ import axios from 'axios';
 import { setToken, setEmail, getToken,getRefreshToken, setRefreshToken, clearTokens} from '../constant/local_storage';
 import { base_url } from '../constant/url_path';
 
-
-// export const login_service = async (body) => {
-//     console.log("Login Initiated")
-
-//     const response = await axios.post(login_url, body);
-
-//     if (response.status == 200 || response.status == 201) {
-
-
-//                 //Assuming the token is in response.data.token
-//                 if (response.data["responseBody"]) {
-
-//                     setToken(response.data["responseBody"].accessToken);
-        
-//                     // Store the email in local storage
-//                     if (body.email) {
-//                         setEmail(body.email);
-//                     }
-//                 } else {
-//                     console.warn('Token not found in response');
-//                 }
-//                 console.log(response.data["responseBody"].accessToken);
-
-//         return response;
-
-//     } else {
-
-//         // updateErrorText(response.data["responseMessage"])
-//         console.log("Login failed", response.data)
-  
-//     }
-
-//     return response;
-// };
-
-
 export const login_service = async (body) => {
     console.log("Login Initiated");
 

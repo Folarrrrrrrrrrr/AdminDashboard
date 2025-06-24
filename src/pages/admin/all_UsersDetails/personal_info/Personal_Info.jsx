@@ -30,6 +30,11 @@ const Personal_Info = () => {
     const { phoneNumber } = useParams()
 
     const [currentPage, setCurrentPage] = useState(1)
+    const [selectedDatePurchase, setSelectedDatePurchase] = useState(new Date());
+    const [isCalendarOpenPurchase, setIsCalendarOpenPurchase] = useState(false);
+    const [selectedDateWithdrawal, setSelectedDateWithdrawal] = useState(new Date());
+    const [isCalendarOpenWithdrawal, setIsCalendarOpenWithdrawal] = useState(false);
+
     const [postsPerPage] = useState(10)
 
     const { updateErrorText, updateErrorPopup, updatePhoneState, updateSuspendUserPopup } = PopupContextHook()
@@ -43,6 +48,25 @@ const Personal_Info = () => {
         withdrawalHistory: [],
         subscriptionHistory: [],
     })
+
+    // HANDLERS
+        const toggleCalendarPurchase = () => {
+            setIsCalendarOpenPurchase(!isCalendarOpenPurchase);
+        };
+
+        const handleDateChangePurchase = (date) => {
+            setSelectedDatePurchase(date);
+            setIsCalendarOpenPurchase(false);
+        };
+
+        const toggleCalendarWithdrawal = () => {
+            setIsCalendarOpenWithdrawal(!isCalendarOpenWithdrawal);
+        };
+
+        const handleDateChangeWithdrawal = (date) => {
+            setSelectedDateWithdrawal(date);
+            setIsCalendarOpenWithdrawal(false);
+        };
 
 
     // State to manage selected date for filtering
@@ -121,6 +145,18 @@ const Personal_Info = () => {
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const coinPurchaseHistory = userDetails.coinPurchaseHistory.slice(indexOfFirstPost, indexOfLastPost);
     const withdrawalHistory = userDetails.withdrawalHistory.slice(indexOfFirstPost, indexOfLastPost);
+
+    // filtering purchase history by selected date
+    const filteredCoinPurchaseHistory = coinPurchaseHistory.filter((obj) => {
+        const recordDate = obj.time.split(" ")[0]; // "2025-06-18"
+        const selectedDateStr = selectedDatePurchase.toISOString().split("T")[0]; // "2025-06-18"
+        return recordDate === selectedDateStr;
+    });
+    const filteredWithdrawalHistory = withdrawalHistory.filter((obj) => {
+        const recordDate = obj.time.split(" ")[0]; // "2025-06-18"
+        const selectedDateStr = selectedDatePurchase.toISOString().split("T")[0]; // "2025-06-18"
+        return recordDate === selectedDateStr;
+    });
 
     // Function to handle pagination
     const paginate = (pageNumber) => setCurrentPage(pageNumber)
@@ -327,6 +363,33 @@ const Personal_Info = () => {
                 body: tableRows,
                 startY: 25,
             });
+            // doc.autoTable({
+            // head: [['S/N','Ref Number','Time','Amount Paid','Payment Type','Status']],
+            // body: tableRows,
+            // startY: 25,
+            // theme: 'grid',
+            // headStyles: {
+            //     fillColor: [52, 73, 94], // dark slate
+            //     textColor: [255, 255, 255],
+            //     fontStyle: 'bold',
+            //     halign: 'center',
+            //     fontSize: 12,
+            // },
+            // bodyStyles: {
+            //     fontSize: 10,
+            //     textColor: [33,33,33],
+            //     cellPadding: 4,
+            // },
+            // alternateRowStyles: {
+            //     fillColor: [245, 245, 245],
+            // },
+            // styles: {
+            //     overflow: 'linebreak',
+            //     valign: 'middle',
+            // },
+            // margin: { left: 14, right: 14 },
+            // });
+
         
             // Instead of directly saving, generate a Blob URL and trigger the download manually
             const pdfBlob = doc.output("blob");
@@ -624,16 +687,25 @@ const Personal_Info = () => {
 
                         <div className={Style.date_inputDiv}>
 
-                            <span>{selectedDate.toDateString()} <img src={arrow_down} onClick={toggleCalendar} alt="" /></span>
+                            {/* <span>{selectedDate.toDateString()} <img src={arrow_down} onClick={toggleCalendar} alt="" /></span> */}
 
-                            {
+                            {/* {
                                 isCalendarOpen && (
 
                                     <div id={Style.calendar_popup}>
                                         <Date_Picker onDateChange={handleDateChange} />
                                     </div>
                                 )
-                            }
+                            } */}
+                            <span>{selectedDatePurchase.toDateString()} 
+                                <img src={arrow_down} onClick={toggleCalendarPurchase} alt="" />
+                            </span>
+                            {isCalendarOpenPurchase && (
+                                <div id={Style.calendar_popup}>
+                                    <Date_Picker onDateChange={handleDateChangePurchase} />
+                                </div>
+                            )}
+                            
 
 
                             <div className={Style.searchDiv}>
@@ -665,7 +737,7 @@ const Personal_Info = () => {
                                 <tbody>
 
                                     {
-                                        coinPurchaseHistory.map((obj, index) => {
+                                        filteredCoinPurchaseHistory.map((obj, index) => {
 
                                             const serialNumber = indexOfFirstPost + index + 1; // Calculate the correct serial number
 
@@ -739,7 +811,7 @@ const Personal_Info = () => {
 
                         <div className={Style.date_inputDiv}>
 
-                            <span>{selectedDate.toDateString()} <img src={arrow_down} onClick={toggleCalendar} alt="" /></span>
+                            {/* <span>{selectedDate.toDateString()} <img src={arrow_down} onClick={toggleCalendar} alt="" /></span>
 
                             {
                                 isCalendarOpen && (
@@ -748,7 +820,16 @@ const Personal_Info = () => {
                                         <Date_Picker onDateChange={handleDateChange} />
                                     </div>
                                 )
-                            }
+                            } */}
+                            <span>{selectedDateWithdrawal.toDateString()} 
+                                <img src={arrow_down} onClick={toggleCalendarWithdrawal} alt="" />
+                            </span>
+
+                            {isCalendarOpenWithdrawal && (
+                                <div id={Style.calendar_popup}>
+                                    <Date_Picker onDateChange={handleDateChangeWithdrawal} />
+                                </div>
+                            )}
 
                             <div className={Style.searchDiv}>
                                 <img src={search} alt="" />
@@ -777,7 +858,7 @@ const Personal_Info = () => {
                                 <tbody>
 
                                     {
-                                        withdrawalHistory.map((obj, index) => {
+                                        filteredWithdrawalHistory.map((obj, index) => {
 
                                             const serialNumber = indexOfFirstPost + index + 1; // Calculate the correct serial number
 

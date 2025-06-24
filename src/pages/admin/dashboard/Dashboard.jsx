@@ -340,7 +340,7 @@ const Dashboard = () => {
   // console.log(footballBetsListError)
 
   useEffect(() => {
-    dispatch(fetchFootballBetList());
+    dispatch(fetchFootballBetList({page:1, limit:10}));
     dispatch(fetchDiceBetList());
   }, [dispatch]);
 
@@ -350,7 +350,7 @@ const Dashboard = () => {
   const { footballBetsList, footballBetsListLoading, footballBetsListError } = useSelector(
     (state) => state.FootballBetList
   );
-  // console.log(footballBetsList);
+  console.log(footballBetsList);
   
   
   function interleaveArrays(arr1, arr2) {

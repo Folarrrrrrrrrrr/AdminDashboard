@@ -1,0 +1,90 @@
+/* .modalContainer{
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.468);
+    inset: 0;
+} */
+.modalContainer{
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.468);
+    inset: 0;
+}
+.modalBackground{
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.468);
+}
+.modalCard{
+    position: relative;
+    justify-self: center;
+    top: 40%;
+    background-color: white;
+    border-radius: 15px;
+    z-index: 9999;
+    width: 400px ;  
+    height: 300px ;  
+    text-align: center;
+    justify-content: center;
+    padding: 20px;
+   animation: slide-In-top 0.5s;
+}
+@keyframes slide-In-top {
+  from {
+    position: relative;
+    top: -350px;
+  }
+  to {
+    position: relative;
+    top: 0;
+  }
+}
+.successIconContainer{
+    display: flex;
+    justify-self: center;
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    padding: 20px;
+    margin-top: 20px;    
+}
+.failedIconContainer{
+    display: flex;
+    justify-self: center;
+    background-color: rgb(248, 241, 241);
+    border-radius: 20px;
+    padding: 20px;
+    margin-top: 20px;
+}
+.faledIcon{
+    color:white;
+}
+.icon{
+    color:green;
+}
+.reportHeading{
+    font-size:large;
+    color: black;
+}
+.actionBtn{
+    margin-top: 16px;
+    padding: 10px;
+    border: none;
+    color: black;
+    font-weight: 300;
+    font-size: small;
+    border-radius: 10px;
+    width: 200px;
+    text-align: center;
+    align-self: center;
+    justify-self: center;
+}
+.actionBtn:hover{
+    background-color: rgba(1, 70, 198, 0.637);
+    color: white;
+    border: none;
+}
