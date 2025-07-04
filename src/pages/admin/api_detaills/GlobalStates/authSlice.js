@@ -26,8 +26,10 @@ export const loginUser = createAsyncThunk(
       const token = data.responseBody.accessToken;
       console.log(token)
       // Store in localStorage
+      const now = new Date().getTime();
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("token", token);
+      localStorage.setItem("loginTime", now.toString());
 
       return { user, token };
     } catch (err) {
@@ -36,13 +38,33 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+
+
 //declaring and assigning initialState
+const loginTime = parseInt(localStorage.getItem("loginTime"), 10);
+const now = new Date().getTime();
+const timePassed = now - loginTime;
+const isExpired = timePassed > 24 * 60 * 60 * 1000; // 24 hours in ms
+
+if (isExpired) {
+  localStorage.removeItem("user");
+  localStorage.removeItem("token");
+  localStorage.removeItem("loginTime");
+}
+
 const initialState = {
-  user: JSON.parse(localStorage.getItem("user")) || null,
-  token: localStorage.getItem("token") || null,
+  user: !isExpired ? JSON.parse(localStorage.getItem("user")) : null,
+  token: !isExpired ? localStorage.getItem("token") : null,
   loading: false,
   error: null,
 };
+
+// const initialState = {
+//   user: JSON.parse(localStorage.getItem("user")) || null,
+//   token: localStorage.getItem("token") || null,
+//   loading: false,
+//   error: null,
+// };
 
 const authSlice = createSlice({
   name: "auth",
@@ -55,6 +77,7 @@ const authSlice = createSlice({
       state.token = null;
       localStorage.removeItem("user");
       localStorage.removeItem("token");
+      localStorage.removeItem("loginTime");
     },
   },
   extraReducers: (builder) => {

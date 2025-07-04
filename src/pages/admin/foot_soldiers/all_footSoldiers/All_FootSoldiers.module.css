@@ -2,9 +2,10 @@
     width: 100%;
     min-height: 100vh;
     background-color: #ffffff;
+    margin-top:40px;
 }
 #All_FootSoldiers_wrapperDiv{
-    padding: 5rem 7.5rem;
+    padding: 2rem 7.5rem;
 }
 #All_FootSoldiers_headerText{
     color: #1A1A1A;

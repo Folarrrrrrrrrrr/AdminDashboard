@@ -143,8 +143,8 @@ const All_FootSoldiers = () => {
     >
       <div id={Style.All_FootSoldiers_mainDiv}>
         <Header
-          headerText={"All Foot Soldiers"}
-          headerInfo={"Here’s an information of all Foot Soldiers"}
+          // headerText={"All Foot Soldiers"}
+          // headerInfo={"Here’s an information of all Foot Soldiers"}
         />
 
         <div id={Style.All_FootSoldiers_wrapperDiv}>

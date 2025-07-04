@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import Style from './Staff_Details.module.css'
 import CalendarHeatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css';
@@ -9,14 +9,18 @@ import rise from '../../../../assets/svg/rise.svg'
 import users from '../../../../assets/svg/users.svg'
 import './Staff_Details.css'
 import Stats_Card from '../../../../components/stats_card/Stats_Card';
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import { fetchStaffDetails } from "../../api_detaills/GlobalStates/AllStaffsProfile";
+import { deleteStaff } from "../../api_detaills/GlobalStates/DeleteStaff";
 
 
 
 const Staff_Details = () => {
     const { email } = useParams()
+     const navigate = useNavigate();
+
+    const [signOutModal, setSignOutModal] = useState(false)
 
     const dispatch = useDispatch();
 
@@ -27,7 +31,7 @@ const Staff_Details = () => {
     }, []);
     
     const { StaffProfileData, StaffProfileDataLoading, StaffProfileDataError } = useSelector((state) => state.StaffsProfile);
-    // const {
+   // const {
     //     StaffProfileData = [],
     //     StaffProfileDataLoading = false,
     //     StaffProfileDataError = null,
@@ -115,6 +119,17 @@ const Staff_Details = () => {
         date: date.toISOString().split('T')[0],
         count: Math.floor(Math.random() * 4),
     }));
+   const deletableEmail = StaffProfileData[0].email;
+   console.log(StaffProfileData[0]);
+   
+    const deleteStaffHandler= ()=>{
+        dispatch( deleteStaff(deletableEmail))        
+        navigate("/allStaffs")
+        console.log("staff successfully deleted!");        
+        console.log(currentEmail);        
+    }
+     const { DeleteStaff, DeleteStaffLoading, DeleteStaffError } = useSelector((state) => state.DeleteStaffReducer);
+    
 
     // function getDate() {
     //     const today = new Date();
@@ -127,11 +142,28 @@ const Staff_Details = () => {
     return (
         <div id={Style.Staff_Details_mainDiv}>
             <Header
-                headerText={"All Staff"}
-                headerInfo={"Here’s an overview of all Staff"} />
+                // headerText={"All Staff"}
+                // headerInfo={"Here’s an overview of all Staff"}
+                 />
 
             <div id={Style.Staff_Details_wrapperDiv}>
-                <p id={Style.Staff_headerText}>Staff Detail </p>
+                <div className={Style.HeaderRow}>
+                    <p id={Style.Staff_headerText}>Staff Detail </p>
+                   <div className={Style.SignOutConfirmationDiv}>
+                        <button onClick={()=>{setSignOutModal(true);}} id={Style.deleteStaffBtn}> Delete Staff</button>
+                        { signOutModal&& (
+                            <div className={Style.confirmSignOutDiv}>
+                                <p style={{fontSize:"10px"}}>are you sure you want to delete this user?</p>
+                                <div className={Style.signOutModalBtns}>
+                                <button  className='signedOutBtn' onClick={()=>deleteStaffHandler()} style={{border:"none", borderRadius:"8px", padding:"5px"}}>Delete</button>
+                                <button className={Style.cancealSignedOutBtn} onClick={()=>setSignOutModal(false)} style={{border:"none",  borderRadius:"8px", padding:"5px"}}> Cancel </button>
+                                </div>
+                            </div>
+                            )          
+                        }
+                   </div>
+
+                </div>
                 <div id={Style.Staff_Details_tableDiv}>
                     <table>
                         <tr id={Style.headerTable}>
@@ -150,22 +182,9 @@ const Staff_Details = () => {
                             <td>{ StaffProfileData[0].fullname}</td>
                             <td>{ StaffProfileData[0].email}</td>
                             <td>{ StaffProfileData[0].phone_number}</td>
-                            <td>{ StaffProfileData[0].country}</td>``
+                            <td>{ StaffProfileData[0].country}</td>
                             <td>
                                 <div id={Style.BankDetails_Div}>
-                                    {/* <div>
-                                        <p>Bank</p>
-                                        <p className={Style.BankDetails_BoldText}>Access Bank</p>
-                                    </div> */}
-
-                                    {/* <div>
-                                        <p>Account Number</p>
-                                        <p className={Style.BankDetails_BoldText}>0123456789</p>
-                                    </div>
-                                    <div>
-                                        <p>Account Name</p>
-                                        <p className={Style.BankDetails_BoldText}>John Doe</p>
-                                    </div> */}
                                     <div>
                                         { StaffProfileData[0].bankDetails}
                                     </div>
@@ -175,7 +194,7 @@ const Staff_Details = () => {
                                 <div id={Style.statusText}>{ StaffProfileData[0].status}</div>
                             </td>
 
-                            <td><button style={{ backgroundColor: "#075070", border: "none", color: "#FFFFFF", fontSize: "0.7rem", borderRadius: "8px", height: "1.37rem" }}>Suspend Action</button></td>
+                            <td><button style={{ backgroundColor: "#075070",  border: "none", color: "#FFFFFF", fontSize: "0.7rem", borderRadius: "8px", height: "2.37rem" }}>Suspend Action</button></td>
                         </tr>
                     </table>
 

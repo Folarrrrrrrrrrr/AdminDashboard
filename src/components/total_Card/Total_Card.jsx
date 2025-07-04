@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 
 const Total_Card = (props) => {
-  const { image1, text, divText, divTextColor, price, to, isBlack, isPurple, isGreen, isRed ,onClick, all, image2, image3, image4, price2, price3, price4, view_div = true } = props
+  const { image1, currency, text, divText, divTextColor, price, to, isBlack, isPurple, isGreen, isRed ,onClick, all, image2, image3, image4, price2, price3, price4, view_div = true } = props
 
 
   return (
@@ -19,7 +19,7 @@ const Total_Card = (props) => {
             <div id={Style.Total_Card_firstLine_ImgDiv}>
 
               <img src={image1} alt="" />
-              <div id={Style.Total_CardText} style={{ color: isBlack ? "#FFFFFF" : "#777777", }}>{text}</div>
+              <div id={Style.Total_CardText} style={{ color: isBlack ? "#FFFFFF" : "#777777", }}> {text}</div>
             </div>
 
             {view_div == true ? 
@@ -34,7 +34,7 @@ const Total_Card = (props) => {
           <div id={Style.Total_Card_info_Div}>
 
             <p id={Style.priceText} style={{ color: isBlack ? "#FFFFFF" : "#0E093C", }}>
-              <span>{all}</span> {price}
+              <span>{all}</span> {currency? <>&#x20A6;</>: ""} {price}
             </p>
 
             <div id={Style.contact_detailsDiv}>

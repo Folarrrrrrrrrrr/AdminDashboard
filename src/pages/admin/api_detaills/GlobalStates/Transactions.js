@@ -5,10 +5,11 @@ export const fetchTransactions = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const accessToken = localStorage.getItem("token");
+      console.log(accessToken);
       if (!accessToken) {
         throw new Error("No access token found");
       }
-
+      
       const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
       const response = await fetch(`${API_BASE_URL}/users/all-transactions`,
         {
@@ -28,7 +29,7 @@ export const fetchTransactions = createAsyncThunk(
       // console.log(TransactionsData)
       return TransactionsData.responseBody;
     } catch (error) {
-      console.log("Fetch Dice Bet List Error:", error.message);
+      console.log("Error fetching Transactions:", error.message);
       return rejectWithValue(error.message);
     }
   }

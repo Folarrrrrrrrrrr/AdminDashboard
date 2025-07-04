@@ -51,8 +51,9 @@ const Top_Agents = () => {
     return (
         <div id={Style.Top_Agents_mainDiv}>
             <Header
-                headerText={"Top Performing Agents"}
-                headerInfo={"Here’s an overview of top performing agents"} />
+                // headerText={"Top Performing Agents"}
+                // headerInfo={"Here’s an overview of top performing agents"} 
+            />
 
             <div id={Style.Top_Agents_wrapperDiv}>
                 <p id={Style.Top_Agents_headerText}>John Doe’s Performance Overview</p>

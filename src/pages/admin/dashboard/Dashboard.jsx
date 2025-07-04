@@ -24,6 +24,8 @@ import { motion } from "framer-motion";
 import physicalMap from "../../../assets/images/physicalMap.jpg";
 import LoadingScreen from "../../../components/loader/LoadingSreen";
 import logo from "../../../assets/images/S_icon.png";
+
+
 import {
   APIProvider,
   Map,

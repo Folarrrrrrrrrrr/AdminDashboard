@@ -43,9 +43,7 @@ svg{
 .NavBar_text{
   background-color: none;
 }
-.NavBar_text:hover{
-  background-color: #ffffff;
-}
+
 #navs p{
   width:0px ;
   opacity: 0;

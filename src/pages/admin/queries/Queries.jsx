@@ -23,7 +23,7 @@ import LoadingScreen from "../../../components/loader/LoadingSreen";
 import logo from "../../../assets/images/S_icon.png";
 import { motion } from "framer-motion";
 import App_Pagination from "../../../components/app_Pagination/App_Pagination";
-
+import PostAPIModal from "../../../components/postAPIModal/PostAPIModal"
 const Reports = () => {
   
   // const [currentPage, setCurrentPage] = useState(1);
@@ -101,6 +101,7 @@ useEffect(() => {
   const [isBtnHovered, setIsBtnHovered] = useState(false);
   const [resolveScreen, setResolveScreen] = useState(false);
   const prevQueries = [];
+  
   const stats_card4 = [
     {
       image1: three_users,
@@ -696,6 +697,9 @@ useEffect(() => {
                                           onClick={() => setnew_status(option)}
                                           style={{
                                             margin: "10px",
+                                            height:"30px",
+                                            borderRadius:"5px",
+                                            border:"none",
                                             fontWeight:
                                               status === option
                                                 ? "bold"
@@ -715,6 +719,12 @@ useEffect(() => {
                                     <button
                                       onClick={handleSendResolution}
                                       disabled={ResolutionSubmissionLoading}
+                                       style={{
+                                            margin: "10px",
+                                            height:"30px",
+                                            borderRadius:"5px",
+                                            border:"none",
+                                          }}
                                     >
                                       {ResolutionSubmissionLoading
                                         ? "Sending..."
@@ -722,7 +732,7 @@ useEffect(() => {
                                     </button>
 
                                     {/* Success or Error Messages */}
-                                    {ResolutionSubmissionSuccess && (
+                                    {/* {ResolutionSubmissionSuccess && (
                                       <p style={{ color: "green" }}>
                                         {ResolutionSubmissionSuccess}
                                       </p>
@@ -731,7 +741,25 @@ useEffect(() => {
                                       <p style={{ color: "red" }}>
                                         {ResolutionSubmissionError}
                                       </p>
-                                    )}
+                                    )} */}
+                                    {ResolutionSubmissionError &&   
+                                      <PostAPIModal
+                                        failedPost ={ResolutionSubmissionError}
+                                        reportHeader="Failed to resolve"
+                                        message={ResolutionSubmissionError}
+                                        actionText="Cancel"
+                                        // actionTxtTwo="Create another user"
+                                      />
+                                    }
+                                    {ResolutionSubmissionSuccess &&   
+                                      <PostAPIModal
+                                        failedPost ={ResolutionSubmissionSuccess}
+                                        reportHeader="Resolution sent successfully"
+                                        message={ResolutionSubmissionSuccess}
+                                        actionText="Cancel"
+                                        // actionTxtTwo="Create another user"
+                                      />
+                                    }
                                   </div>
                                 </div>
                               ) : (

@@ -151,7 +151,7 @@ const BetPlaced_com = (props) => {
   console.log(betDetailsData)
   const HandleViewMoreBtn = (betId) => {
     // setSelectedBet(bet);                                      
-    {source ==="Sports"? dispatch(fetchFootballBetDetails(betId)):  null};
+    {source ==="Sports"? dispatch(fetchFootballBetDetails(betId)):source ==="Dashboard"? dispatch(fetchFootballBetDetails(betId)):  null};
     setBetDetailsModal(!betDetailsModal);
     // console.log(betId);
   };
@@ -615,7 +615,7 @@ const BetPlaced_com = (props) => {
                               <div
                                 id={Style.modalOverlay}
                                 onClick={() => {
-                                  HandleViewMoreBtn(user);
+                                  HandleViewMoreBtn(user.betId);
                                 }}
                               ></div>
 
@@ -829,7 +829,9 @@ const BetPlaced_com = (props) => {
                         <div id={Style.action_field}>
                           <button
                             onClick={() => {
-                              HandleViewMoreBtn(user);
+                              HandleViewMoreBtn(user.betId);
+                              console.log(user);
+                              
                             }}
                             // style={{
                             //   backgroundColor: "#eb575733",
@@ -845,7 +847,7 @@ const BetPlaced_com = (props) => {
                               <div
                                 id={Style.modalOverlay}
                                 onClick={() => {
-                                  HandleViewMoreBtn(user);
+                                  HandleViewMoreBtn(user.betId);
                                 }}
                               ></div>
 
@@ -1141,7 +1143,7 @@ const BetPlaced_com = (props) => {
                         <div id={Style.action_field}>
                           <button
                             onClick={() => {
-                              HandleViewMoreBtn(user);
+                              HandleViewMoreBtn(user.betId.betId);
                             }}
                             // style={{
                             //   backgroundColor: "#eb575733",
@@ -1157,7 +1159,7 @@ const BetPlaced_com = (props) => {
                               <div
                                 id={Style.modalOverlay}
                                 onClick={() => {
-                                  HandleViewMoreBtn(user);
+                                  HandleViewMoreBtn(user.betId);
                                 }}
                               ></div>
 

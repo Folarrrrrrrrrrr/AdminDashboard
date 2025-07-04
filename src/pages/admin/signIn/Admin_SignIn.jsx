@@ -12,6 +12,8 @@ import { login_provider } from '../api_detaills/provider/auth_provider'
 import { PopupContextHook } from '../../../WhiteHouse_PopupContext'
 import { loginUser } from '../api_detaills/GlobalStates/authSlice'
 import { useDispatch, useSelector } from 'react-redux'
+
+
 const Admin_SignIn = () => {
 
   
@@ -21,13 +23,6 @@ const Admin_SignIn = () => {
   const user = useSelector((state) => state.auth.user);
   console.log(user);
   
-  // useEffect(() => {
-  //   if (user) {
-  //     navigate("/dashboard"); // Prevent login if already authenticated
-  //   }
-  // }, [user, navigate]);
-
-
   const [signIn, setSignIn] = useState({
     email: '',
     password: ''

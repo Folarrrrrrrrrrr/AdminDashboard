@@ -2,9 +2,10 @@
     width: 100%;
     min-height: 100vh;
     background-color: #fff;
+    margin-top:50px;
 }
 #Top_Agents_wrapperDiv{
-    padding: 5rem 7.5rem ;
+    padding: 1rem 7.5rem ;
 }
 #Top_Agents_headerText{
     color: #1A1A1A;

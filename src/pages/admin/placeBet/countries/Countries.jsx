@@ -136,15 +136,15 @@ const Countries = () => {
                             <tbody>
 
                                 {
-                                    countries.map((obj, index) => {
+                                    countries?.countries?.map((obj, index) => {
 
                                         return (
 
                                             <tr>
                                                 <td className={Style.number}>{index + 1}</td>
-                                                <td>{obj.name}</td>
-                                                <td>{obj.users}</td>
-                                                <td><img src={obj.flag} alt="" /></td>
+                                                <td>{obj?.name}</td>
+                                                <td>{obj?.users}</td>
+                                                <td><img src={obj?.flag} alt="" /></td>
                                                 <td>
                                                     <Link to={"/countryUsers"}>
                                                         <Button

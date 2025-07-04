@@ -71,6 +71,7 @@ const Staff_Card = (props) => {
 
                     <Link to={to}>
                         <Button
+                            
                             text={"View More Details"} />
                     </Link> 
                 </div>

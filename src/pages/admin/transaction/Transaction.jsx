@@ -356,6 +356,7 @@ const Transaction = () => {
                   isBlack={isBlack}
                   onClick={() => toggle(index)}
                   id={Style.EachStyleCard}
+                  currency="true"
                 />
               </div>
             );

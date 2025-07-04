@@ -1,4 +1,23 @@
 /*  loading-container */
+.loadingContainer {
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(17, 10, 10, 0.397); /* Dark background */
+  }
+  
+  .speeding-object {
+    z-index: 99999;
+    width: 100px; /* Adjust based on your image */
+    height: auto;
+  }
+  /*  loading-container ends here*/ 
 .errorContainer {
     z-index: 100000;
     height: 200px;
@@ -55,23 +74,61 @@
     height: 80px;
 }
 
-#Foot_Soldiers_wrapperDiv {
-    padding: 0.5rem 7.5rem;
-    /* margin-top: -30px; */
-    /* border: 2px solid black; */
+#Foot_Soldiers_wrapperDiv{
+    padding: 0.5rem 4.0rem;
+    margin-top:-100px;
 }
 #allCardsDiv{
-    display: flex;
+    display: grid;
+    max-width:40%;
+    justify-content:center;
+}
+#sliderContainer{
+    display:flex;
+    justify-content:space-between;  
+    width: 310px; 
+    justify-self:center;
+    margin-bottom:15px;
+}
+
+.sliderBtnOne{
+    height:30px;
+    align-self:center;
+    position:relative;
+    right: 20px;
+    border:none;
+    cursor: pointer;
+}
+.sliderBtnTwo{
+    height:30px;
+    align-self:center;
+    position:relative;
+    left:20px;
+    border:none;
+    cursor: pointer;
+}
+.sliderBtnOne:hover{
+    background-color:blue;
+    color:white;
+    border-radius:5px;
+}
+.sliderBtnTwo:hover{
+    background-color:blue;
+    color:white;
+    border-radius:5px;
 }
 #Foot_Soldiers_cardDiv {
-    display: grid;
-    grid-template-columns: max-content;
-    margin-right: 50px;
-    width:400px;
-    column-gap: 2rem;
+    display: flex;
+    align-self: center;
+    justify-self:center;
+    overflow:hidden; 
+    width: 415px;
+
 }
 #eachTotCard{
-    margin-bottom: 10px;
+  margin-right:10px;
+  flex: 0 0 auto;
+  min-width: 260px; /* Adjust width as needed */
 }
 /* Slider section starts */
 .slider-container {
@@ -83,20 +140,6 @@
     margin: auto;
   }
   
-  .card {
-    width: 200px;
-    padding: 20px;
-    text-align: center;
-    border-radius: 10px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .slider-btn {
-    background-color: transparent;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-  }
 
 #Foot_Soldiers_headerText {
     color: #1A1A1A;
@@ -315,45 +358,3 @@ padding: 0.4rem;
     line-height: 0;
 }
 
-@media(max-width: 480px){
-    #Foot_Soldiers_wrapperDiv{
-        display: grid;
-        /* margin-bottom: -35px; */
-    }
-    #Foot_Soldiers_headerText{
-        position: relative;
-        right: 100px;
-    }
-    #Foot_Soldiers_cardDiv{
-        display:  grid;
-        justify-self: left;
-        position: relative;
-        left: -122px;
-        width: 100vw;
-    }
-    #Foot_Soldiers_table_revenueDiv{
-        display:  grid;
-        justify-self: left;
-        position: relative;
-        left:-120px;
-        width: 100vw;
-    }
-    #onboarded_users_wrapperDiv{
-        width: 100vw;
-        overflow: scroll;
-        margin-bottom: 20px;
-    }
-    #Revenue_wrapperDiv{
-        width:  100vw;
-        overflow: scroll;
-        margin-left: 10px;
-    }
-    #foot_soldiers_stats_cardDiv{
-        display: grid;
-        height: 160px;
-    }
-    #Cards{
-        margin-bottom: 10px;
-    }
-
-}

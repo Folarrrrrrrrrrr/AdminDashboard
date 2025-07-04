@@ -57,8 +57,9 @@ const Total_Top_Agents = () => {
     return (
         <div id={Style.Top_Agents_mainDiv}>
             <Header
-                headerText={"Top Performing Agents"}
-                headerInfo={"Here’s an overview of top performing agents"} />
+                // headerText={"Top Performing Agents"}
+                // headerInfo={"Here’s an overview of top performing agents"} 
+                />
 
             <div id={Style.Top_Agents_wrapperDiv}>
 
@@ -80,15 +81,15 @@ const Total_Top_Agents = () => {
 
                         <tbody>
                             {
-                                CCPerformanceData.map((user, i )=>{
+                                CCPerformanceData?.map((user, i )=>{
                                  return (
                                  <tr key={i}>
                                     <td>{i+1}</td>
                                     <td><p><img src={person_img} alt=""/>{user.agentName}</p></td>
-                                    <td className={Style.tableData}>{user.queries[1].count}</td>
-                                    <td className={Style.tableData}>{user.queries[0].count}</td>
+                                    <td className={Style.tableData}>{user?.queries[1].count}</td>
+                                    <td className={Style.tableData}>{user?.queries[0].count}</td>
                                     <td className={Style.tableData}>-</td>
-                                    <td className={Style.tableData}>{user.queries[2].count}</td>
+                                    <td className={Style.tableData}>{user?.queries[2].count}</td>
                                     <td><button style={{ backgroundColor: "#0E093C", border: "none", color: "#FFFFFF", fontSize: "0.7rem", width: "5.18rem", borderRadius: "8px", height: "1.37rem" }}>View more.</button></td>
                                 </tr>
                                  )                                    

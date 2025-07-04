@@ -57,6 +57,13 @@ const AllUsers_com = (props) => {
   );
 
   console.log(sortedUsers.length);
+
+  // Applying pagination AFTER filtering and sorting
+const paginatedUsers = sortedUsers.slice(
+  (currentPage - 1) * usersPerPage,
+  currentPage * usersPerPage
+);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage]);
@@ -75,26 +82,6 @@ const AllUsers_com = (props) => {
             }
           >
             All
-          </button>
-          <button
-            onClick={() => transactionToggle(1)}
-            className={
-              toggleIndex == 1
-                ? Style.toggleDiv_buttonActive
-                : Style.All_Users_listDiv_button
-            }
-          >
-            Subscribed
-          </button>
-          <button
-            onClick={() => transactionToggle(2)}
-            className={
-              toggleIndex == 2
-                ? Style.toggleDiv_buttonActive
-                : Style.All_Users_listDiv_button
-            }
-          >
-            Unsubscribed
           </button>
           {/* <button onClick={() => transactionToggle(3)} className={toggleIndex == 3 ? Style.toggleDiv_buttonActive : Style.All_Users_listDiv_button}>Not-Subscribed</button> */}
         </div>
@@ -125,7 +112,7 @@ const AllUsers_com = (props) => {
         {
           toggleIndex === 0 &&
             // <div id={Style.UserCardsDiv}>
-            sortedUsers.map((object) => {
+            paginatedUsers.map((object) => {
               let statusColor = object.status === "Online" ? true : false;
 
               let verify =

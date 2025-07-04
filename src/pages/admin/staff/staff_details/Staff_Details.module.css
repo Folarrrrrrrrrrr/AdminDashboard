@@ -6,6 +6,64 @@
 #Staff_Details_wrapperDiv{
     padding: 5rem 7.5rem;
 }
+.HeaderRow{ 
+    display:flex;
+    justify-content: space-between;
+}
+#deleteStaffBtn{
+    height:25px;
+    width:100%;
+    border:none;
+    margin-top: 30px;
+    align-self:center;
+    text-align: center;
+    border-radius:5px;
+}
+#deleteStaffBtn:hover{
+    background-color:red;
+    color:white;
+    border-radius:8px;
+}
+.confirmSignOutDiv{
+    animation: scaleIn 0.5s ease-in-out;
+    padding-top: 1px;
+    padding-left: 5px;
+    padding-right: 5px;
+    align-items: center;
+    justify-items: center;
+    height: 65px;
+    width: 100%;
+    position: relative;
+    top:-30px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0px 5px 15px rgba(13, 39, 80, 0.16);
+}
+  
+.signOutModalBtns{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+ 
+.signedOutBtn:hover {    
+    padding: 5px 10px;
+    background-color: #eb2525;
+    color: white;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+}
+.cancealSignedOutBtn:hover {    
+    padding: 5px 10px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+
 #Staff_headerText{
     color: #000000;
     font-size: 1.56rem;

@@ -41,7 +41,7 @@ const NavBar = () => {
   // Retrieve email from local storage
       const user = getEmail()
    const jsonUser = JSON.parse(user);
-    const email = jsonUser.email; 
+    const email = jsonUser?.email; 
 
   return (
     <div>

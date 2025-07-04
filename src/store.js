@@ -28,6 +28,7 @@ import TransactionReducer from "./pages/admin/api_detaills/GlobalStates/Transact
 import AddStaffReducer from "./pages/admin/api_detaills/GlobalStates/AddStaff"
 // import OnlinePlayersReducer from "./pages/admin/api_detaills/GlobalStates "
 import OnlinePlayers from "./pages/admin/api_detaills/GlobalStates/OnlinePlayers"
+import DeleteStaff from "./pages/admin/api_detaills/GlobalStates/DeleteStaff"
 
 
 
@@ -61,6 +62,7 @@ const store = configureStore({
     StaffsProfile : StaffsProfileReducer,
     AddStaff : AddStaffReducer,
     OnlinePlayersReducer : OnlinePlayers,
+    DeleteStaffReducer : DeleteStaff,
 
     // OnlinePlayers  : OnlinePlayersReducer,
     

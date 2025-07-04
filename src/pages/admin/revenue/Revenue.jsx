@@ -110,6 +110,8 @@ const Revenue = () => {
     const monthly = Revenue.monthlyRevenue
     const yearly = Revenue.yearlyRevenue
     console.log(Revenue.yearlyRevenue);
+    console.log(monthly);
+    console.log(weekly);
     
 
     const total_Card2 = [
@@ -123,9 +125,9 @@ const Revenue = () => {
         {
             image1: activity,
             text: "Total Bet Placed",
-            divText: "View all",
-            price: `#${Revenue.totalBetsPlaced}`,
-            to: `/totalBetPlaced/${0}`
+            // divText: "View all",
+            price: ` ${Revenue.totalBetsPlaced}`,
+            // to: `/totalBetPlaced/${0}`
 
         }
     ]
@@ -188,6 +190,7 @@ const Revenue = () => {
                                                 price={object.price}
                                                 view_div={object.view_div}
                                                 to = {object.to}
+                                                currency="true"
                                             />
                                         </div>
                                     )
@@ -196,30 +199,40 @@ const Revenue = () => {
                         </div>
                         {/* <img src={graph} alt="" /> */}  
 
-                        <div id={Style.AreaChartDiv}>
+                        <div id={Style.AreaChartDiv} >
                             <div id={Style.AreaChart_TextDiv}>
                                 <p id={Style.AreaChart_weeklyText}>Weekly Revenue Report</p>
                                 <p id={Style.AreaChart_dateText}>Week One October, 2024 <img src={arrow_down} alt="" /></p>
                             </div>
-                            <ResponsiveContainer width="100%" height="70%">
-                                <AreaChart
-                                    width={500}
-                                    height={300}
-                                    data={weekly}
-                                    margin={{
-                                        top: 0,
-                                        right: 0,
-                                        left: -20,
-                                        bottom: 0,
-                                    }}
+                            <ResponsiveContainer width="100%"  aspect={1.1}>
+                               <AreaChart data={weekly}
+                                    margin={{ top: 0, right: 2, left: 0, bottom: 0 }}>
+                                    <defs>
+                                        <linearGradient id="colorSeries2" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#1E3A8A" stopOpacity={0.8} />
+                                        <stop offset="95%" stopColor="#1E3A8A" stopOpacity={0} />
+                                        </linearGradient>
+                                    </defs>
 
-                                >
-                                    {/* <CartesianGrid strokeDasharray="3 3" /> */}
-                                    <XAxis dataKey="name" axisLine={false} tickLine={false} />
-                                    <YAxis axisLine={false} tickLine={true} tickFormatter={customTickFormatter} />
+                                    <XAxis dataKey="name" />
+                                    <YAxis 
+                                        domain={[0, (dataMax) => Math.ceil(dataMax * 7.0)]} //
+                                        tickFormatter={(tick) => `${tick}`} 
+                                />
                                     <Tooltip />
-                                    <Area type="normal" dataKey="total" dot={true} stroke="#003E79" fill="#003e79cc" />
+
+                                    <Area
+                                        type="monotone"
+                                        dataKey="total"
+                                        stroke="#1E3A8A"
+                                        fillOpacity={1}
+                                        fill="url(#colorSeries2)"
+                                        animationDuration={3000}
+                                        animationEasing="ease-in-out"
+                                        isAnimationActive={true}
+                                    />
                                 </AreaChart>
+
                             </ResponsiveContainer>
                         </div>      
                     </div>
@@ -228,8 +241,9 @@ const Revenue = () => {
                         <div id={Style.Revenue_total_EarningDiv}>
                             <div className={Style.Revenue_earningDiv}>
                                 <RevenueProgressBar 
+                                    catgory='Daily'
                                     currentRevenue={Revenue.dailyRevenue} 
-                                    expectedRevenue={1000} 
+                                    expectedRevenue={5000} 
                                     comparisonText="keep watching to find out more" 
                                 />
                             </div>
@@ -237,6 +251,7 @@ const Revenue = () => {
                             <div className={Style.Revenue_earningDiv}>
 
                                 <RevenueProgressBar 
+                                    catgory="Monthly"
                                     currentRevenue={Revenue.monthlyEarnings} 
                                     expectedRevenue= {100000}  
                                     comparisonText="keep watching to find out more" 
@@ -247,18 +262,34 @@ const Revenue = () => {
 
                         <div id={Style.Dashboard_lineChart}>
                             <p id={Style.Dashboard_RevenueText}>Revenue</p>
-                            <ResponsiveContainer width="100%" height="100%">
-                                <LineChart width={300} height={100} data={monthly} margin={{
-                                    top: 5,
-                                    // right: 30,
-                                    left: -20,
-                                    bottom: 10,
-                                }} >
-                                    <CartesianGrid strokeDasharray="3 4 " vertical={false}></CartesianGrid>
-                                    <Line type="monotone" dot={false} dataKey="total" stroke="#113353" backgr strokeWidth={4} />
-                                    <XAxis dataKey="month" fontSize={"0.8rem"}></XAxis>
-                                    <YAxis dataKey="uv" fontSize={"0.7rem"}></YAxis>
-                                </LineChart>
+                            <ResponsiveContainer width="100%"  aspect={2.5}>
+                                <AreaChart data={monthly}
+                                    margin={{ top: 0, right: 2, left: 0, bottom: 0 }}>
+                                    <defs>
+                                        <linearGradient id="colorSeries2" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#1E3A8A" stopOpacity={0.8} />
+                                        <stop offset="95%" stopColor="#1E3A8A" stopOpacity={0} />
+                                        </linearGradient>
+                                    </defs>
+
+                                    <XAxis dataKey="name" />
+                                    <YAxis 
+                                        domain={[0, (dataMax) => Math.ceil(dataMax * 7.0)]} //
+                                        tickFormatter={(tick) => `${tick}`} 
+                                />
+                                    <Tooltip />
+
+                                    <Area
+                                        type="monotone"
+                                        dataKey="total"
+                                        stroke="#1E3A8A"
+                                        fillOpacity={1}
+                                        fill="url(#colorSeries2)"
+                                        animationDuration={3000}
+                                        animationEasing="ease-in-out"
+                                        isAnimationActive={true}
+                                    />
+                                </AreaChart>
                             </ResponsiveContainer>
                         </div>
                     </div>
