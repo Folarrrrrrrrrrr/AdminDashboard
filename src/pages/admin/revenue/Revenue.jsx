@@ -257,7 +257,6 @@ const Revenue = () => {
                                     comparisonText="keep watching to find out more" 
                                 />
                             </div>
-
                         </div>
 
                         <div id={Style.Dashboard_lineChart}>

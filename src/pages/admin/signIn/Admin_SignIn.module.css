@@ -1,3 +1,77 @@
+.loadingContainer {
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(17, 10, 10, 0.397); /* Dark background */
+  }
+  
+  .speeding-object {
+    z-index: 99999;
+    width: 100px; /* Adjust based on your image */
+    height: auto;
+  }
+  /*  loading-container ends here*/ 
+
+  /* error popop  starts here*/
+
+  /*  loading-container */
+.errorContainer {
+  z-index: 100000;
+  height: 100px;
+  width: 100px;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -100px;
+  left: 43%;
+  padding:15px;
+  border-radius: 20px;
+  background: linear-gradient(to top, #f2f5f9 0%,#eff1f3 50%, #ffffff 100%);
+}
+.signOutBtn{
+  cursor: pointer;
+  text-align: center;
+}
+.signOutBtn:hover{
+  color:rgb(158, 3, 3);
+}
+#closeErrorBtn{
+  position: relative;
+  left: 75%;
+  top: 10px;
+  border: none;
+  border-radius: 10px;
+  width:30px;
+  height:30px;
+  font-weight: 900;
+  color:#fff;
+  background-color: #003f796b;
+}
+#closeErrorBtn:hover{
+  background-color:rgb(48, 49, 49);
+  color: #fff;
+  font-size:20px;
+}
+.errorText{
+  color: rgb(59, 59, 61);
+  flex-wrap: wrap;
+  font-weight:600;
+  font-size:10px;
+}
+
+  /* error popop end here*/
+
+
+
+
+
 #SignIn_mainDiv{
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, .6)), url("/Admin_BG.svg") no-repeat center;
     background-size: cover;

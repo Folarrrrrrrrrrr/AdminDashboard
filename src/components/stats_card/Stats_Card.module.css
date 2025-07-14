@@ -9,7 +9,7 @@
     display: flex;
     padding: 0rem 1.5rem;
     box-sizing: border-box;
-    /* width: 500px; */
+    width: 100%;
 }
 #Stats_Card_img_textDiv{
     display: flex;
