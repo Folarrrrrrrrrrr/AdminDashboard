@@ -12,16 +12,24 @@ import { login_provider } from '../api_detaills/provider/auth_provider'
 import { PopupContextHook } from '../../../WhiteHouse_PopupContext'
 import { loginUser } from '../api_detaills/GlobalStates/authSlice'
 import { useDispatch, useSelector } from 'react-redux'
-
+import { motion } from "framer-motion";
+import logo from '../../../assets/images/S_icon.png'
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 const Admin_SignIn = () => {
 
   
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loginLoading, setloginLoading] = useState(false);
+  const [errorPopup, setErrorPopup] = useState(false);
+
+
   const { updateLoadingPopup, updateErrorText, updateErrorPopup,} = PopupContextHook();
   const user = useSelector((state) => state.auth.user);
-  console.log(user);
+  const {loading, error} = useSelector((state) => state.auth);
+  console.log(loading);
+  console.log(error);
   
   const [signIn, setSignIn] = useState({
     email: '',
@@ -48,21 +56,21 @@ const Admin_SignIn = () => {
     )
   }
 
-  const LoginSubmit = async () => {
+  // const LoginSubmit = async () => {
 
-    //The request Body
+  //   //The request Body
     
-    let body = signIn;
-    dispatch(login(signIn))
+  //   let body = signIn;
+  //   dispatch(login(signIn))
 
 
-    // Set a 6-second timeout before calling the login provider
-    // setTimeout(() => {
-      //This initiates the provider that handles the login API.
-      login_provider(body, navigate, updateLoadingPopup, updateErrorText, updateErrorPopup );
-  // }, 1000); // 6000ms = 6 seconds
+  //   // Set a 6-second timeout before calling the login provider
+  //   // setTimeout(() => {
+  //     //This initiates the provider that handles the login API.
+  //     login_provider(body, navigate, updateLoadingPopup, updateErrorText, updateErrorPopup );
+  // // }, 1000); // 6000ms = 6 seconds
 
-  }
+  // }
 
   const handleSubmit = (e) => {
 
@@ -93,9 +101,78 @@ const Admin_SignIn = () => {
       navigate("/dashboard"); // Prevent login if already authenticated
     }
   }, [token, navigate]);
+ 
+  useEffect(() => {
+    if (error) {
+      setErrorPopup(true);
+
+      const timer = setTimeout(() => {
+        setErrorPopup(false);
+      }, 5000); // Close popup after 5 seconds
+
+      return () => clearTimeout(timer); // Clear timeout if error changes quickly
+    }
+  }, [error]);
+
+
+  useEffect(() => {
+      setTimeout(
+        () =>
+          loading ? setloginLoading(false) : setloginLoading(true),
+        6000
+      );
+    }, [10000]);
 
   return (
+    <>
+     {loading ? (
+        <div className={Style.loadingContainer}>
+        <motion.img
+            src={logo}
+            alt="Loading Object"
+            className="speeding-object"
+            initial={{
+            // x: "-100vw",
+            scale: 0.5,
+            }} // Starts small off-screen
+            animate={{
+            // x: ["-100vw", "50vw", "100vw"], // Moves from left -> center -> right
+            scale: [0.5, 1.2, 0.5], // Scales up in center, back down on exit
+            }}
+            transition={{
+            times: [0, 0.5, 1],
+            duration: 2,
+            ease: "easeInOut",
+            repeat: Infinity,
+            repeatDelay: 0.5,
+            }}
+        />
+        </div>
+    ) : null}
+    
+        {error && errorPopup && (
+          <motion.div
+            className="errorContainer"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <button id="closeErrorBtn" onClick={() => setErrorPopup(false)}>&times;</button>
+            <DotLottieReact
+              src="https://lottie.host/75c1ee26-7356-43d6-983b-f0c3e9ad86ad/H1VFgjJyzy.lottie"
+              loop
+              autoplay
+            />
+            <p className="errorText"  style={{textAlign:"center"}}>
+              {error}
+              <p className="signOutBtn" onClick={() => setErrorPopup(false)}>Try Again</p>
+            </p>
+          </motion.div>
+        )}
+
     <div id={Style.SignIn_mainDiv}>
+      
       <div id={Style.scattered_imagesDiv}>
 
         <img id={Style.gamePad} src={game_BG} alt="" />
@@ -156,7 +233,7 @@ const Admin_SignIn = () => {
           {
             window.innerWidth < 480 ? <div id={Style.btnDiv}>
              <button type="submit" id={Style.SigninBtn}> Sign In </button> </ div>: <div id={Style.btnDiv}>
-              <Button type={"submit"} text={"Sign In"} />
+              <Button type={"submit"} text={loading===true? "signing in...": "Sign In"} />
             </div>
           }
             
@@ -165,6 +242,7 @@ const Admin_SignIn = () => {
         </form>
       </div>
     </div >
+    </>
   )
 }
 

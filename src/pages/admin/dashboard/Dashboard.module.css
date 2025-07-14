@@ -78,7 +78,10 @@
     align-items: center;
     margin-bottom: 2.5rem;
 }
-#statCards{
+.statCards{
+  margin-left: 20px;
+  width: 100%;
+  max-height: 100px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -86,25 +89,27 @@
   cursor: pointer;
   background-color: rgba(4, 135, 155, 0.4);
   border-radius:10px;
-  transform: scale(1.05);
+  /* margin-left: 30%; */
+  /* border: solid; */
+  /* transform: scale(1.05); */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 } #isPurple:hover{
   cursor: pointer;
   background-color: rgba(11,67,141, 0.15);
   border-radius:10px;
-  transform: scale(1.05);
+  /* transform: scale(1.05); */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }  #isGreen:hover{
   cursor: pointer;
   background-color: rgba(49,195,100, 0.15);
   border-radius:10px;
-  transform: scale(1.05);
+  /* transform: scale(1.05); */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 } #isRed:hover{
   cursor: pointer;
   background-color: rgba(237,113,13,0.15);
   border-radius:10px;
-  transform: scale(1.05) ease;
+  /* transform: scale(1.05) ease; */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 /* #Dashboard_Card_wrapper {
