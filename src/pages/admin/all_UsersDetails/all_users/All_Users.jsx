@@ -18,6 +18,8 @@ const All_Users = () => {
     const dispatch = useDispatch();
     
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+
   const limit = 12;
     // Extracting functions from PopupContextHook for error handling
     const { updateErrorText, updateErrorPopup } = PopupContextHook()
@@ -30,34 +32,14 @@ const All_Users = () => {
         unsubscribedUsers: []
     })
 
-    // Effect to fetch all users when the component mounts
-    useEffect(() => {
-        getAllUsersProvider({
-
-            updateUsers: (data) => {
-                // Update the users state with the fetched data
-                setUsers({
-                    allUsers: data.allUsers,
-                    subscribedUsers: data.subscribedUsers,
-                    unsubscribedUsers: data.unsubscribedUsers
-                })
-            },
-            // updateErrorPopup, // Function to update error popup
-            // updateErrorText // Function to update error text
-        })
-    }, []) // Empty dependency array means this runs once on mount
-    // console.log(updateErrorText);
-
-  //   const [page, setPage] = useState(1);
-  // const limit = 10;
 
   const { AllUsersData, AllUsersDataLoading, AllUsersDataError } = useSelector(
     (state) => state.AllUsers // Make sure the reducer is mounted as `allUsers`
   );
 
   useEffect(() => {
-    dispatch(fetchAllUsers({ page:currentPage, limit }));
-  }, [dispatch, currentPage]);
+    dispatch(fetchAllUsers({ page: currentPage, limit, search: searchQuery }));
+  }, [dispatch, currentPage, searchQuery]);
   const totalPages = Math.ceil((AllUsersData?.totalCount || 0) / limit);
   const PaginatedUsers = AllUsersData?.users || [];
 
@@ -145,13 +127,16 @@ const All_Users = () => {
                 
                 <div id={Style.AllUsers_com_Div}>
                     <AllUsers_com 
+                    //  <AllUsers_com 
                       arr={PaginatedUsers}
                       currentPage={currentPage}
                       prevPage={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                       nextPage={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                       setCurrentPage={setCurrentPage}
-                      totalCount={AllUsersData?.totalCount || 0} 
-                      />
+                      totalCount={AllUsersData?.totalCount || 0}
+                      searchQuery={searchQuery}
+                      setSearchQuery={setSearchQuery}
+                    />
                 </div>
             </div>
         </div>

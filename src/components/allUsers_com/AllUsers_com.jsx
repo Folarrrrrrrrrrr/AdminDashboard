@@ -22,10 +22,9 @@ const AllUsers_com = (props) => {
   let array = props.arr;
   console.log(array);
  
-  // const { allUsers, subscribedUsers, unsubscribedUsers } = array;
+  // const { allUsers, subscribedUsers, unsubscribedUsers } = array?;
 
   const [toggleIndex, setToggleIndex] = useState(0);
-  const [searchUser, setSearchUser] = useState("");
   const [sortList, setSortList] = useState("name"); // Default sort by name
 
   // Pagination state
@@ -34,35 +33,14 @@ const AllUsers_com = (props) => {
   const usersPerPage = 12; // Max 10 users per page
   const totalPages = Math.ceil(totalCount / usersPerPage);
 
-  useEffect(() => {
-    setTimeout(() => (allUsers ? setLoading(false) : setLoading(true)), 3000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => (allUsers ? setLoading(false) : setLoading(true)), 3000);
+  // }, []);
 
   const transactionToggle = (index) => {
     setToggleIndex(index);  
   };
 
-  // Filter users based on search input
-  const filteredUsers = array?.filter((user) =>
-    user.username.toLowerCase().includes(searchUser.toLowerCase())
-  );
-
-    console.log(filteredUsers);
-    
-  // Sort users based on selected option
-  const sortedUsers = [...filteredUsers].sort((a, b) =>
-    sortList === "name"
-      ? a.username.localeCompare(b.username)
-      : a.country.localeCompare(b.country)
-  );
-
-  console.log(sortedUsers.length);
-
-  // Applying pagination AFTER filtering and sorting
-const paginatedUsers = sortedUsers.slice(
-  (currentPage - 1) * usersPerPage,
-  currentPage * usersPerPage
-);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -91,8 +69,11 @@ const paginatedUsers = sortedUsers.slice(
             id={Style.inputBox}
             type="text"
             placeholder="Search Username"
-            value={searchUser}
-            onChange={(e) => setSearchUser(e.target.value)}
+            value={props.searchQuery}
+            onChange={(e) => {
+              props.setSearchQuery(e.target.value);
+              props.setCurrentPage(1); // Reset pagination
+            }}
             className="search-box"
           />
 
@@ -112,7 +93,7 @@ const paginatedUsers = sortedUsers.slice(
         {
           toggleIndex === 0 &&
             // <div id={Style.UserCardsDiv}>
-            paginatedUsers.map((object) => {
+            array?.map((object, i) => {
               let statusColor = object.status === "Online" ? true : false;
 
               let verify =
@@ -125,7 +106,7 @@ const paginatedUsers = sortedUsers.slice(
                   : "";
 
               return (
-                <div id={Style.eachCard}>
+                <div id={Style.eachCard} key={i}>
                     <Staff_Card
                       img={object.profile_picture}
                       subscriptionType={object.subscriptionType}

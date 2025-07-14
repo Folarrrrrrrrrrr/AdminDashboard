@@ -9,8 +9,8 @@ export const fetchCCWeeklyPerformance = createAsyncThunk(
         throw new Error("No access token found");
       }
 
-      const CC_BASE_URL = import.meta.env.VITE_CC_BASE_URL;
-      const response = await fetch(`${CC_BASE_URL}/top-performing-agents`,
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+      const response = await fetch(`${API_BASE_URL}/staffs/top-performing-agents`,
         {
           method: "GET",
           headers: {
@@ -25,7 +25,9 @@ export const fetchCCWeeklyPerformance = createAsyncThunk(
       }
 
       const CCPerformanceData = await response.json();
+      console.log(CCPerformanceData)
       return CCPerformanceData.responseBody;
+
     } catch (error) {
       console.log("Fetch Weekly Performance Error:", error.message);
       return rejectWithValue(error.message);

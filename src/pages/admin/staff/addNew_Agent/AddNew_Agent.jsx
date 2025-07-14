@@ -72,7 +72,7 @@ const AddNew_Agent = () => {
         <div className={Style.inputGroup}>
           <label>Phone Number</label>
           <div className={Style.phoneInput}>
-            <span className={Style.flag}>🇳🇬</span>
+            {/* <span className={Style.flag}>🇳🇬</span> */}
             <input type="tel" name="phone_number" value={form.phone_number} onChange={handleChange} placeholder="1234 5678 9901" required />
           </div>
         </div>
